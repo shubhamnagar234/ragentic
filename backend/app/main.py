@@ -4,6 +4,9 @@ from contextlib import asynccontextmanager
 from app.config import settings
 from app.database import engine, Base
 
+# Import all models so SQLAlchemy creates the tables
+import app.models
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
