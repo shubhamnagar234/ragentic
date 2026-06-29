@@ -7,6 +7,9 @@ from app.database import engine, Base
 # Import all models so SQLAlchemy creates the tables
 import app.models
 
+# Import routers
+from app.api import workspaces
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -33,6 +36,14 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+)
+
+
+# Register routers
+app.include_router(
+    workspaces.router,
+    prefix="/api/workspaces",
+    tags=["workspaces"],
 )
 
 
