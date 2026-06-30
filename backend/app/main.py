@@ -8,7 +8,7 @@ from app.database import engine, Base
 import app.models
 
 # Import routers
-from app.api import workspaces, sources
+from app.api import workspaces, sources, chat
 
 
 @asynccontextmanager
@@ -50,6 +50,12 @@ app.include_router(
     sources.router,
     prefix="/api/workspaces",
     tags=["sources"],
+)
+
+app.include_router(
+    chat.router,
+    prefix="/api/workspaces",
+    tags=["chat"],
 )
 
 
