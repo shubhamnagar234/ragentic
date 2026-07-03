@@ -1,5 +1,6 @@
 import { SignJWT } from "jose";
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
 export async function generateToken(userId: string): Promise<string> {
   const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
@@ -17,10 +18,14 @@ export async function serverFetch(
   options: RequestInit = {},
   userId?: string,
 ) {
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-    ...(options.headers as Record<string, string>),
-  };
+  const isFormData = options.body instanceof FormData;
+  const headers: Record<string, string> = {};
+  
+  if (!isFormData) {
+    headers["Content-Type"] = "application/json";
+  }
+  
+  Object.assign(headers, options.headers || {});
 
   if (userId) {
     const token = await generateToken(userId);
@@ -42,12 +47,18 @@ export async function serverFetch(
 // Client-side fetch helper
 // Calls Next.js API routes (not FastAPI directly)
 export async function clientFetch(path: string, options: RequestInit = {}) {
+  const isFormData = options.body instanceof FormData;
+  const headers: Record<string, string> = {};
+  
+  if (!isFormData) {
+    headers["Content-Type"] = "application/json";
+  }
+  
+  Object.assign(headers, options.headers || {});
+
   const response = await fetch(`/api${path}`, {
     ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers as Record<string, string>),
-    },
+    headers,
   });
 
   if (!response.ok) {
@@ -89,6 +100,14 @@ export const sourcesApi = {
       method: "POST",
       body: JSON.stringify(data),
     }),
+  upload: (workspaceId: string, file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    return clientFetch(`/workspaces/${workspaceId}/sources/upload`, {
+      method: "POST",
+      body: formData,
+    });
+  },
   delete: (workspaceId: string, sourceId: string) =>
     clientFetch(`/workspaces/${workspaceId}/sources/${sourceId}`, {
       method: "DELETE",

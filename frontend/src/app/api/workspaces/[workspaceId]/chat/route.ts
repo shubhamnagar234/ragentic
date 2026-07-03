@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth";
 import { generateToken } from "@/lib/api";
 import { NextRequest, NextResponse } from "next/server";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
 interface Props {
   params: Promise<{ workspaceId: string }>;

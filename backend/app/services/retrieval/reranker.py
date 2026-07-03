@@ -1,8 +1,10 @@
+import math
 from typing import List
 from sentence_transformers import CrossEncoder
+from app.config import settings
 
 # Load reranker model once at module level
-RERANKER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+RERANKER_MODEL = settings.RERANKER_MODEL
 _reranker = None
 
 
@@ -38,11 +40,14 @@ def rerank_chunks(
     print(f"[reranker] Scoring {len(pairs)} chunks...")
     scores = reranker.predict(pairs)
 
+    def sigmoid(x):
+        return 1 / (1 + math.exp(-x))
+
     # Add scores to chunks
     scored_chunks = []
     for chunk, score in zip(chunks, scores):
         chunk_copy = chunk.copy()
-        chunk_copy["reranker_score"] = float(score)
+        chunk_copy["reranker_score"] = sigmoid(float(score))
         scored_chunks.append(chunk_copy)
 
     # Sort by reranker score

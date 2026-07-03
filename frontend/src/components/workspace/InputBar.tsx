@@ -114,7 +114,7 @@ export default function InputBar({ workspaceId }: Props) {
       {detectedType && (
         <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-primary/5 border border-primary/20">
           {DetectedIcon && (
-            <DetectedIcon className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+            <DetectedIcon className="w-3.5 h-3.5 text-primary shrink-0" />
           )}
           <span className="text-xs text-primary font-medium">
             {detectedType} detected — press Enter to ingest
@@ -137,7 +137,7 @@ export default function InputBar({ workspaceId }: Props) {
           rows={1}
         />
 
-        <div className="flex items-center gap-1.5 flex-shrink-0">
+        <div className="flex items-center gap-1.5 shrink-0">
           {/* File upload */}
           <input
             ref={fileInputRef}
@@ -147,8 +147,20 @@ export default function InputBar({ workspaceId }: Props) {
             onChange={async (e) => {
               const file = e.target.files?.[0];
               if (!file) return;
-              // File upload handled separately
-              console.log("File selected:", file.name);
+              
+              setIsIngesting(true);
+              try {
+                await sourcesApi.upload(workspaceId, file);
+                queryClient.invalidateQueries({ queryKey: ["sources", workspaceId] });
+              } catch (err) {
+                console.error("File upload failed:", err);
+              } finally {
+                setIsIngesting(false);
+                // Reset file input so same file can be uploaded again if needed
+                if (fileInputRef.current) {
+                  fileInputRef.current.value = "";
+                }
+              }
             }}
           />
           <Button

@@ -34,7 +34,7 @@ async def init_qdrant():
         client.create_collection(
             collection_name=collection_name,
             vectors_config=VectorParams(
-                size=1024,  # BAAI/bge-large-en-v1.5 dimension
+                size=settings.QDRANT_VECTOR_DIM,
                 distance=Distance.COSINE,
             ),
         )

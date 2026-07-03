@@ -1,10 +1,11 @@
 from typing import List
 from sentence_transformers import SentenceTransformer
 from app.services.ingestion.chunker import Chunk
+from app.config import settings
 
 # Load model once at module level — avoids reloading on every call
-TEXT_MODEL_NAME = "BAAI/bge-large-en-v1.5"
-CODE_MODEL_NAME = "nomic-ai/nomic-embed-text-v1"
+TEXT_MODEL_NAME = settings.EMBEDDING_MODEL_TEXT
+CODE_MODEL_NAME = settings.EMBEDDING_MODEL_CODE
 
 _text_model = None
 _code_model = None

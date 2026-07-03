@@ -39,7 +39,7 @@ async def get_image_description(page_num: int, file_path: str) -> str:
         import fitz
 
         genai.configure(api_key=settings.GEMINI_API_KEY)
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        model = genai.GenerativeModel(settings.LLM_VISION_MODEL)
 
         # Render page as image
         doc = fitz.open(file_path)
@@ -83,7 +83,7 @@ async def ingest_pdf(file_path: str, source_id: str) -> List[Chunk]:
         page_text = page["text"]
 
         # Vision pass for image pages
-        if page["has_images"] and page_text:
+        if page["has_images"]:
             print(f"[pdf_ingestor] Running vision pass on page {page['page_num']}")
             image_description = await get_image_description(
                 page["page_num"], file_path
