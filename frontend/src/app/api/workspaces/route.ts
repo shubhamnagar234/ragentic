@@ -3,19 +3,19 @@ import { serverFetch } from "@/lib/api";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
-  const session = await auth();
+  const session = await auth()
   if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
+  // Temporary — pass user id as token for now
   const data = await serverFetch(
     "/api/workspaces/",
     { method: "GET" },
     session.user.id,
-  );
-  return NextResponse.json(data);
+  )
+  return NextResponse.json(data)
 }
-
 export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session) {

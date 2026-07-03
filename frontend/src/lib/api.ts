@@ -1,18 +1,29 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+import { SignJWT } from "jose";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+
+async function generateToken(userId: string): Promise<string> {
+  const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
+
+  return new SignJWT({ sub: userId })
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime("7d")
+    .sign(secret);
+}
 
 // Server-side fetch helper
 // Used in Server Components and API routes
 export async function serverFetch(
   path: string,
   options: RequestInit = {},
-  token?: string,
+  userId?: string,
 ) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     ...(options.headers as Record<string, string>),
   };
 
-  if (token) {
+  if (userId) {
+    const token = await generateToken(userId);
     headers["Authorization"] = `Bearer ${token}`;
   }
 
@@ -48,20 +59,20 @@ export async function clientFetch(path: string, options: RequestInit = {}) {
 
 // Workspace API (client-side)
 export const workspaceApi = {
-  getAll: () => clientFetch("/workspaces"),
-  getOne: (id: string) => clientFetch(`/workspaces/${id}`),
+  getAll: () => clientFetch("/workspaces/"),
+  getOne: (id: string) => clientFetch(`/workspaces/${id}/`),
   create: (name: string) =>
-    clientFetch("/workspaces", {
+    clientFetch("/workspaces/", {
       method: "POST",
       body: JSON.stringify({ name }),
     }),
   update: (id: string, name: string) =>
-    clientFetch(`/workspaces/${id}`, {
+    clientFetch(`/workspaces/${id}/`, {
       method: "PATCH",
       body: JSON.stringify({ name }),
     }),
   delete: (id: string) =>
-    clientFetch(`/workspaces/${id}`, { method: "DELETE" }),
+    clientFetch(`/workspaces/${id}/`, { method: "DELETE" }),
 };
 
 // Sources API (client-side)

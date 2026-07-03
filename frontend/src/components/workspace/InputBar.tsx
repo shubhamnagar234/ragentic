@@ -13,8 +13,8 @@ import {
   Send,
   Paperclip,
   Link,
-  Youtube,
-  Github,
+  Play,
+  GitBranch,
   Globe,
   Loader2,
 } from "lucide-react";
@@ -25,8 +25,8 @@ interface Props {
 }
 
 const sourceIcons: Record<string, React.ElementType> = {
-  YOUTUBE: Youtube,
-  GITHUB: Github,
+  YOUTUBE: Play,
+  GITHUB: GitBranch,
   WEB: Globe,
   LOOM: Globe,
   PDF: Paperclip,

@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const { handlers, auth, signIn, signOut } = (NextAuth as any)({
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
@@ -12,15 +13,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     strategy: "jwt",
   },
   callbacks: {
-    jwt({ token, account }) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    jwt({ token, account }: { token: any; account: any }) {
       if (account) {
         token.userId = token.sub;
       }
       return token;
     },
-    session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.sub as string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    session({ session, token }: { session: any; token: any }) {
+      if (session?.user) {
+        session.user.id = token.sub;
       }
       return session;
     },
@@ -29,3 +32,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/auth/signin",
   },
 });
+
+export { handlers, auth, signIn, signOut };
