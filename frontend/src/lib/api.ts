@@ -1,7 +1,7 @@
 import { SignJWT } from "jose";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 
-async function generateToken(userId: string): Promise<string> {
+export async function generateToken(userId: string): Promise<string> {
   const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
 
   return new SignJWT({ sub: userId })
