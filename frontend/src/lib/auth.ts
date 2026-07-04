@@ -29,7 +29,7 @@ const { handlers, auth, signIn, signOut } = (NextAuth as any)({
     },
   },
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/signin",
   },
 });
 
