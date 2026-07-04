@@ -1,14 +1,14 @@
-import json
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, asc
+import json
 
 from app.database import get_db
 from app.dependencies import get_current_user
 from app.models.workspace import Workspace
 from app.models.message import Message
-from app.schemas.chat import ChatRequest
+from app.schemas.chat import ChatRequest, MessageResponse
 from app.services.agents.graph import ragentic_graph
 from app.services.memory.compressor import get_conversation_memory
 
@@ -35,6 +35,25 @@ async def verify_workspace(
     return workspace
 
 
+@router.get(
+    "/{workspace_id}/messages",
+    response_model=list[MessageResponse],
+)
+async def get_messages(
+    workspace_id: str,
+    user_id: str = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    await verify_workspace(workspace_id, user_id, db)
+
+    result = await db.execute(
+        select(Message)
+        .where(Message.workspace_id == workspace_id)
+        .order_by(asc(Message.created_at))
+    )
+    return result.scalars().all()
+
+
 async def event_generator(
     query: str,
     workspace_id: str,
@@ -42,23 +61,12 @@ async def event_generator(
     source_ids: list,
     db: AsyncSession,
 ):
-    """
-    SSE event generator — runs the agent graph and streams events.
-    Event types:
-    - timeline: agent status updates
-    - token: streamed response tokens
-    - sources: cited sources
-    - confidence: confidence level
-    - done: stream complete
-    """
     try:
-        # Get conversation memory
         memory = await get_conversation_memory(
             session_id=workspace_id,
             db=db,
         )
 
-        # Build initial state
         initial_state = {
             "query": query,
             "workspace_id": workspace_id,
@@ -86,23 +94,19 @@ async def event_generator(
             "report": None,
         }
 
-        # Stream timeline events as graph runs
         seen_events = 0
 
         async for state in ragentic_graph.astream(initial_state):
-            # Get new timeline events
             all_events = []
             for node_output in state.values():
                 if isinstance(node_output, dict):
                     all_events = node_output.get("timeline_events", [])
 
-            # Stream new events
             new_events = all_events[seen_events:]
             for event in new_events:
                 yield f"data: {json.dumps({'type': 'timeline', 'data': event})}\n\n"
                 seen_events += 1
 
-        # Get final state
         final_state = None
         async for final_state in ragentic_graph.astream(initial_state):
             pass
@@ -114,19 +118,14 @@ async def event_generator(
                     sources = node_output.get("sources_used", [])
                     confidence = node_output.get("confidence_level", "MEDIUM")
 
-                    # Stream answer tokens
                     words = answer.split()
                     for i, word in enumerate(words):
                         token = word + (" " if i < len(words) - 1 else "")
                         yield f"data: {json.dumps({'type': 'token', 'data': token})}\n\n"
 
-                    # Send sources
                     yield f"data: {json.dumps({'type': 'sources', 'data': sources})}\n\n"
-
-                    # Send confidence
                     yield f"data: {json.dumps({'type': 'confidence', 'data': confidence})}\n\n"
 
-                    # Save messages to DB
                     user_msg = Message(
                         workspace_id=workspace_id,
                         user_id=user_id,
@@ -145,7 +144,6 @@ async def event_generator(
                     db.add(assistant_msg)
                     await db.commit()
 
-        # Send done event
         yield f"data: {json.dumps({'type': 'done'})}\n\n"
 
     except Exception as e:

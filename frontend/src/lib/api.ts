@@ -20,11 +20,11 @@ export async function serverFetch(
 ) {
   const isFormData = options.body instanceof FormData;
   const headers: Record<string, string> = {};
-  
+
   if (!isFormData) {
     headers["Content-Type"] = "application/json";
   }
-  
+
   Object.assign(headers, options.headers || {});
 
   if (userId) {
@@ -49,11 +49,11 @@ export async function serverFetch(
 export async function clientFetch(path: string, options: RequestInit = {}) {
   const isFormData = options.body instanceof FormData;
   const headers: Record<string, string> = {};
-  
+
   if (!isFormData) {
     headers["Content-Type"] = "application/json";
   }
-  
+
   Object.assign(headers, options.headers || {});
 
   const response = await fetch(`/api${path}`, {
@@ -152,4 +152,10 @@ export const createChatStream = (
       source_ids: sourceIds.length > 0 ? sourceIds : null,
     }),
   });
+};
+
+// Messages API (client-side)
+export const messagesApi = {
+  getAll: (workspaceId: string) =>
+    clientFetch(`/workspaces/${workspaceId}/messages`),
 };

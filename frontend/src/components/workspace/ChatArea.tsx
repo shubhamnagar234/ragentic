@@ -2,14 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import { useChatStore } from "@/store/chatStore";
-import { useWorkspaceStore } from "@/store/workspaceStore";
 import { Message, SourceCitation } from "@/types";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Bot, User, AlertCircle, CheckCircle } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
+import { messagesApi } from "@/lib/api";
 
 interface Props {
   workspaceId: string;
@@ -163,8 +162,21 @@ function StreamingBubble() {
 }
 
 export default function ChatArea({ workspaceId }: Props) {
-  const { messages, streamingMessage, isLoading } = useChatStore();
+  const { messages, streamingMessage, setMessages } = useChatStore();
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  // Load message history on mount
+  const { data: historicalMessages = [] } = useQuery<Message[]>({
+    queryKey: ["messages", workspaceId],
+    queryFn: () => messagesApi.getAll(workspaceId),
+  });
+
+  // Sync historical messages to store
+  useEffect(() => {
+    if (historicalMessages.length > 0 && messages.length === 0) {
+      setMessages(historicalMessages);
+    }
+  }, [historicalMessages, messages.length, setMessages]);
 
   // Auto scroll to bottom
   useEffect(() => {
