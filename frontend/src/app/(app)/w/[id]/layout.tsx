@@ -38,10 +38,12 @@ export default function WorkspaceLayout({
       <div className="border-b border-border bg-background">
         <div className="max-w-7xl mx-auto px-4">
           {/* Workspace name */}
-          <div className="py-3">
-            <h1 className="font-heading font-semibold text-sm text-muted-foreground">
+          <div className="py-2 flex items-center gap-2">
+            <span className="text-xs text-muted-foreground">Workspace</span>
+            <span className="text-xs text-muted-foreground">/</span>
+            <span className="font-heading font-semibold text-sm">
               {workspace?.name ?? "Loading..."}
-            </h1>
+            </span>
           </div>
 
           {/* Tab navigation */}
