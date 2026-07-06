@@ -2,6 +2,7 @@
 
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,11 +12,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOut, Sparkles } from "lucide-react";
+import { LogOut, Moon, Sun, Sparkles } from "lucide-react";
 
 export default function Navbar() {
   const { data: session } = useSession();
   const router = useRouter();
+  const { theme, setTheme } = useTheme();
 
   return (
     <nav className="h-12 border-b border-border bg-background/80 backdrop-blur-sm sticky top-0 z-50 flex items-center px-4 gap-3">
@@ -33,6 +35,17 @@ export default function Navbar() {
       </div>
 
       <div className="flex-1" />
+
+      {/* Dark mode toggle */}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="h-8 w-8"
+        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      >
+        <Sun className="w-4 h-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+        <Moon className="absolute w-4 h-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      </Button>
 
       {/* User menu */}
       {session?.user && (
