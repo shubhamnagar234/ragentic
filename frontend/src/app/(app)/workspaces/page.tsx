@@ -15,7 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Navbar from "@/components/layout/Navbar";
-import { Plus, Folder, ArrowRight, Sparkles } from "lucide-react";
+import { Plus, Folder, ArrowRight, Sparkles, Trash2 } from "lucide-react";
 import { motion } from "motion/react";
 
 export default function WorkspacesPage() {
@@ -38,6 +38,13 @@ export default function WorkspacesPage() {
       setDialogOpen(false);
       setNewWorkspaceName("");
       router.push(`/w/${newWorkspace.id}`);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => workspaceApi.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["workspaces"] });
     },
   });
 
@@ -159,7 +166,20 @@ export default function WorkspacesPage() {
                       </p>
                     </div>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="flex items-center gap-1">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-7 w-7 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive transition-all"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteMutation.mutate(workspace.id);
+                      }}
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </Button>
+                    <ArrowRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
                 </div>
               </motion.div>
             ))}

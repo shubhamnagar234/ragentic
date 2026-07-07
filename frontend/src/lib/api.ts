@@ -18,73 +18,82 @@ export async function serverFetch(
   options: RequestInit = {},
   userId?: string,
 ) {
-  const isFormData = options.body instanceof FormData;
-  const headers: Record<string, string> = {};
-
-  if (!isFormData) {
-    headers["Content-Type"] = "application/json";
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    ...(options.headers as Record<string, string>),
   }
 
-  Object.assign(headers, options.headers || {});
-
   if (userId) {
-    const token = await generateToken(userId);
-    headers["Authorization"] = `Bearer ${token}`;
+    const token = await generateToken(userId)
+    headers["Authorization"] = `Bearer ${token}`
   }
 
   const response = await fetch(`${API_URL}${path}`, {
     ...options,
     headers,
-  });
+  })
 
   if (!response.ok) {
-    throw new Error(`API error: ${response.status} ${response.statusText}`);
+    throw new Error(`API error: ${response.status} ${response.statusText}`)
   }
 
-  return response.json();
+  // Handle empty responses (204 No Content)
+  if (response.status === 204 || response.headers.get("content-length") === "0") {
+    return null
+  }
+
+  const text = await response.text()
+  if (!text) return null
+
+  return JSON.parse(text)
 }
 
 // Client-side fetch helper
 // Calls Next.js API routes (not FastAPI directly)
-export async function clientFetch(path: string, options: RequestInit = {}) {
-  const isFormData = options.body instanceof FormData;
-  const headers: Record<string, string> = {};
-
-  if (!isFormData) {
-    headers["Content-Type"] = "application/json";
-  }
-
-  Object.assign(headers, options.headers || {});
-
+export async function clientFetch(
+  path: string,
+  options: RequestInit = {},
+) {
   const response = await fetch(`/api${path}`, {
     ...options,
-    headers,
-  });
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers as Record<string, string>),
+    },
+  })
 
   if (!response.ok) {
-    throw new Error(`API error: ${response.status} ${response.statusText}`);
+    throw new Error(`API error: ${response.status} ${response.statusText}`)
   }
 
-  return response.json();
+  // Handle empty responses (204 No Content)
+  if (response.status === 204 || response.headers.get("content-length") === "0") {
+    return null
+  }
+
+  const text = await response.text()
+  if (!text) return null
+
+  return JSON.parse(text)
 }
 
 // Workspace API (client-side)
 export const workspaceApi = {
   getAll: () => clientFetch("/workspaces/"),
-  getOne: (id: string) => clientFetch(`/workspaces/${id}/`),
+  getOne: (id: string) => clientFetch(`/workspaces/${id}`),
   create: (name: string) =>
     clientFetch("/workspaces/", {
       method: "POST",
       body: JSON.stringify({ name }),
     }),
   update: (id: string, name: string) =>
-    clientFetch(`/workspaces/${id}/`, {
+    clientFetch(`/workspaces/${id}`, {
       method: "PATCH",
       body: JSON.stringify({ name }),
     }),
   delete: (id: string) =>
-    clientFetch(`/workspaces/${id}/`, { method: "DELETE" }),
-};
+    clientFetch(`/workspaces/${id}`, { method: "DELETE" }),
+}
 
 // Sources API (client-side)
 export const sourcesApi = {
@@ -120,7 +129,7 @@ export const analyticsApi = {
     clientFetch(`/workspaces/${workspaceId}/analytics`),
   getScoreTrend: (workspaceId: string) =>
     clientFetch(`/workspaces/${workspaceId}/analytics/scores`),
-};
+}
 
 // Reports API (client-side)
 export const reportsApi = {

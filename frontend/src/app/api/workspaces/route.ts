@@ -8,13 +8,17 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
-  // Temporary — pass user id as token for now
-  const data = await serverFetch(
-    "/api/workspaces/",
-    { method: "GET" },
-    session.user.id,
-  )
-  return NextResponse.json(data)
+  try {
+    const data = await serverFetch(
+      "/api/workspaces/",
+      { method: "GET" },
+      session.user.id,
+    )
+    return NextResponse.json(data)
+  } catch (error: any) {
+    console.error("Error fetching workspaces:", error);
+    return NextResponse.json({ error: error.message, stack: error.stack }, { status: 500 })
+  }
 }
 export async function POST(request: NextRequest) {
   const session = await auth();
