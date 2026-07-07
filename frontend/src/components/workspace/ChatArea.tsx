@@ -1,11 +1,18 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useChatStore } from "@/store/chatStore";
 import { Message, SourceCitation } from "@/types";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Bot, User, AlertCircle, CheckCircle } from "lucide-react";
+import {
+  Bot,
+  User,
+  AlertCircle,
+  Copy,
+  CheckCircle,
+  CheckCircle2,
+} from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useQuery } from "@tanstack/react-query";
 import { messagesApi } from "@/lib/api";
@@ -58,6 +65,29 @@ function SourcesList({ sources }: { sources: SourceCitation[] }) {
   );
 }
 
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-muted flex-shrink-0 mt-1"
+    >
+      {copied ? (
+        <CheckCircle2 className="w-3.5 h-3.5 text-green-600" />
+      ) : (
+        <Copy className="w-3.5 h-3.5 text-muted-foreground" />
+      )}
+    </button>
+  );
+}
+
 function MessageBubble({ message }: { message: Message }) {
   const isUser = message.role === "user";
   const confidence = message.confidence
@@ -91,15 +121,19 @@ function MessageBubble({ message }: { message: Message }) {
           isUser && "items-end flex flex-col",
         )}
       >
-        <div
-          className={cn(
-            "px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed",
-            isUser
-              ? "bg-primary text-primary-foreground rounded-tr-sm"
-              : "bg-muted rounded-tl-sm",
-          )}
-        >
-          {message.content}
+        {/* Bubble + copy button */}
+        <div className="flex items-start gap-1 group">
+          <div
+            className={cn(
+              "px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed",
+              isUser
+                ? "bg-primary text-primary-foreground rounded-tr-sm"
+                : "bg-muted rounded-tl-sm",
+            )}
+          >
+            {message.content}
+          </div>
+          {!isUser && <CopyButton text={message.content} />}
         </div>
 
         {/* Confidence badge */}
