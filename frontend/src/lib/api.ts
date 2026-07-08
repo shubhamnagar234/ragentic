@@ -18,8 +18,9 @@ export async function serverFetch(
   options: RequestInit = {},
   userId?: string,
 ) {
+  const isFormData = options.body instanceof FormData;
   const headers: Record<string, string> = {
-    "Content-Type": "application/json",
+    ...(isFormData ? {} : { "Content-Type": "application/json" }),
     ...(options.headers as Record<string, string>),
   }
 
@@ -54,12 +55,15 @@ export async function clientFetch(
   path: string,
   options: RequestInit = {},
 ) {
+  const isFormData = options.body instanceof FormData;
+  const headers: Record<string, string> = {
+    ...(isFormData ? {} : { "Content-Type": "application/json" }),
+    ...(options.headers as Record<string, string>),
+  };
+
   const response = await fetch(`/api${path}`, {
     ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers as Record<string, string>),
-    },
+    headers,
   })
 
   if (!response.ok) {

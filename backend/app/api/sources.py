@@ -14,6 +14,8 @@ from app.workers.ingest_tasks import ingest_source
 
 router = APIRouter()
 
+UPLOAD_DIR = "uploads"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 async def verify_workspace_access(
     workspace_id: UUID,

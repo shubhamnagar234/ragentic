@@ -29,7 +29,8 @@ class Source(Base):
     )
 
     # Relationships
-    workspace = relationship("Workspace", backref="sources")
+    from sqlalchemy.orm import backref
+    workspace = relationship("Workspace", backref=backref("sources", cascade="all, delete-orphan"))
 
     def __repr__(self):
         return f"<Source {self.source_type} - {self.title}>"

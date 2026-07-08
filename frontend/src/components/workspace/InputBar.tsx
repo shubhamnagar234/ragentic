@@ -8,7 +8,6 @@ import { sourcesApi } from "@/lib/api";
 import { detectSourceType } from "@/lib/detector";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
 import {
   Send,
   Paperclip,
@@ -82,6 +81,7 @@ export default function InputBar({ workspaceId }: Props) {
     }
   };
 
+
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
@@ -147,11 +147,12 @@ export default function InputBar({ workspaceId }: Props) {
             onChange={async (e) => {
               const file = e.target.files?.[0];
               if (!file) return;
-              
               setIsIngesting(true);
               try {
                 await sourcesApi.upload(workspaceId, file);
-                queryClient.invalidateQueries({ queryKey: ["sources", workspaceId] });
+                queryClient.invalidateQueries({
+                  queryKey: ["sources", workspaceId],
+                });
               } catch (err) {
                 console.error("File upload failed:", err);
               } finally {
