@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Workspace, Source, Session } from "@/types";
+import { Workspace, Source, Session, SourceCitation } from "@/types";
 
 interface WorkspaceStore {
   // Current workspace
@@ -28,6 +28,8 @@ interface WorkspaceStore {
   // UI state
   showEvalPanel: boolean;
   toggleEvalPanel: () => void;
+  activeCitation: SourceCitation | null;
+  setActiveCitation: (citation: SourceCitation | null) => void;
 }
 
 export const useWorkspaceStore = create<WorkspaceStore>((set) => ({
@@ -73,4 +75,6 @@ export const useWorkspaceStore = create<WorkspaceStore>((set) => ({
   // UI state
   showEvalPanel: false, // Default hidden based on user request
   toggleEvalPanel: () => set((state) => ({ showEvalPanel: !state.showEvalPanel })),
+  activeCitation: null,
+  setActiveCitation: (citation) => set({ activeCitation: citation }),
 }));

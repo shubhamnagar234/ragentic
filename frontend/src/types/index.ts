@@ -68,6 +68,7 @@ export interface SourceCitation {
   chunk_id: string;
   score: number;
   text_preview: string;
+  full_text?: string;
   source_title?: string;
   source_type?: string;
 }

@@ -15,6 +15,7 @@ class SourceCitation(BaseModel):
     chunk_id: str
     score: float
     text_preview: str
+    full_text: Optional[str] = None
     source_title: Optional[str] = None
     source_type: Optional[str] = None
 

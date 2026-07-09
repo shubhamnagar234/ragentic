@@ -1,9 +1,8 @@
 import { useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useChatStore } from "@/store/chatStore";
-import { useWorkspaceStore } from "@/store/workspaceStore";
 import { createChatStream } from "@/lib/api";
-import { TimelineEvent, SourceCitation, ConfidenceLevel, Message } from "@/types";
+import { TimelineEvent, SourceCitation, ConfidenceLevel, Message, Session } from "@/types";
 
 export function useSSE() {
   const {
@@ -18,17 +17,16 @@ export function useSSE() {
     clearTimeline,
     clearStreamingMessage,
   } = useChatStore();
-  const { activeSessionId } = useWorkspaceStore();
   const queryClient = useQueryClient();
 
   const sendMessage = useCallback(
-    async (workspaceId: string, query: string, sourceIds: string[] = []) => {
+    async (workspaceId: string, sessionId: string | null, query: string, sourceIds: string[] = []) => {
       setIsLoading(true);
       clearTimeline();
       startStreaming();
 
       try {
-        const response = await createChatStream(workspaceId, activeSessionId, query, sourceIds);
+        const response = await createChatStream(workspaceId, sessionId, query, sourceIds);
 
         if (!response.ok || !response.body) {
           throw new Error("Stream failed to start");
@@ -89,11 +87,12 @@ export function useSSE() {
                   // Optimistically add the AI message to prevent flicker
                   const state = useChatStore.getState();
                   if (state.streamingMessage) {
-                    queryClient.setQueryData(["messages", workspaceId], (old: Message[] = []) => [
+                    queryClient.setQueryData(["messages", workspaceId, sessionId], (old: Message[] = []) => [
                       ...old,
                       {
                         id: `optimistic-${Date.now()}`,
                         workspace_id: workspaceId,
+                        session_id: sessionId,
                         user_id: "",
                         role: "assistant",
                         content: state.streamingMessage!.content,
@@ -105,9 +104,9 @@ export function useSSE() {
                   }
                   
                   clearStreamingMessage();
-                  if (activeSessionId) {
+                  if (sessionId) {
                     queryClient.invalidateQueries({
-                      queryKey: ["messages", workspaceId, activeSessionId],
+                      queryKey: ["messages", workspaceId, sessionId],
                     });
                   } else {
                     queryClient.invalidateQueries({
@@ -122,9 +121,9 @@ export function useSSE() {
                   const { id, title } = event.data;
                   queryClient.setQueryData(
                     ["sessions", workspaceId],
-                    (old: any) => {
+                    (old: Session[] | undefined) => {
                       if (!old) return old;
-                      return old.map((s: any) =>
+                      return old.map((s: Session) =>
                         s.id === id ? { ...s, title } : s
                       );
                     }

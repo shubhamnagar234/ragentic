@@ -32,6 +32,7 @@ async def responder_node(state: RagenticState) -> RagenticState:
                 "chunk_id": str(chunk.get("chunk_id", "")),
                 "score": chunk.get("reranker_score", 0.0),
                 "text_preview": chunk["text"][:150] + "...",
+                "full_text": chunk.get("text", ""),
                 "source_id": str(chunk.get("source_id", "")),
             }
         )

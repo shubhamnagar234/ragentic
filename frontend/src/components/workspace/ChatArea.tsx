@@ -46,6 +46,8 @@ const confidenceConfig = {
 };
 
 function SourcesList({ sources }: { sources: SourceCitation[] }) {
+  const { setActiveCitation, activeCitation } = useWorkspaceStore();
+  
   if (!sources.length) return null;
 
   return (
@@ -53,20 +55,32 @@ function SourcesList({ sources }: { sources: SourceCitation[] }) {
       <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
         Sources · {sources.length} selected
       </p>
-      {sources.map((source, i) => (
-        <div
-          key={i}
-          className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-muted/50 border border-border"
-        >
-          <span className="text-[10px] text-muted-foreground w-4">{i + 1}</span>
-          <span className="text-xs text-foreground flex-1 truncate">
-            {source.text_preview}
-          </span>
-          <span className="text-[10px] font-medium text-green-600 bg-green-500/10 px-1.5 py-0.5 rounded-full">
-            {source.score.toFixed(2)}
-          </span>
-        </div>
-      ))}
+      {sources.map((source, i) => {
+        const isActive = activeCitation?.chunk_id === source.chunk_id;
+        return (
+          <button
+            key={i}
+            onClick={() => setActiveCitation(source)}
+            className={cn(
+              "flex w-full items-center text-left gap-2 px-2.5 py-1.5 rounded-lg border transition-colors cursor-pointer",
+              isActive 
+                ? "bg-primary/10 border-primary/20" 
+                : "bg-muted/50 border-border hover:bg-muted"
+            )}
+          >
+            <span className={cn(
+              "text-[10px] w-4 shrink-0",
+              isActive ? "text-primary" : "text-muted-foreground"
+            )}>{i + 1}</span>
+            <span className="text-xs text-foreground flex-1 truncate">
+              {source.text_preview}
+            </span>
+            <span className="text-[10px] font-medium text-green-600 bg-green-500/10 px-1.5 py-0.5 rounded-full shrink-0">
+              {source.score.toFixed(2)}
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }

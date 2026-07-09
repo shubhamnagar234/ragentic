@@ -9,13 +9,14 @@ import { Source } from "@/types";
 import AgentSidebar from "@/components/workspace/AgentSidebar";
 import ChatArea from "@/components/workspace/ChatArea";
 import EvalPanel from "@/components/workspace/EvalPanel";
+import DocumentViewerPanel from "@/components/workspace/DocumentViewerPanel";
 import Timeline from "@/components/workspace/Timeline";
 import InputBar from "@/components/workspace/InputBar";
 
 export default function WorkspaceChatPage() {
   const params = useParams();
   const id = params.id as string;
-  const { setSources, showEvalPanel } = useWorkspaceStore();
+  const { setSources, showEvalPanel, activeCitation } = useWorkspaceStore();
 
   // Load sources into sidebar
   const { data: sources } = useQuery<Source[]>({
@@ -39,7 +40,7 @@ export default function WorkspaceChatPage() {
       <div 
         className="flex-1 grid gap-3 min-h-0"
         style={{
-          gridTemplateColumns: showEvalPanel ? "220px 1fr 200px" : "220px 1fr",
+          gridTemplateColumns: (activeCitation || showEvalPanel) ? "220px 1fr 300px" : "220px 1fr",
         }}
       >
         <AgentSidebar />
@@ -47,7 +48,7 @@ export default function WorkspaceChatPage() {
           <ChatArea workspaceId={id} />
           <InputBar workspaceId={id} />
         </div>
-        {showEvalPanel && <EvalPanel />}
+        {activeCitation ? <DocumentViewerPanel /> : (showEvalPanel && <EvalPanel />)}
       </div>
       <Timeline />
     </div>

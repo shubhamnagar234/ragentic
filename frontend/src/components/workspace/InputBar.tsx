@@ -4,8 +4,8 @@ import { useState, useRef } from "react";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useChatStore } from "@/store/chatStore";
 import { useSSE } from "@/hooks/useSSE";
-import { Message } from "@/types";
-import { sourcesApi } from "@/lib/api";
+import { Message, Session } from "@/types";
+import { sourcesApi, sessionsApi } from "@/lib/api";
 import { detectSourceType } from "@/lib/detector";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -41,7 +41,7 @@ export default function InputBar({ workspaceId }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
 
-  const { activeSourceIds } = useWorkspaceStore();
+  const { activeSourceIds, activeSessionId, setActiveSessionId } = useWorkspaceStore();
   const { isLoading } = useChatStore();
   const { sendMessage } = useSSE();
 
@@ -96,12 +96,31 @@ export default function InputBar({ workspaceId }: Props) {
     const query = input.trim();
     setInput("");
 
+    let targetSessionId = activeSessionId;
+
+    // Auto-create session if none exists
+    if (!targetSessionId) {
+      try {
+        const newSession = await sessionsApi.create(workspaceId, "New Chat");
+        targetSessionId = newSession.id;
+        queryClient.setQueryData(
+          ["sessions", workspaceId],
+          (old: Session[] | undefined) => [...(old || []), newSession]
+        );
+        setActiveSessionId(newSession.id);
+      } catch (e) {
+        console.error("Failed to create session automatically:", e);
+        return; // Don't proceed if we can't create a session
+      }
+    }
+
     // Optimistically add the user message to the UI
-    queryClient.setQueryData(["messages", workspaceId], (old: Message[] = []) => [
+    queryClient.setQueryData(["messages", workspaceId, targetSessionId], (old: Message[] = []) => [
       ...old,
       {
         id: Date.now().toString(),
         workspace_id: workspaceId,
+        session_id: targetSessionId,
         user_id: "",
         role: "user",
         content: query,
@@ -109,7 +128,7 @@ export default function InputBar({ workspaceId }: Props) {
       },
     ]);
 
-    await sendMessage(workspaceId, query, activeSourceIds);
+    await sendMessage(workspaceId, targetSessionId, query, activeSourceIds);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
