@@ -21,7 +21,11 @@ export default function WorkspaceChatPage() {
   const { data: sources } = useQuery<Source[]>({
     queryKey: ["sources", id],
     queryFn: () => sourcesApi.getAll(id),
-    refetchInterval: 10000,
+    refetchInterval: (query) => {
+      const data = query.state.data as Source[] | undefined;
+      const hasProcessing = data?.some(s => s.status === "queued" || s.status === "ingesting");
+      return hasProcessing ? 2000 : 10000;
+    },
   });
 
   useEffect(() => {
@@ -34,7 +38,7 @@ export default function WorkspaceChatPage() {
     <div className="h-[calc(100vh-8rem)] flex flex-col gap-3">
       <div className="flex-1 grid grid-cols-[220px_1fr_200px] gap-3 min-h-0">
         <AgentSidebar />
-        <div className="flex flex-col gap-3 min-h-0">
+        <div className="flex flex-col gap-3 min-h-0 min-w-0">
           <ChatArea workspaceId={id} />
           <InputBar workspaceId={id} />
         </div>

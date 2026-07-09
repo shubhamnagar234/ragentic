@@ -125,6 +125,10 @@ export const sourcesApi = {
     clientFetch(`/workspaces/${workspaceId}/sources/${sourceId}`, {
       method: "DELETE",
     }),
+  retry: (workspaceId: string, sourceId: string) =>
+    clientFetch(`/workspaces/${workspaceId}/sources/${sourceId}/retry`, {
+      method: "POST",
+    }),
 };
 
 // Analytics API (client-side)
@@ -171,4 +175,6 @@ export const createChatStream = (
 export const messagesApi = {
   getAll: (workspaceId: string) =>
     clientFetch(`/workspaces/${workspaceId}/messages`),
+  deleteAll: (workspaceId: string) =>
+    clientFetch(`/workspaces/${workspaceId}/messages`, { method: "DELETE" }),
 };

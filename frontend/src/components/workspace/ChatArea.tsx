@@ -15,8 +15,10 @@ import {
   Trash2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { messagesApi } from "@/lib/api";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface Props {
   workspaceId: string;
@@ -78,7 +80,7 @@ function CopyButton({ text }: { text: string }) {
   return (
     <button
       onClick={handleCopy}
-      className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-muted flex-shrink-0 mt-1"
+      className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-muted shrink-0 mt-1"
     >
       {copied ? (
         <CheckCircle2 className="w-3.5 h-3.5 text-green-600" />
@@ -101,7 +103,7 @@ function MessageBubble({ message }: { message: Message }) {
       animate={{ opacity: 1, y: 0 }}
       className={cn("flex gap-3 items-start", isUser && "flex-row-reverse")}
     >
-      <Avatar className="w-7 h-7 flex-shrink-0 mt-0.5">
+      <Avatar className="w-7 h-7 shrink-0 mt-0.5">
         <AvatarFallback
           className={cn(
             "text-xs",
@@ -129,10 +131,16 @@ function MessageBubble({ message }: { message: Message }) {
               "px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed",
               isUser
                 ? "bg-primary text-primary-foreground rounded-tr-sm"
-                : "bg-muted rounded-tl-sm",
+                : "bg-muted rounded-tl-sm prose prose-sm prose-p:leading-relaxed prose-pre:bg-background prose-pre:border prose-pre:border-border max-w-none dark:prose-invert",
             )}
           >
-            {message.content}
+            {isUser ? (
+              message.content
+            ) : (
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {message.content}
+              </ReactMarkdown>
+            )}
           </div>
           {!isUser && <CopyButton text={message.content} />}
         </div>
@@ -169,16 +177,20 @@ function StreamingBubble() {
       animate={{ opacity: 1, y: 0 }}
       className="flex gap-3 items-start"
     >
-      <Avatar className="w-7 h-7 flex-shrink-0 mt-0.5">
+      <Avatar className="w-7 h-7 shrink-0 mt-0.5">
         <AvatarFallback className="text-xs bg-muted">
           <Bot className="w-3.5 h-3.5" />
         </AvatarFallback>
       </Avatar>
 
       <div className="max-w-[80%] space-y-2">
-        <div className="px-3.5 py-2.5 rounded-2xl rounded-tl-sm text-sm leading-relaxed bg-muted">
-          {streamingMessage.content || (
-            <span className="flex gap-1">
+        <div className="px-3.5 py-2.5 rounded-2xl rounded-tl-sm text-sm leading-relaxed bg-muted prose prose-sm prose-p:leading-relaxed prose-pre:bg-background prose-pre:border prose-pre:border-border max-w-none dark:prose-invert">
+          {streamingMessage.content ? (
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {streamingMessage.content}
+            </ReactMarkdown>
+          ) : (
+            <span className="flex gap-1 h-5 items-center">
               <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce [animation-delay:0ms]" />
               <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce [animation-delay:150ms]" />
               <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce [animation-delay:300ms]" />
@@ -196,23 +208,37 @@ function StreamingBubble() {
   );
 }
 
+const EMPTY_MESSAGES: Message[] = [];
+
 export default function ChatArea({ workspaceId }: Props) {
+  const queryClient = useQueryClient();
   const { messages, streamingMessage, setMessages, clearMessages, isLoading } =
     useChatStore();
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  const handleClearChat = async () => {
+    try {
+      // Optimistically clear the UI
+      queryClient.setQueryData(["messages", workspaceId], []);
+      clearMessages();
+      
+      await messagesApi.deleteAll(workspaceId);
+      queryClient.invalidateQueries({ queryKey: ["messages", workspaceId] });
+    } catch (e) {
+      console.error("Failed to clear chat", e);
+    }
+  };
+
   // Load message history on mount
-  const { data: historicalMessages = [] } = useQuery<Message[]>({
+  const { data: historicalMessages = EMPTY_MESSAGES } = useQuery<Message[]>({
     queryKey: ["messages", workspaceId],
     queryFn: () => messagesApi.getAll(workspaceId),
   });
 
   // Sync historical messages to store
   useEffect(() => {
-    if (historicalMessages.length > 0 && messages.length === 0) {
-      setMessages(historicalMessages);
-    }
-  }, [historicalMessages, messages.length, setMessages]);
+    setMessages(historicalMessages);
+  }, [historicalMessages, setMessages]);
 
   // Auto scroll to bottom
   useEffect(() => {
@@ -228,7 +254,7 @@ export default function ChatArea({ workspaceId }: Props) {
             {messages.length} messages
           </span>
           <button
-            onClick={clearMessages}
+            onClick={handleClearChat}
             disabled={isLoading}
             className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-destructive transition-colors disabled:opacity-50"
           >

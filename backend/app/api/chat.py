@@ -54,6 +54,25 @@ async def get_messages(
     return result.scalars().all()
 
 
+@router.delete(
+    "/{workspace_id}/messages",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+async def delete_messages(
+    workspace_id: str,
+    user_id: str = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    await verify_workspace(workspace_id, user_id, db)
+
+    result = await db.execute(
+        select(Message).where(Message.workspace_id == workspace_id)
+    )
+    messages = result.scalars().all()
+    for msg in messages:
+        await db.delete(msg)
+    await db.commit()
+
 async def event_generator(
     query: str,
     workspace_id: str,

@@ -2,6 +2,9 @@
 
 import { useChatStore } from "@/store/chatStore";
 import { useWorkspaceStore } from "@/store/workspaceStore";
+import { useParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { sourcesApi } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import {
   Brain,
@@ -11,6 +14,10 @@ import {
   MessageSquare,
   FileText,
   Layers,
+  Loader2,
+  CheckCircle2,
+  AlertCircle,
+  RotateCcw,
 } from "lucide-react";
 
 const agents = [
@@ -42,6 +49,8 @@ const statusConfig = {
 };
 
 export default function AgentSidebar() {
+  const { id: workspaceId } = useParams() as { id: string };
+  const queryClient = useQueryClient();
   const { activeAgent, timelineEvents } = useChatStore();
   const { sources, activeSourceIds, toggleSourceFilter, clearSourceFilter } =
     useWorkspaceStore();
@@ -76,7 +85,7 @@ export default function AgentSidebar() {
             >
               <div
                 className={cn(
-                  "w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0",
+                  "w-7 h-7 rounded-md flex items-center justify-center shrink-0",
                   isActive ? "bg-primary/10" : "bg-muted",
                 )}
               >
@@ -132,21 +141,53 @@ export default function AgentSidebar() {
               activeSourceIds.includes(source.id);
 
             return (
-              <button
-                key={source.id}
-                onClick={() => toggleSourceFilter(source.id)}
-                className={cn(
-                  "w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-left transition-colors",
-                  isActive
-                    ? "bg-primary/5 text-foreground"
-                    : "text-muted-foreground hover:bg-muted",
+              <div key={source.id} className="flex flex-col gap-1">
+                <button
+                  onClick={() => toggleSourceFilter(source.id)}
+                  className={cn(
+                    "w-full flex items-center justify-between gap-2 px-2 py-1.5 rounded-lg text-left transition-colors",
+                    isActive
+                      ? "bg-primary/5 text-foreground"
+                      : "text-muted-foreground hover:bg-muted",
+                  )}
+                >
+                  <div className="flex items-center gap-2 overflow-hidden">
+                    <Layers className="w-3 h-3 shrink-0" />
+                    <span className="text-xs truncate">
+                      {source.title ?? source.url ?? source.source_type}
+                    </span>
+                  </div>
+                  {/* Status Indicator */}
+                  <div className="shrink-0 flex items-center">
+                    {(source.status === "queued" || source.status === "ingesting") && (
+                      <Loader2 className="w-3 h-3 text-primary animate-spin" />
+                    )}
+                    {source.status === "ready" && (
+                      <CheckCircle2 className="w-3 h-3 text-green-500" />
+                    )}
+                    {source.status === "failed" && (
+                      <AlertCircle className="w-3 h-3 text-red-500" />
+                    )}
+                  </div>
+                </button>
+                {/* Retry Button for Failed Sources */}
+                {source.status === "failed" && (
+                  <button 
+                    onClick={async () => {
+                      try {
+                        await sourcesApi.retry(workspaceId, source.id);
+                        queryClient.invalidateQueries({ queryKey: ["sources", workspaceId] });
+                      } catch (err) {
+                        console.error("Failed to retry source", err);
+                      }
+                    }}
+                    className="ml-6 flex items-center gap-1 text-[10px] text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <RotateCcw className="w-2.5 h-2.5" />
+                    Retry ingestion
+                  </button>
                 )}
-              >
-                <Layers className="w-3 h-3 flex-shrink-0" />
-                <span className="text-xs truncate">
-                  {source.title ?? source.url ?? source.source_type}
-                </span>
-              </button>
+              </div>
             );
           })
         )}

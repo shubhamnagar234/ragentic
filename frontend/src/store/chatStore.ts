@@ -27,6 +27,7 @@ interface ChatStore {
   setConfidence: (confidence: ConfidenceLevel) => void;
   startStreaming: () => void;
   stopStreaming: () => void;
+  clearStreamingMessage: () => void;
 
   // Timeline events
   timelineEvents: TimelineEvent[];
@@ -97,6 +98,7 @@ export const useChatStore = create<ChatStore>((set) => ({
         ? { ...state.streamingMessage, isStreaming: false }
         : null,
     })),
+  clearStreamingMessage: () => set({ streamingMessage: null }),
 
   // Timeline events
   timelineEvents: [],

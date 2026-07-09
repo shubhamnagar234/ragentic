@@ -1,7 +1,8 @@
 import { useCallback } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useChatStore } from "@/store/chatStore";
 import { createChatStream } from "@/lib/api";
-import { TimelineEvent, SourceCitation, ConfidenceLevel } from "@/types";
+import { TimelineEvent, SourceCitation, ConfidenceLevel, Message } from "@/types";
 
 export function useSSE() {
   const {
@@ -14,7 +15,9 @@ export function useSSE() {
     setActiveAgent,
     setIsLoading,
     clearTimeline,
+    clearStreamingMessage,
   } = useChatStore();
+  const queryClient = useQueryClient();
 
   const sendMessage = useCallback(
     async (workspaceId: string, query: string, sourceIds: string[] = []) => {
@@ -80,6 +83,27 @@ export function useSSE() {
                   stopStreaming();
                   setActiveAgent(null);
                   setIsLoading(false);
+
+                  // Optimistically add the AI message to prevent flicker
+                  const state = useChatStore.getState();
+                  if (state.streamingMessage) {
+                    queryClient.setQueryData(["messages", workspaceId], (old: Message[] = []) => [
+                      ...old,
+                      {
+                        id: `optimistic-${Date.now()}`,
+                        workspace_id: workspaceId,
+                        user_id: "",
+                        role: "assistant",
+                        content: state.streamingMessage!.content,
+                        sources: state.streamingMessage!.sources,
+                        confidence: state.streamingMessage!.confidence,
+                        created_at: new Date().toISOString(),
+                      },
+                    ]);
+                  }
+                  
+                  clearStreamingMessage();
+                  queryClient.invalidateQueries({ queryKey: ["messages", workspaceId] });
                   break;
                 }
 
@@ -113,6 +137,8 @@ export function useSSE() {
       setActiveAgent,
       setIsLoading,
       clearTimeline,
+      clearStreamingMessage,
+      queryClient,
     ],
   );
 

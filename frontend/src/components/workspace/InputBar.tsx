@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useChatStore } from "@/store/chatStore";
 import { useSSE } from "@/hooks/useSSE";
+import { Message } from "@/types";
 import { sourcesApi } from "@/lib/api";
 import { detectSourceType } from "@/lib/detector";
 import { Button } from "@/components/ui/button";
@@ -94,6 +95,20 @@ export default function InputBar({ workspaceId }: Props) {
     // Otherwise send as chat query
     const query = input.trim();
     setInput("");
+
+    // Optimistically add the user message to the UI
+    queryClient.setQueryData(["messages", workspaceId], (old: Message[] = []) => [
+      ...old,
+      {
+        id: Date.now().toString(),
+        workspace_id: workspaceId,
+        user_id: "",
+        role: "user",
+        content: query,
+        created_at: new Date().toISOString(),
+      },
+    ]);
+
     await sendMessage(workspaceId, query, activeSourceIds);
   };
 

@@ -132,6 +132,49 @@ async def upload_source(
     return source
 
 
+@router.post(
+    "/{workspace_id}/sources/{source_id}/retry",
+    response_model=SourceResponse,
+)
+async def retry_source(
+    workspace_id: UUID,
+    source_id: UUID,
+    user_id: str = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    await verify_workspace_access(workspace_id, user_id, db)
+
+    result = await db.execute(
+        select(Source).where(
+            Source.id == source_id,
+            Source.workspace_id == workspace_id,
+        )
+    )
+    source = result.scalar_one_or_none()
+    if not source:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Source not found",
+        )
+
+    # Reset status
+    source.status = "queued"
+    await db.commit()
+    await db.refresh(source)
+
+    try:
+        ingest_source.delay(
+            source_id=str(source.id),
+            workspace_id=str(workspace_id),
+            source_type=source.source_type,
+            url=source.url,
+        )
+        print(f"[sources] ✓ Queued retry task for source {source.id}")
+    except Exception as e:
+        print(f"[sources] ✗ Failed to queue retry task: {e}")
+
+    return source
+
 @router.get(
     "/{workspace_id}/sources",
     response_model=list[SourceResponse],
