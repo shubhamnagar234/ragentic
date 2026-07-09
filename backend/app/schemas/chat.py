@@ -26,6 +26,10 @@ class MessageResponse(BaseModel):
     sources: Optional[List[SourceCitation]] = None
     confidence: Optional[str] = None
     retry_count: int
+    feedback: Optional[str] = None
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+class MessageFeedbackRequest(BaseModel):
+    feedback: Optional[str] = None   # "UP", "DOWN", or None

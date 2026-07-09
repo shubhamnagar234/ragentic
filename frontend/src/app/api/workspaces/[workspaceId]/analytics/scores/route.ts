@@ -6,6 +6,8 @@ interface Props {
     params: Promise<{ workspaceId: string }>
 }
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(_request: NextRequest, { params }: Props) {
     const session = await auth()
     if (!session) {

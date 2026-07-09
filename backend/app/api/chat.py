@@ -8,7 +8,7 @@ from app.database import get_db
 from app.dependencies import get_current_user
 from app.models.workspace import Workspace
 from app.models.message import Message
-from app.schemas.chat import ChatRequest, MessageResponse
+from app.schemas.chat import ChatRequest, MessageResponse, MessageFeedbackRequest
 from app.services.agents.graph import ragentic_graph
 from app.services.memory.compressor import get_conversation_memory
 
@@ -72,6 +72,40 @@ async def delete_messages(
     for msg in messages:
         await db.delete(msg)
     await db.commit()
+
+@router.patch(
+    "/{workspace_id}/messages/{message_id}/feedback",
+    response_model=MessageResponse,
+)
+async def update_message_feedback(
+    workspace_id: str,
+    message_id: str,
+    payload: MessageFeedbackRequest,
+    user_id: str = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    await verify_workspace(workspace_id, user_id, db)
+
+    result = await db.execute(
+        select(Message).where(
+            Message.id == message_id,
+            Message.workspace_id == workspace_id
+        )
+    )
+    message = result.scalar_one_or_none()
+    
+    if not message:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Message not found",
+        )
+        
+    message.feedback = payload.feedback
+    await db.commit()
+    await db.refresh(message)
+    
+    return message
+
 
 async def event_generator(
     query: str,

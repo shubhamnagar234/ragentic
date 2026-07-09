@@ -13,6 +13,8 @@ import {
   CheckCircle,
   CheckCircle2,
   Trash2,
+  ThumbsUp,
+  ThumbsDown,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -91,6 +93,65 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
+function FeedbackButtons({ message }: { message: Message }) {
+  const queryClient = useQueryClient();
+
+  const handleFeedback = async (feedbackType: "UP" | "DOWN") => {
+    // If clicking the same feedback, unset it
+    const newFeedback = message.feedback === feedbackType ? null : feedbackType;
+
+    // Optimistically update React Query cache
+    queryClient.setQueryData<Message[]>(
+      ["messages", message.workspace_id],
+      (old) => {
+        if (!old) return old;
+        return old.map((m) =>
+          m.id === message.id ? { ...m, feedback: newFeedback } : m
+        );
+      }
+    );
+
+    try {
+      await messagesApi.submitFeedback(message.workspace_id, message.id, newFeedback);
+    } catch (e) {
+      console.error("Failed to submit feedback", e);
+      // Revert optimistic update
+      queryClient.setQueryData<Message[]>(
+        ["messages", message.workspace_id],
+        (old) => {
+          if (!old) return old;
+          return old.map((m) =>
+            m.id === message.id ? { ...m, feedback: message.feedback } : m
+          );
+        }
+      );
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-1 mt-1">
+      <button
+        onClick={() => handleFeedback("UP")}
+        className={cn(
+          "p-1.5 rounded hover:bg-muted transition-colors",
+          message.feedback === "UP" ? "text-green-600 bg-green-500/10" : "text-muted-foreground"
+        )}
+      >
+        <ThumbsUp className="w-3.5 h-3.5" />
+      </button>
+      <button
+        onClick={() => handleFeedback("DOWN")}
+        className={cn(
+          "p-1.5 rounded hover:bg-muted transition-colors",
+          message.feedback === "DOWN" ? "text-red-600 bg-red-500/10" : "text-muted-foreground"
+        )}
+      >
+        <ThumbsDown className="w-3.5 h-3.5" />
+      </button>
+    </div>
+  );
+}
+
 function MessageBubble({ message }: { message: Message }) {
   const isUser = message.role === "user";
   const confidence = message.confidence
@@ -161,6 +222,11 @@ function MessageBubble({ message }: { message: Message }) {
         {/* Sources */}
         {message.sources && message.sources.length > 0 && (
           <SourcesList sources={message.sources} />
+        )}
+        
+        {/* Feedback Buttons */}
+        {!isUser && (
+          <FeedbackButtons message={message} />
         )}
       </div>
     </motion.div>

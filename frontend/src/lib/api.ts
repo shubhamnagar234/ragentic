@@ -177,4 +177,9 @@ export const messagesApi = {
     clientFetch(`/workspaces/${workspaceId}/messages`),
   deleteAll: (workspaceId: string) =>
     clientFetch(`/workspaces/${workspaceId}/messages`, { method: "DELETE" }),
+  submitFeedback: (workspaceId: string, messageId: string, feedback: "UP" | "DOWN" | null) =>
+    clientFetch(`/workspaces/${workspaceId}/messages/${messageId}/feedback`, {
+      method: "PATCH",
+      body: JSON.stringify({ feedback }),
+    }),
 };

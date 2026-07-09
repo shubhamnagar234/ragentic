@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 from app.config import settings
 from app.database import engine, Base
 from app.middleware.logging import LoggingMiddleware
+from sqlalchemy import text
 
 # Import all models so SQLAlchemy creates the tables
 import app.models
@@ -48,6 +49,11 @@ async def lifespan(app: FastAPI):
     # Startup
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+        # Safely add feedback column to existing table
+        try:
+            await conn.execute(text("ALTER TABLE messages ADD COLUMN IF NOT EXISTS feedback VARCHAR"))
+        except Exception as e:
+            print(f"Skipping alter table: {e}")
     print("✓ Database tables created")
 
     await init_qdrant()

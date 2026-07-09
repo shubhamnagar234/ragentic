@@ -66,6 +66,7 @@ export interface Message {
   sources?: SourceCitation[];
   confidence?: ConfidenceLevel;
   retry_count: number;
+  feedback?: "UP" | "DOWN" | null;
   created_at: string;
 }
 

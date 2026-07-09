@@ -20,6 +20,7 @@ class Message(Base):
     sources = Column(JSONB, nullable=True)          # [{chunk_id, score, text_preview}]
     confidence = Column(String, nullable=True)      # HIGH | MEDIUM | LOW
     retry_count = Column(Integer, default=0)
+    feedback = Column(String, nullable=True)        # UP | DOWN
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     # Relationships
