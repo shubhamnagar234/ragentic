@@ -139,6 +139,21 @@ export const analyticsApi = {
     clientFetch(`/workspaces/${workspaceId}/analytics/scores`),
 }
 
+// Sessions API (client-side)
+export const sessionsApi = {
+  getAll: (workspaceId: string) =>
+    clientFetch(`/workspaces/${workspaceId}/sessions`),
+  create: (workspaceId: string, title: string) =>
+    clientFetch(`/workspaces/${workspaceId}/sessions`, {
+      method: "POST",
+      body: JSON.stringify({ title }),
+    }),
+  delete: (workspaceId: string, sessionId: string) =>
+    clientFetch(`/workspaces/${workspaceId}/sessions/${sessionId}`, {
+      method: "DELETE",
+    }),
+};
+
 // Reports API (client-side)
 export const reportsApi = {
   getAll: (workspaceId: string) =>
@@ -155,6 +170,7 @@ export const reportsApi = {
 // Goes through Next.js API route which attaches token server-side
 export const createChatStream = (
   workspaceId: string,
+  sessionId: string | null,
   query: string,
   sourceIds: string[],
 ) => {
@@ -166,6 +182,7 @@ export const createChatStream = (
     body: JSON.stringify({
       query,
       workspace_id: workspaceId,
+      session_id: sessionId,
       source_ids: sourceIds.length > 0 ? sourceIds : null,
     }),
   });
@@ -173,8 +190,12 @@ export const createChatStream = (
 
 // Messages API (client-side)
 export const messagesApi = {
-  getAll: (workspaceId: string) =>
-    clientFetch(`/workspaces/${workspaceId}/messages`),
+  getAll: (workspaceId: string, sessionId?: string | null) => {
+    const url = sessionId 
+      ? `/workspaces/${workspaceId}/messages?session_id=${sessionId}`
+      : `/workspaces/${workspaceId}/messages`;
+    return clientFetch(url);
+  },
   deleteAll: (workspaceId: string) =>
     clientFetch(`/workspaces/${workspaceId}/messages`, { method: "DELETE" }),
   submitFeedback: (workspaceId: string, messageId: string, feedback: "UP" | "DOWN" | null) =>

@@ -11,6 +11,20 @@ export interface WorkspaceCreate {
   name: string;
 }
 
+// Session types
+export interface Session {
+  id: string;
+  workspace_id: string;
+  user_id: string;
+  title: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SessionCreate {
+  title: string;
+}
+
 // Source types
 export type SourceType =
   | "PDF"
@@ -61,6 +75,7 @@ export interface SourceCitation {
 export interface Message {
   id: string;
   workspace_id: string;
+  session_id: string | null;
   role: "user" | "assistant";
   content: string;
   sources?: SourceCitation[];

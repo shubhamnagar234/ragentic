@@ -19,6 +19,7 @@ import {
   AlertCircle,
   RotateCcw,
 } from "lucide-react";
+import ChatHistory from "./ChatHistory";
 
 const agents = [
   { id: "classifier", label: "Query analyzer", icon: Brain },
@@ -65,6 +66,8 @@ export default function AgentSidebar() {
 
   return (
     <div className="flex flex-col gap-4 overflow-y-auto">
+      <ChatHistory />
+
       {/* Agents */}
       <div className="border border-border rounded-xl p-3 space-y-1">
         <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-1 mb-2">

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Workspace, Source } from "@/types";
+import { Workspace, Source, Session } from "@/types";
 
 interface WorkspaceStore {
   // Current workspace
@@ -12,6 +12,13 @@ interface WorkspaceStore {
   addSource: (source: Source) => void;
   updateSource: (id: string, updates: Partial<Source>) => void;
   removeSource: (id: string) => void;
+
+  // Sessions
+  sessions: Session[];
+  setSessions: (sessions: Session[]) => void;
+  activeSessionId: string | null;
+  setActiveSessionId: (id: string | null) => void;
+  addSession: (session: Session) => void;
 
   // Source filter
   activeSourceIds: string[];
@@ -43,6 +50,14 @@ export const useWorkspaceStore = create<WorkspaceStore>((set) => ({
     set((state) => ({
       sources: state.sources.filter((s) => s.id !== id),
     })),
+
+  // Sessions
+  sessions: [],
+  setSessions: (sessions) => set({ sessions }),
+  activeSessionId: null,
+  setActiveSessionId: (id) => set({ activeSessionId: id }),
+  addSession: (session) => 
+    set((state) => ({ sessions: [...state.sessions, session] })),
 
   // Source filter
   activeSourceIds: [],

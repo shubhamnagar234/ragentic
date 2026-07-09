@@ -7,6 +7,7 @@ from typing import Optional, List
 class ChatRequest(BaseModel):
     query: str
     workspace_id: UUID
+    session_id: Optional[UUID] = None
     source_ids: Optional[List[UUID]] = None   # filter to specific sources
 
 

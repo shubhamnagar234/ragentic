@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, asc
 import json
 from uuid import UUID
+from typing import Optional
 
 from app.database import get_db
 from app.dependencies import get_current_user
@@ -12,6 +13,8 @@ from app.models.message import Message
 from app.schemas.chat import ChatRequest, MessageResponse, MessageFeedbackRequest
 from app.services.agents.graph import ragentic_graph
 from app.services.memory.compressor import get_conversation_memory
+from app.services.llm.client import get_llm_response
+from app.models.session import Session
 
 router = APIRouter()
 
@@ -42,16 +45,17 @@ async def verify_workspace(
 )
 async def get_messages(
     workspace_id: str,
+    session_id: Optional[str] = None,
     user_id: str = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
     await verify_workspace(workspace_id, user_id, db)
 
-    result = await db.execute(
-        select(Message)
-        .where(Message.workspace_id == workspace_id)
-        .order_by(asc(Message.created_at))
-    )
+    query = select(Message).where(Message.workspace_id == workspace_id)
+    if session_id:
+        query = query.where(Message.session_id == UUID(session_id))
+    
+    result = await db.execute(query.order_by(asc(Message.created_at)))
     return result.scalars().all()
 
 
@@ -111,13 +115,14 @@ async def update_message_feedback(
 async def event_generator(
     query: str,
     workspace_id: str,
+    session_id: Optional[str],
     user_id: str,
     source_ids: list,
     db: AsyncSession,
 ):
     try:
         memory = await get_conversation_memory(
-            session_id=workspace_id,
+            session_id=session_id or workspace_id,
             db=db,
         )
 
@@ -182,13 +187,15 @@ async def event_generator(
 
                     user_msg = Message(
                         workspace_id=workspace_id,
-                        user_id=user_id,
+                        session_id=UUID(session_id) if session_id else None,
+                        user_id=UUID(user_id),
                         role="user",
                         content=query,
                     )
                     assistant_msg = Message(
                         workspace_id=workspace_id,
-                        user_id=user_id,
+                        session_id=UUID(session_id) if session_id else None,
+                        user_id=UUID(user_id),
                         role="assistant",
                         content=answer,
                         sources=sources,
@@ -197,6 +204,24 @@ async def event_generator(
                     db.add(user_msg)
                     db.add(assistant_msg)
                     await db.commit()
+
+                    # Generate title if this is the first exchange in a session
+                    if session_id and len(memory.recent_turns) == 0:
+                        try:
+                            prompt = f"User: {query}\nAssistant: {answer}\n\nGenerate a short 3-5 word title for this chat."
+                            system = "You are a helpful assistant. Output ONLY the short title, no quotes, no prefix."
+                            title = await get_llm_response(prompt=prompt, system_prompt=system, max_tokens=15)
+                            
+                            if title:
+                                title = title.strip(' "\'').strip()
+                                session_record = await db.execute(select(Session).where(Session.id == UUID(session_id)))
+                                session_record = session_record.scalar_one_or_none()
+                                if session_record:
+                                    session_record.title = title
+                                    await db.commit()
+                                    yield f"data: {json.dumps({'type': 'session_update', 'data': {'id': session_id, 'title': title}})}\n\n"
+                        except Exception as e:
+                            print(f"[chat] Title generation failed: {e}")
 
         yield f"data: {json.dumps({'type': 'done'})}\n\n"
 
@@ -218,6 +243,7 @@ async def chat(
         event_generator(
             query=payload.query,
             workspace_id=workspace_id,
+            session_id=str(payload.session_id) if payload.session_id else None,
             user_id=user_id,
             source_ids=payload.source_ids or [],
             db=db,

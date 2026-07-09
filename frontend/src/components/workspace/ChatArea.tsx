@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useWorkspaceStore } from "@/store/workspaceStore";
 import { useChatStore } from "@/store/chatStore";
 import { Message, SourceCitation } from "@/types";
 import { cn } from "@/lib/utils";
@@ -278,6 +279,7 @@ const EMPTY_MESSAGES: Message[] = [];
 
 export default function ChatArea({ workspaceId }: Props) {
   const queryClient = useQueryClient();
+  const { activeSessionId } = useWorkspaceStore();
   const { messages, streamingMessage, setMessages, clearMessages, isLoading } =
     useChatStore();
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -285,11 +287,15 @@ export default function ChatArea({ workspaceId }: Props) {
   const handleClearChat = async () => {
     try {
       // Optimistically clear the UI
-      queryClient.setQueryData(["messages", workspaceId], []);
+      if (activeSessionId) {
+        queryClient.setQueryData(["messages", workspaceId, activeSessionId], []);
+      }
       clearMessages();
       
-      await messagesApi.deleteAll(workspaceId);
-      queryClient.invalidateQueries({ queryKey: ["messages", workspaceId] });
+      await messagesApi.deleteAll(workspaceId); // TODO: Delete for session only
+      if (activeSessionId) {
+        queryClient.invalidateQueries({ queryKey: ["messages", workspaceId, activeSessionId] });
+      }
     } catch (e) {
       console.error("Failed to clear chat", e);
     }
@@ -297,14 +303,18 @@ export default function ChatArea({ workspaceId }: Props) {
 
   // Load message history on mount
   const { data: historicalMessages = EMPTY_MESSAGES } = useQuery<Message[]>({
-    queryKey: ["messages", workspaceId],
-    queryFn: () => messagesApi.getAll(workspaceId),
+    queryKey: ["messages", workspaceId, activeSessionId],
+    queryFn: () => messagesApi.getAll(workspaceId, activeSessionId),
+    enabled: !!activeSessionId,
   });
 
-  // Sync historical messages to store
   useEffect(() => {
-    setMessages(historicalMessages);
-  }, [historicalMessages, setMessages]);
+    if (activeSessionId) {
+      setMessages(historicalMessages);
+    } else {
+      setMessages([]);
+    }
+  }, [historicalMessages, setMessages, activeSessionId]);
 
   // Auto scroll to bottom
   useEffect(() => {

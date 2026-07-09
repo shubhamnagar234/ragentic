@@ -10,7 +10,7 @@ from sqlalchemy import text
 import app.models
 
 # Import routers
-from app.api import workspaces, sources, chat, analytics, reports
+from app.api import workspaces, sources, chat, analytics, reports, sessions
 
 
 async def init_qdrant():
@@ -49,9 +49,28 @@ async def lifespan(app: FastAPI):
     # Startup
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-        # Safely add feedback column to existing table
         try:
             await conn.execute(text("ALTER TABLE messages ADD COLUMN IF NOT EXISTS feedback VARCHAR"))
+            await conn.execute(text("ALTER TABLE messages ADD COLUMN IF NOT EXISTS session_id UUID REFERENCES sessions(id)"))
+            
+            # Auto-create default sessions for existing workspaces
+            await conn.execute(text("""
+                INSERT INTO sessions (id, workspace_id, user_id, title)
+                SELECT gen_random_uuid(), id, user_id, 'Default Chat'
+                FROM workspaces w
+                WHERE NOT EXISTS (
+                    SELECT 1 FROM sessions s WHERE s.workspace_id = w.id
+                )
+            """))
+
+            # Backfill session_id for existing messages
+            await conn.execute(text("""
+                UPDATE messages m
+                SET session_id = (
+                    SELECT id FROM sessions s WHERE s.workspace_id = m.workspace_id LIMIT 1
+                )
+                WHERE session_id IS NULL
+            """))
         except Exception as e:
             print(f"Skipping alter table: {e}")
     print("✓ Database tables created")
@@ -107,6 +126,11 @@ app.include_router(
     reports.router,
     prefix="/api/workspaces",
     tags=["reports"],
+)
+app.include_router(
+    sessions.router,
+    prefix="/api/workspaces",
+    tags=["sessions"],
 )
 
 

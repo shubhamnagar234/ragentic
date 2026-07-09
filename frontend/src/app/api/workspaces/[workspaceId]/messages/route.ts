@@ -16,9 +16,15 @@ export async function GET(_request: NextRequest, { params }: Props) {
   }
 
   const { workspaceId } = await params;
+  const url = new URL(_request.url);
+  const sessionId = url.searchParams.get("session_id");
+  const backendUrl = sessionId 
+    ? `/api/workspaces/${workspaceId}/messages?session_id=${sessionId}`
+    : `/api/workspaces/${workspaceId}/messages`;
+
   try {
     const data = await serverFetch(
-      `/api/workspaces/${workspaceId}/messages`,
+      backendUrl,
       { method: "GET" },
       session.user.id,
     );

@@ -12,6 +12,9 @@ class Message(Base):
     workspace_id = Column(
         UUID(as_uuid=True), ForeignKey("workspaces.id"), nullable=False
     )
+    session_id = Column(
+        UUID(as_uuid=True), ForeignKey("sessions.id"), nullable=True
+    )
     user_id = Column(
         UUID(as_uuid=True), ForeignKey("users.id"), nullable=False
     )
@@ -25,6 +28,7 @@ class Message(Base):
 
     # Relationships
     workspace = relationship("Workspace", backref="messages")
+    session = relationship("Session", backref="messages")
     user = relationship("User", backref="messages")
 
     def __repr__(self):

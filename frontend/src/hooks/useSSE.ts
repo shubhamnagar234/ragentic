@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useChatStore } from "@/store/chatStore";
+import { useWorkspaceStore } from "@/store/workspaceStore";
 import { createChatStream } from "@/lib/api";
 import { TimelineEvent, SourceCitation, ConfidenceLevel, Message } from "@/types";
 
@@ -17,6 +18,7 @@ export function useSSE() {
     clearTimeline,
     clearStreamingMessage,
   } = useChatStore();
+  const { activeSessionId } = useWorkspaceStore();
   const queryClient = useQueryClient();
 
   const sendMessage = useCallback(
@@ -26,7 +28,7 @@ export function useSSE() {
       startStreaming();
 
       try {
-        const response = await createChatStream(workspaceId, query, sourceIds);
+        const response = await createChatStream(workspaceId, activeSessionId, query, sourceIds);
 
         if (!response.ok || !response.body) {
           throw new Error("Stream failed to start");
@@ -103,7 +105,30 @@ export function useSSE() {
                   }
                   
                   clearStreamingMessage();
-                  queryClient.invalidateQueries({ queryKey: ["messages", workspaceId] });
+                  if (activeSessionId) {
+                    queryClient.invalidateQueries({
+                      queryKey: ["messages", workspaceId, activeSessionId],
+                    });
+                  } else {
+                    queryClient.invalidateQueries({
+                      queryKey: ["messages", workspaceId],
+                    });
+                  }
+                  break;
+                }
+
+                case "session_update": {
+                  // Update session title in query client / store if needed
+                  const { id, title } = event.data;
+                  queryClient.setQueryData(
+                    ["sessions", workspaceId],
+                    (old: any) => {
+                      if (!old) return old;
+                      return old.map((s: any) =>
+                        s.id === id ? { ...s, title } : s
+                      );
+                    }
+                  );
                   break;
                 }
 
