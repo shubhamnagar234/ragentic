@@ -18,6 +18,9 @@ interface WorkspaceStore {
   setActiveSourceIds: (ids: string[]) => void;
   toggleSourceFilter: (id: string) => void;
   clearSourceFilter: () => void;
+  // UI state
+  showEvalPanel: boolean;
+  toggleEvalPanel: () => void;
 }
 
 export const useWorkspaceStore = create<WorkspaceStore>((set) => ({
@@ -51,4 +54,8 @@ export const useWorkspaceStore = create<WorkspaceStore>((set) => ({
         : [...state.activeSourceIds, id],
     })),
   clearSourceFilter: () => set({ activeSourceIds: [] }),
+
+  // UI state
+  showEvalPanel: false, // Default hidden based on user request
+  toggleEvalPanel: () => set((state) => ({ showEvalPanel: !state.showEvalPanel })),
 }));

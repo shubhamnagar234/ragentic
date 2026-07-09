@@ -20,8 +20,8 @@ class Feedback(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     # Relationships
-    message = relationship("Message", backref="feedback")
-    user = relationship("User", backref="feedback")
+    message = relationship("Message", backref="feedbacks")
+    user = relationship("User", backref="feedbacks")
 
     def __repr__(self):
         return f"<Feedback score={self.score}>"

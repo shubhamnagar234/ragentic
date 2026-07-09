@@ -32,7 +32,7 @@ async def get_workspaces(
     user_id: str = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    result = await db.execute(select(Workspace).where(Workspace.user_id == user_id))
+    result = await db.execute(select(Workspace).where(Workspace.user_id == UUID(user_id)))
     return result.scalars().all()
 
 
@@ -45,7 +45,7 @@ async def get_workspace(
     result = await db.execute(
         select(Workspace).where(
             Workspace.id == workspace_id,
-            Workspace.user_id == user_id,
+            Workspace.user_id == UUID(user_id),
         )
     )
     workspace = result.scalar_one_or_none()
@@ -67,7 +67,7 @@ async def update_workspace(
     result = await db.execute(
         select(Workspace).where(
             Workspace.id == workspace_id,
-            Workspace.user_id == user_id,
+            Workspace.user_id == UUID(user_id),
         )
     )
     workspace = result.scalar_one_or_none()
@@ -91,7 +91,7 @@ async def delete_workspace(
     result = await db.execute(
         select(Workspace).where(
             Workspace.id == workspace_id,
-            Workspace.user_id == user_id,
+            Workspace.user_id == UUID(user_id),
         )
     )
     workspace = result.scalar_one_or_none()

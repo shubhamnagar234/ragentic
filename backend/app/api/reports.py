@@ -20,7 +20,7 @@ async def verify_workspace_access(
     result = await db.execute(
         select(Workspace).where(
             Workspace.id == workspace_id,
-            Workspace.user_id == user_id,
+            Workspace.user_id == UUID(user_id),
         )
     )
     workspace = result.scalar_one_or_none()

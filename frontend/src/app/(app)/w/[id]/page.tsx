@@ -15,7 +15,7 @@ import InputBar from "@/components/workspace/InputBar";
 export default function WorkspaceChatPage() {
   const params = useParams();
   const id = params.id as string;
-  const { setSources } = useWorkspaceStore();
+  const { setSources, showEvalPanel } = useWorkspaceStore();
 
   // Load sources into sidebar
   const { data: sources } = useQuery<Source[]>({
@@ -36,13 +36,18 @@ export default function WorkspaceChatPage() {
 
   return (
     <div className="h-[calc(100vh-8rem)] flex flex-col gap-3">
-      <div className="flex-1 grid grid-cols-[220px_1fr_200px] gap-3 min-h-0">
+      <div 
+        className="flex-1 grid gap-3 min-h-0"
+        style={{
+          gridTemplateColumns: showEvalPanel ? "220px 1fr 200px" : "220px 1fr",
+        }}
+      >
         <AgentSidebar />
         <div className="flex flex-col gap-3 min-h-0 min-w-0">
           <ChatArea workspaceId={id} />
           <InputBar workspaceId={id} />
         </div>
-        <EvalPanel />
+        {showEvalPanel && <EvalPanel />}
       </div>
       <Timeline />
     </div>

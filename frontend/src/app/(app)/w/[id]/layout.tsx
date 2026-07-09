@@ -6,7 +6,9 @@ import { workspaceApi } from "@/lib/api";
 import { Workspace } from "@/types";
 import Navbar from "@/components/layout/Navbar";
 import { cn } from "@/lib/utils";
-import { MessageSquare, Database, FileText, BarChart2 } from "lucide-react";
+import { MessageSquare, Database, FileText, BarChart2, PanelRightClose, PanelRightOpen } from "lucide-react";
+import { useWorkspaceStore } from "@/store/workspaceStore";
+import { Button } from "@/components/ui/button";
 
 const tabs = [
   { label: "Chat", icon: MessageSquare, href: "" },
@@ -24,6 +26,7 @@ export default function WorkspaceLayout({
   const pathname = usePathname();
   const router = useRouter();
   const id = params.id as string;
+  const { showEvalPanel, toggleEvalPanel } = useWorkspaceStore();
 
   const { data: workspace } = useQuery<Workspace>({
     queryKey: ["workspace", id],
@@ -71,6 +74,24 @@ export default function WorkspaceLayout({
                 </button>
               );
             })}
+            
+            <div className="flex-1" />
+            
+            {pathname === `/w/${id}` && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 mb-1 px-2 text-muted-foreground hover:text-foreground"
+                onClick={toggleEvalPanel}
+                title={showEvalPanel ? "Hide Evaluation Panel" : "Show Evaluation Panel"}
+              >
+                {showEvalPanel ? (
+                  <PanelRightClose className="w-4 h-4" />
+                ) : (
+                  <PanelRightOpen className="w-4 h-4" />
+                )}
+              </Button>
+            )}
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, asc
 import json
+from uuid import UUID
 
 from app.database import get_db
 from app.dependencies import get_current_user
@@ -23,7 +24,7 @@ async def verify_workspace(
     result = await db.execute(
         select(Workspace).where(
             Workspace.id == workspace_id,
-            Workspace.user_id == user_id,
+            Workspace.user_id == UUID(user_id),
         )
     )
     workspace = result.scalar_one_or_none()
