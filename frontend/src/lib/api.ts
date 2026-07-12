@@ -11,6 +11,17 @@ export async function generateToken(userId: string): Promise<string> {
     .sign(secret);
 }
 
+// Custom error class that carries the upstream HTTP status code
+export class ApiError extends Error {
+  constructor(
+    public readonly status: number,
+    message: string,
+  ) {
+    super(message);
+    this.name = "ApiError";
+  }
+}
+
 // Server-side fetch helper
 // Used in Server Components and API routes
 export async function serverFetch(
@@ -35,7 +46,11 @@ export async function serverFetch(
   })
 
   if (!response.ok) {
-    throw new Error(`API error: ${response.status} ${response.statusText}`)
+    const body = await response.text().catch(() => "")
+    throw new ApiError(
+      response.status,
+      `API error ${response.status}: ${response.statusText}${body ? ` — ${body}` : ""}`,
+    )
   }
 
   // Handle empty responses (204 No Content)
@@ -48,6 +63,9 @@ export async function serverFetch(
 
   return JSON.parse(text)
 }
+
+
+
 
 // Client-side fetch helper
 // Calls Next.js API routes (not FastAPI directly)

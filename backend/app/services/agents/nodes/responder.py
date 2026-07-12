@@ -4,6 +4,7 @@ from app.services.retrieval.confidence import (
     get_confidence_prompt_instruction,
     ConfidenceLevel,
 )
+from app.services.eval.ragas_eval import evaluate_response
 from datetime import datetime
 
 
@@ -11,7 +12,8 @@ async def responder_node(state: RagenticState) -> RagenticState:
     """
     Generates the final answer using retrieved context.
     Uses confidence level to frame the response appropriately.
-    Updates state with final_answer and sources_used.
+    Runs LLM-based evaluation on the real answer (faithfulness, precision, relevance).
+    Updates state with final_answer, sources_used, and eval scores.
     """
     print(f"[responder] Generating final answer...")
 
@@ -71,12 +73,30 @@ Question: {query}
 
 Answer:"""
 
+    # Initialise eval scores
+    faithfulness_score = None
+    context_precision_score = None
+    answer_relevance_score = None
+
     try:
         answer = await get_llm_response(
             prompt=user_prompt,
             system_prompt=system_prompt,
             max_tokens=1500,
         )
+
+        # ── Run evaluation on the real answer ───────────────────────────────
+        contexts = [c["text"] for c in reranked_chunks]
+        eval_result = await evaluate_response(
+            query=query,
+            answer=answer,
+            contexts=contexts,
+        )
+        if eval_result:
+            faithfulness_score = eval_result.faithfulness
+            context_precision_score = eval_result.context_precision
+            answer_relevance_score = eval_result.answer_relevance
+        # ────────────────────────────────────────────────────────────────────
 
         event = {
             "agent": "responder",
@@ -86,6 +106,9 @@ Answer:"""
             "metadata": {
                 "sources_count": len(sources_used),
                 "confidence_level": confidence_level,
+                "faithfulness": faithfulness_score,
+                "context_precision": context_precision_score,
+                "answer_relevance": answer_relevance_score,
             },
         }
 
@@ -95,6 +118,9 @@ Answer:"""
             **state,
             "final_answer": answer,
             "sources_used": sources_used,
+            "faithfulness_score": faithfulness_score,
+            "context_precision": context_precision_score,
+            "answer_relevance": answer_relevance_score,
             "timeline_events": state.get("timeline_events", []) + [event],
         }
 
@@ -105,4 +131,7 @@ Answer:"""
             **state,
             "final_answer": f"I encountered an error generating a response: {str(e)}",
             "sources_used": [],
+            "faithfulness_score": None,
+            "context_precision": None,
+            "answer_relevance": None,
         }

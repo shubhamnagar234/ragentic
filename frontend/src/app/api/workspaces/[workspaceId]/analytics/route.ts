@@ -1,13 +1,13 @@
 import { auth } from "@/lib/auth";
 import { serverFetch } from "@/lib/api";
+import { handleApiError } from "@/lib/server-utils";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Props {
   params: Promise<{ workspaceId: string }>;
 }
 
-export const dynamic = 'force-dynamic';
-
+export const dynamic = "force-dynamic";
 
 export async function GET(_request: NextRequest, { params }: Props) {
   const session = await auth();
@@ -16,10 +16,15 @@ export async function GET(_request: NextRequest, { params }: Props) {
   }
 
   const { workspaceId } = await params;
-  const data = await serverFetch(
-    `/api/workspaces/${workspaceId}/analytics`,
-    { method: "GET" },
-    session.user.id,
-  );
-  return NextResponse.json(data);
+
+  try {
+    const data = await serverFetch(
+      `/api/workspaces/${workspaceId}/analytics`,
+      { method: "GET" },
+      session.user.id,
+    );
+    return NextResponse.json(data);
+  } catch (error) {
+    return handleApiError(error, "analytics");
+  }
 }

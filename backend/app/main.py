@@ -52,7 +52,12 @@ async def lifespan(app: FastAPI):
         try:
             await conn.execute(text("ALTER TABLE messages ADD COLUMN IF NOT EXISTS feedback VARCHAR"))
             await conn.execute(text("ALTER TABLE messages ADD COLUMN IF NOT EXISTS session_id UUID REFERENCES sessions(id)"))
-            
+
+            # Add workspace_id to eval_scores for per-workspace analytics scoping
+            await conn.execute(text(
+                "ALTER TABLE eval_scores ADD COLUMN IF NOT EXISTS workspace_id UUID REFERENCES workspaces(id)"
+            ))
+
             # Auto-create default sessions for existing workspaces
             await conn.execute(text("""
                 INSERT INTO sessions (id, workspace_id, user_id, title)

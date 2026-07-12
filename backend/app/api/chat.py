@@ -10,6 +10,7 @@ from app.database import get_db
 from app.dependencies import get_current_user
 from app.models.workspace import Workspace
 from app.models.message import Message
+from app.models.eval_score import EvalScore
 from app.schemas.chat import ChatRequest, MessageResponse, MessageFeedbackRequest
 from app.services.agents.graph import ragentic_graph
 from app.services.memory.compressor import get_conversation_memory
@@ -177,6 +178,9 @@ async def event_generator(
                     answer = node_output["final_answer"]
                     sources = node_output.get("sources_used", [])
                     confidence = node_output.get("confidence_level", "MEDIUM")
+                    faithfulness = node_output.get("faithfulness_score")
+                    ctx_precision = node_output.get("context_precision")
+                    ans_relevance = node_output.get("answer_relevance")
 
                     words = answer.split()
                     for i, word in enumerate(words):
@@ -204,6 +208,19 @@ async def event_generator(
                     )
                     db.add(user_msg)
                     db.add(assistant_msg)
+                    await db.flush()  # get assistant_msg.id before committing
+
+                    # Persist eval scores so analytics dashboard has real data
+                    if any(v is not None for v in [faithfulness, ctx_precision, ans_relevance]):
+                        eval_score = EvalScore(
+                            message_id=assistant_msg.id,
+                            workspace_id=UUID(workspace_id),
+                            faithfulness=faithfulness,
+                            context_precision=ctx_precision,
+                            answer_relevance=ans_relevance,
+                        )
+                        db.add(eval_score)
+
                     await db.commit()
 
                     # Generate title if this is the first exchange in a session

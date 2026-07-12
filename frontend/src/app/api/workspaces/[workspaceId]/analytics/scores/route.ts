@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth"
 import { serverFetch } from "@/lib/api"
+import { handleApiError } from "@/lib/server-utils"
 import { NextRequest, NextResponse } from "next/server"
 
 interface Props {
@@ -15,10 +16,15 @@ export async function GET(_request: NextRequest, { params }: Props) {
     }
 
     const { workspaceId } = await params
-    const data = await serverFetch(
-        `/api/workspaces/${workspaceId}/analytics/scores`,
-        { method: "GET" },
-        session.user.id,
-    )
-    return NextResponse.json(data)
+
+    try {
+        const data = await serverFetch(
+            `/api/workspaces/${workspaceId}/analytics/scores`,
+            { method: "GET" },
+            session.user.id,
+        )
+        return NextResponse.json(data)
+    } catch (error) {
+        return handleApiError(error, "analytics/scores")
+    }
 }
