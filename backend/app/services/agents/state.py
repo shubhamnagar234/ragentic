@@ -35,6 +35,8 @@ class RagenticState(TypedDict):
     # Response
     final_answer: str
     sources_used: List[dict]
+    responder_prompt: Optional[str]
+    responder_system_prompt: Optional[str]
 
     # Timeline events for UI
     timeline_events: List[dict]

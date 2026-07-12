@@ -78,60 +78,23 @@ Answer:"""
     context_precision_score = None
     answer_relevance_score = None
 
-    try:
-        answer = await get_llm_response(
-            prompt=user_prompt,
-            system_prompt=system_prompt,
-            max_tokens=1500,
-        )
+    event = {
+        "agent": "responder",
+        "status": "completed",
+        "message": f"Prompt prepared using {len(sources_used)} sources, ready to stream response",
+        "timestamp": datetime.utcnow().isoformat(),
+        "metadata": {
+            "sources_count": len(sources_used),
+            "confidence_level": confidence_level,
+        },
+    }
 
-        # ── Run evaluation on the real answer ───────────────────────────────
-        contexts = [c["text"] for c in reranked_chunks]
-        eval_result = await evaluate_response(
-            query=query,
-            answer=answer,
-            contexts=contexts,
-        )
-        if eval_result:
-            faithfulness_score = eval_result.faithfulness
-            context_precision_score = eval_result.context_precision
-            answer_relevance_score = eval_result.answer_relevance
-        # ────────────────────────────────────────────────────────────────────
+    print(f"[responder] Prompt prepared, handing over to stream_llm_response")
 
-        event = {
-            "agent": "responder",
-            "status": "completed",
-            "message": f"Response generated using {len(sources_used)} sources",
-            "timestamp": datetime.utcnow().isoformat(),
-            "metadata": {
-                "sources_count": len(sources_used),
-                "confidence_level": confidence_level,
-                "faithfulness": faithfulness_score,
-                "context_precision": context_precision_score,
-                "answer_relevance": answer_relevance_score,
-            },
-        }
-
-        print(f"[responder] Answer generated successfully")
-
-        return {
-            **state,
-            "final_answer": answer,
-            "sources_used": sources_used,
-            "faithfulness_score": faithfulness_score,
-            "context_precision": context_precision_score,
-            "answer_relevance": answer_relevance_score,
-            "timeline_events": state.get("timeline_events", []) + [event],
-        }
-
-    except Exception as e:
-        print(f"[responder] Generation failed: {e}")
-
-        return {
-            **state,
-            "final_answer": f"I encountered an error generating a response: {str(e)}",
-            "sources_used": [],
-            "faithfulness_score": None,
-            "context_precision": None,
-            "answer_relevance": None,
-        }
+    return {
+        **state,
+        "sources_used": sources_used,
+        "responder_prompt": user_prompt,
+        "responder_system_prompt": system_prompt,
+        "timeline_events": state.get("timeline_events", []) + [event],
+    }

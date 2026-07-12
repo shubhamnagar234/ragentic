@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, asc
+from sqlalchemy import select, desc
 from uuid import UUID
 
 from app.database import get_db
@@ -37,7 +37,7 @@ async def verify_workspace(
     response_model=list[SessionResponse],
 )
 async def get_sessions(
-    workspace_id: str,
+    workspace_id: UUID,
     user_id: str = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -46,7 +46,7 @@ async def get_sessions(
     result = await db.execute(
         select(Session)
         .where(Session.workspace_id == workspace_id)
-        .order_by(asc(Session.created_at))
+        .order_by(desc(Session.created_at))
     )
     return result.scalars().all()
 
@@ -57,7 +57,7 @@ async def get_sessions(
     status_code=status.HTTP_201_CREATED,
 )
 async def create_session(
-    workspace_id: str,
+    workspace_id: UUID,
     payload: SessionCreate,
     user_id: str = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
@@ -65,7 +65,7 @@ async def create_session(
     await verify_workspace(workspace_id, user_id, db)
 
     session = Session(
-        workspace_id=workspace_id,
+        workspace_id=UUID(workspace_id) if isinstance(workspace_id, str) else workspace_id,
         user_id=UUID(user_id),
         title=payload.title,
     )

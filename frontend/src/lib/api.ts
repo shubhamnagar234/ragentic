@@ -214,8 +214,12 @@ export const messagesApi = {
       : `/workspaces/${workspaceId}/messages`;
     return clientFetch(url);
   },
-  deleteAll: (workspaceId: string) =>
-    clientFetch(`/workspaces/${workspaceId}/messages`, { method: "DELETE" }),
+  deleteAll: (workspaceId: string, sessionId?: string | null) => {
+    const url = sessionId
+      ? `/workspaces/${workspaceId}/messages?session_id=${sessionId}`
+      : `/workspaces/${workspaceId}/messages`;
+    return clientFetch(url, { method: "DELETE" });
+  },
   submitFeedback: (workspaceId: string, messageId: string, feedback: "UP" | "DOWN" | null) =>
     clientFetch(`/workspaces/${workspaceId}/messages/${messageId}/feedback`, {
       method: "PATCH",

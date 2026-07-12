@@ -14,14 +14,15 @@ from app.models.eval_score import EvalScore
 from app.schemas.chat import ChatRequest, MessageResponse, MessageFeedbackRequest
 from app.services.agents.graph import ragentic_graph
 from app.services.memory.compressor import get_conversation_memory
-from app.services.llm.client import get_llm_response
+from app.services.llm.client import get_llm_response, stream_llm_response
+from app.services.eval.ragas_eval import evaluate_response
 from app.models.session import Session
 
 router = APIRouter()
 
 
 async def verify_workspace(
-    workspace_id: str,
+    workspace_id: UUID,
     user_id: str,
     db: AsyncSession,
 ) -> Workspace:
@@ -45,7 +46,7 @@ async def verify_workspace(
     response_model=list[MessageResponse],
 )
 async def get_messages(
-    workspace_id: str,
+    workspace_id: UUID,
     session_id: Optional[str] = None,
     user_id: str = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
@@ -65,26 +66,35 @@ async def get_messages(
     status_code=status.HTTP_204_NO_CONTENT,
 )
 async def delete_messages(
-    workspace_id: str,
+    workspace_id: UUID,
+    session_id: Optional[str] = None,
     user_id: str = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
+    """
+    Deletes messages for a workspace.
+    If session_id is provided, only messages for that session are deleted.
+    Otherwise, all messages in the workspace are deleted.
+    """
     await verify_workspace(workspace_id, user_id, db)
 
-    result = await db.execute(
-        select(Message).where(Message.workspace_id == workspace_id)
-    )
+    query = select(Message).where(Message.workspace_id == workspace_id)
+    if session_id:
+        query = query.where(Message.session_id == UUID(session_id))
+
+    result = await db.execute(query)
     messages = result.scalars().all()
     for msg in messages:
         await db.delete(msg)
     await db.commit()
+
 
 @router.patch(
     "/{workspace_id}/messages/{message_id}/feedback",
     response_model=MessageResponse,
 )
 async def update_message_feedback(
-    workspace_id: str,
+    workspace_id: UUID,
     message_id: str,
     payload: MessageFeedbackRequest,
     user_id: str = Depends(get_current_user),
@@ -115,7 +125,7 @@ async def update_message_feedback(
 
 async def event_generator(
     query: str,
-    workspace_id: str,
+    workspace_id: UUID,
     session_id: Optional[str],
     user_id: str,
     source_ids: list,
@@ -129,7 +139,7 @@ async def event_generator(
 
         initial_state = {
             "query": query,
-            "workspace_id": workspace_id,
+            "workspace_id": str(workspace_id),
             "user_id": user_id,
             "source_ids": [str(s) for s in source_ids] if source_ids else None,
             "query_type": "",
@@ -174,37 +184,61 @@ async def event_generator(
 
         if final_state:
             for node_output in final_state.values():
-                if isinstance(node_output, dict) and node_output.get("final_answer"):
-                    answer = node_output["final_answer"]
+                if isinstance(node_output, dict) and node_output.get("responder_prompt"):
                     sources = node_output.get("sources_used", [])
                     confidence = node_output.get("confidence_level", "MEDIUM")
-                    faithfulness = node_output.get("faithfulness_score")
-                    ctx_precision = node_output.get("context_precision")
-                    ans_relevance = node_output.get("answer_relevance")
+                    prompt = node_output["responder_prompt"]
+                    sys_prompt = node_output.get("responder_system_prompt")
+                    reranked_chunks = node_output.get("reranked_chunks", [])
 
-                    words = answer.split()
-                    for i, word in enumerate(words):
-                        token = word + (" " if i < len(words) - 1 else "")
+                    # ── True Streaming ──────────────────────────────────────────────
+                    answer = ""
+                    async for token in stream_llm_response(prompt, sys_prompt, max_tokens=1500):
+                        answer += token
                         yield f"data: {json.dumps({'type': 'token', 'data': token})}\n\n"
 
                     yield f"data: {json.dumps({'type': 'sources', 'data': sources})}\n\n"
                     yield f"data: {json.dumps({'type': 'confidence', 'data': confidence})}\n\n"
 
+                    # ── Evaluation ──────────────────────────────────────────────────
+                    faithfulness = None
+                    ctx_precision = None
+                    ans_relevance = None
+                    
+                    try:
+                        contexts = [c["text"] for c in reranked_chunks]
+                        eval_result = await evaluate_response(
+                            query=query,
+                            answer=answer,
+                            contexts=contexts,
+                        )
+                        if eval_result:
+                            faithfulness = eval_result.faithfulness
+                            ctx_precision = eval_result.context_precision
+                            ans_relevance = eval_result.answer_relevance
+                    except Exception as e:
+                        print(f"[chat] Evaluation failed: {e}")
+
+                    from datetime import datetime, timedelta
+                    now = datetime.utcnow()
+                    
                     user_msg = Message(
-                        workspace_id=workspace_id,
+                        workspace_id=UUID(workspace_id) if isinstance(workspace_id, str) else workspace_id,
                         session_id=UUID(session_id) if session_id else None,
                         user_id=UUID(user_id),
                         role="user",
                         content=query,
+                        created_at=now,
                     )
                     assistant_msg = Message(
-                        workspace_id=workspace_id,
+                        workspace_id=UUID(workspace_id) if isinstance(workspace_id, str) else workspace_id,
                         session_id=UUID(session_id) if session_id else None,
                         user_id=UUID(user_id),
                         role="assistant",
                         content=answer,
                         sources=sources,
                         confidence=confidence,
+                        created_at=now + timedelta(milliseconds=10),
                     )
                     db.add(user_msg)
                     db.add(assistant_msg)
@@ -249,8 +283,8 @@ async def event_generator(
 
 
 @router.post("/{workspace_id}/chat")
-async def chat(
-    workspace_id: str,
+async def chat_endpoint(
+    workspace_id: UUID,
     payload: ChatRequest,
     user_id: str = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
