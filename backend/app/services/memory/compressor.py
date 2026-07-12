@@ -63,7 +63,7 @@ async def get_conversation_memory(
     # Fetch all messages for this session
     result = await db.execute(
         select(Message)
-        .where(Message.workspace_id == session_id)
+        .where(Message.session_id == session_id)
         .order_by(asc(Message.created_at))
     )
     messages = result.scalars().all()

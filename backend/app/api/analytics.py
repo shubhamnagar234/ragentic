@@ -31,17 +31,19 @@ async def get_analytics(
     )
     query_count = query_count_result.scalar() or 0
 
-    # Average faithfulness score
+    # Average faithfulness score (scoped to this workspace)
     avg_faithfulness_result = await db.execute(
         select(func.avg(EvalScore.faithfulness)).where(
+            EvalScore.workspace_id == workspace_id,
             EvalScore.faithfulness.isnot(None),
         )
     )
     avg_faithfulness = avg_faithfulness_result.scalar() or 0.0
 
-    # Average context precision
+    # Average context precision (scoped to this workspace)
     avg_precision_result = await db.execute(
         select(func.avg(EvalScore.context_precision)).where(
+            EvalScore.workspace_id == workspace_id,
             EvalScore.context_precision.isnot(None),
         )
     )
@@ -111,6 +113,7 @@ async def get_score_trend(
             EvalScore.answer_relevance,
             EvalScore.created_at,
         )
+        .where(EvalScore.workspace_id == workspace_id)
         .order_by(EvalScore.created_at.asc())
         .limit(100)
     )

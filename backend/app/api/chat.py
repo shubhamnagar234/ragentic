@@ -154,8 +154,13 @@ async def event_generator(
         }
 
         seen_events = 0
+        final_state = None
 
+        # Single astream pass: emit timeline events incrementally
+        # and retain the last state snapshot for the final answer.
         async for state in ragentic_graph.astream(initial_state):
+            final_state = state  # always keep the latest state
+
             all_events = []
             for node_output in state.values():
                 if isinstance(node_output, dict):
@@ -165,10 +170,6 @@ async def event_generator(
             for event in new_events:
                 yield f"data: {json.dumps({'type': 'timeline', 'data': event})}\n\n"
                 seen_events += 1
-
-        final_state = None
-        async for final_state in ragentic_graph.astream(initial_state):
-            pass
 
         if final_state:
             for node_output in final_state.values():

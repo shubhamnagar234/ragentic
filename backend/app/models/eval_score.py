@@ -12,6 +12,9 @@ class EvalScore(Base):
     message_id = Column(
         UUID(as_uuid=True), ForeignKey("messages.id"), nullable=False
     )
+    workspace_id = Column(
+        UUID(as_uuid=True), ForeignKey("workspaces.id"), nullable=True, index=True
+    )
     source_id = Column(
         UUID(as_uuid=True), ForeignKey("sources.id"), nullable=True
     )

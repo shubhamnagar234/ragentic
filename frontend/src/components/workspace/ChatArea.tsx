@@ -47,7 +47,7 @@ const confidenceConfig = {
 
 function SourcesList({ sources }: { sources: SourceCitation[] }) {
   const { setActiveCitation, activeCitation } = useWorkspaceStore();
-  
+
   if (!sources.length) return null;
 
   return (
@@ -63,15 +63,19 @@ function SourcesList({ sources }: { sources: SourceCitation[] }) {
             onClick={() => setActiveCitation(source)}
             className={cn(
               "flex w-full items-center text-left gap-2 px-2.5 py-1.5 rounded-lg border transition-colors cursor-pointer",
-              isActive 
-                ? "bg-primary/10 border-primary/20" 
-                : "bg-muted/50 border-border hover:bg-muted"
+              isActive
+                ? "bg-primary/10 border-primary/20"
+                : "bg-muted/50 border-border hover:bg-muted",
             )}
           >
-            <span className={cn(
-              "text-[10px] w-4 shrink-0",
-              isActive ? "text-primary" : "text-muted-foreground"
-            )}>{i + 1}</span>
+            <span
+              className={cn(
+                "text-[10px] w-4 shrink-0",
+                isActive ? "text-primary" : "text-muted-foreground",
+              )}
+            >
+              {i + 1}
+            </span>
             <span className="text-xs text-foreground flex-1 truncate">
               {source.text_preview}
             </span>
@@ -115,31 +119,36 @@ function FeedbackButtons({ message }: { message: Message }) {
     // If clicking the same feedback, unset it
     const newFeedback = message.feedback === feedbackType ? null : feedbackType;
 
+    // Correct cache key: ["messages", workspaceId, sessionId]
+    const cacheKey = [
+      "messages",
+      message.workspace_id,
+      message.session_id ?? null,
+    ];
+
     // Optimistically update React Query cache
-    queryClient.setQueryData<Message[]>(
-      ["messages", message.workspace_id],
-      (old) => {
-        if (!old) return old;
-        return old.map((m) =>
-          m.id === message.id ? { ...m, feedback: newFeedback } : m
-        );
-      }
-    );
+    queryClient.setQueryData<Message[]>(cacheKey, (old) => {
+      if (!old) return old;
+      return old.map((m) =>
+        m.id === message.id ? { ...m, feedback: newFeedback } : m,
+      );
+    });
 
     try {
-      await messagesApi.submitFeedback(message.workspace_id, message.id, newFeedback);
+      await messagesApi.submitFeedback(
+        message.workspace_id,
+        message.id,
+        newFeedback,
+      );
     } catch (e) {
       console.error("Failed to submit feedback", e);
       // Revert optimistic update
-      queryClient.setQueryData<Message[]>(
-        ["messages", message.workspace_id],
-        (old) => {
-          if (!old) return old;
-          return old.map((m) =>
-            m.id === message.id ? { ...m, feedback: message.feedback } : m
-          );
-        }
-      );
+      queryClient.setQueryData<Message[]>(cacheKey, (old) => {
+        if (!old) return old;
+        return old.map((m) =>
+          m.id === message.id ? { ...m, feedback: message.feedback } : m,
+        );
+      });
     }
   };
 
@@ -149,7 +158,9 @@ function FeedbackButtons({ message }: { message: Message }) {
         onClick={() => handleFeedback("UP")}
         className={cn(
           "p-1.5 rounded hover:bg-muted transition-colors",
-          message.feedback === "UP" ? "text-green-600 bg-green-500/10" : "text-muted-foreground"
+          message.feedback === "UP"
+            ? "text-green-600 bg-green-500/10"
+            : "text-muted-foreground",
         )}
       >
         <ThumbsUp className="w-3.5 h-3.5" />
@@ -158,7 +169,9 @@ function FeedbackButtons({ message }: { message: Message }) {
         onClick={() => handleFeedback("DOWN")}
         className={cn(
           "p-1.5 rounded hover:bg-muted transition-colors",
-          message.feedback === "DOWN" ? "text-red-600 bg-red-500/10" : "text-muted-foreground"
+          message.feedback === "DOWN"
+            ? "text-red-600 bg-red-500/10"
+            : "text-muted-foreground",
         )}
       >
         <ThumbsDown className="w-3.5 h-3.5" />
@@ -238,11 +251,9 @@ function MessageBubble({ message }: { message: Message }) {
         {message.sources && message.sources.length > 0 && (
           <SourcesList sources={message.sources} />
         )}
-        
+
         {/* Feedback Buttons */}
-        {!isUser && (
-          <FeedbackButtons message={message} />
-        )}
+        {!isUser && <FeedbackButtons message={message} />}
       </div>
     </motion.div>
   );
@@ -302,13 +313,18 @@ export default function ChatArea({ workspaceId }: Props) {
     try {
       // Optimistically clear the UI
       if (activeSessionId) {
-        queryClient.setQueryData(["messages", workspaceId, activeSessionId], []);
+        queryClient.setQueryData(
+          ["messages", workspaceId, activeSessionId],
+          [],
+        );
       }
       clearMessages();
-      
+
       await messagesApi.deleteAll(workspaceId); // TODO: Delete for session only
       if (activeSessionId) {
-        queryClient.invalidateQueries({ queryKey: ["messages", workspaceId, activeSessionId] });
+        queryClient.invalidateQueries({
+          queryKey: ["messages", workspaceId, activeSessionId],
+        });
       }
     } catch (e) {
       console.error("Failed to clear chat", e);

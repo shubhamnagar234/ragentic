@@ -1,33 +1,28 @@
 from app.services.agents.state import RagenticState
-from app.services.eval.ragas_eval import should_retry
-from app.services.eval.ragas_eval import EvalResult
 
 
 def should_retry_edge(state: RagenticState) -> str:
     """
     Conditional edge after critic node.
-    Returns "rewrite" if faithfulness is low and retries remain.
-    Returns "respond" if quality is acceptable or max retries reached.
+
+    The critic sets confidence_level based on reranker scores (pre-generation).
+    Returns "rewrite" if confidence is LOW and retries remain.
+    Returns "respond" if confidence is acceptable or max retries reached.
     """
-    faithfulness = state.get("faithfulness_score")
+    confidence_level = state.get("confidence_level", "MEDIUM")
     retry_count = state.get("retry_count", 0)
     max_retries = 2
 
-    # No eval score available — proceed to respond
-    if faithfulness is None:
-        print(f"[edges] No faithfulness score — proceeding to respond")
-        return "respond"
-
-    # Max retries reached — proceed to respond
+    # Max retries reached — proceed to respond regardless of confidence
     if retry_count >= max_retries:
         print(f"[edges] Max retries ({max_retries}) reached — proceeding to respond")
         return "respond"
 
-    # Low faithfulness — trigger retry
-    if faithfulness < 0.7:
-        print(f"[edges] Faithfulness {faithfulness:.2f} < 0.7 — triggering retry")
+    # Low confidence — trigger query rewrite + re-retrieval
+    if confidence_level == "LOW":
+        print(f"[edges] Confidence LOW (retry {retry_count + 1}/{max_retries}) — triggering rewrite")
         return "rewrite"
 
-    # Quality acceptable — proceed to respond
-    print(f"[edges] Faithfulness {faithfulness:.2f} acceptable — proceeding to respond")
+    # Confidence acceptable — proceed to respond
+    print(f"[edges] Confidence {confidence_level} — proceeding to respond")
     return "respond"
