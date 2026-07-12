@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { sourcesApi } from "@/lib/api";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 import {
   Brain,
   Search,
@@ -182,6 +183,7 @@ export default function AgentSidebar() {
                         queryClient.invalidateQueries({ queryKey: ["sources", workspaceId] });
                       } catch (err) {
                         console.error("Failed to retry source", err);
+                        toast.error("Retry failed", { description: "Could not retry ingestion. Please try again." });
                       }
                     }}
                     className="ml-6 flex items-center gap-1 text-[10px] text-muted-foreground hover:text-foreground transition-colors"

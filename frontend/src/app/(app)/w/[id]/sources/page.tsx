@@ -22,6 +22,7 @@ import {
   Database,
 } from "lucide-react";
 import { motion } from "motion/react";
+import { toast } from "sonner";
 
 const sourceTypeIcons: Record<string, React.ElementType> = {
   YOUTUBE: Play,
@@ -165,8 +166,10 @@ export default function SourcesPage() {
   const deleteMutation = useMutation({
     mutationFn: (sourceId: string) => sourcesApi.delete(id, sourceId),
     onSuccess: () => {
+      toast.success("Source deleted");
       queryClient.invalidateQueries({ queryKey: ["sources", id] });
     },
+    onError: () => toast.error("Failed to delete source"),
   });
 
   return (

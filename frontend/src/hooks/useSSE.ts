@@ -3,6 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useChatStore } from "@/store/chatStore";
 import { createChatStream } from "@/lib/api";
 import { TimelineEvent, SourceCitation, ConfidenceLevel, Message, Session } from "@/types";
+import { toast } from "sonner";
 
 export function useSSE() {
   const {
@@ -133,6 +134,7 @@ export function useSSE() {
 
                 case "error": {
                   console.error("[SSE] Error:", event.data);
+                  toast.error("Chat Error", { description: String(event.data) });
                   stopStreaming();
                   setIsLoading(false);
                   break;
@@ -145,6 +147,7 @@ export function useSSE() {
         }
       } catch (error) {
         console.error("[SSE] Stream error:", error);
+        toast.error("Connection lost", { description: "Failed to connect to the chat service." });
         stopStreaming();
       } finally {
         setIsLoading(false);

@@ -142,6 +142,7 @@ function FeedbackButtons({ message }: { message: Message }) {
       );
     } catch (e) {
       console.error("Failed to submit feedback", e);
+      toast.error("Failed to submit feedback", { description: "Please try again." });
       // Revert optimistic update
       queryClient.setQueryData<Message[]>(cacheKey, (old) => {
         if (!old) return old;
@@ -299,6 +300,7 @@ function StreamingBubble() {
     </motion.div>
   );
 }
+import { toast } from "sonner";
 
 const EMPTY_MESSAGES: Message[] = [];
 
@@ -310,24 +312,26 @@ export default function ChatArea({ workspaceId }: Props) {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const handleClearChat = async () => {
+    if (!activeSessionId) return; // nothing to clear without a session
+
     try {
-      // Optimistically clear the UI
-      if (activeSessionId) {
-        queryClient.setQueryData(
-          ["messages", workspaceId, activeSessionId],
-          [],
-        );
-      }
+      // Optimistically clear the UI immediately
+      queryClient.setQueryData(["messages", workspaceId, activeSessionId], []);
       clearMessages();
 
-      await messagesApi.deleteAll(workspaceId); // TODO: Delete for session only
-      if (activeSessionId) {
-        queryClient.invalidateQueries({
-          queryKey: ["messages", workspaceId, activeSessionId],
-        });
-      }
+      // Delete only this session's messages
+      await messagesApi.deleteAll(workspaceId, activeSessionId);
+      queryClient.invalidateQueries({
+        queryKey: ["messages", workspaceId, activeSessionId],
+      });
+      toast.success("Chat cleared");
     } catch (e) {
       console.error("Failed to clear chat", e);
+      toast.error("Failed to clear chat", { description: "Could not delete messages. Please try again." });
+      // Re-fetch to restore state if delete failed
+      queryClient.invalidateQueries({
+        queryKey: ["messages", workspaceId, activeSessionId],
+      });
     }
   };
 

@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { Plus, MessageSquare, Trash2, Loader2 } from "lucide-react";
 import { Session } from "@/types";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function ChatHistory() {
   const { id: workspaceId } = useParams() as { id: string };
@@ -42,11 +43,13 @@ export default function ChatHistory() {
       );
       setActiveSessionId(newSession.id);
     },
+    onError: () => toast.error("Failed to create chat session"),
   });
 
   const deleteSessionMutation = useMutation({
     mutationFn: (sessionId: string) => sessionsApi.delete(workspaceId, sessionId),
     onSuccess: (_, deletedId) => {
+      toast.success("Chat session deleted");
       queryClient.setQueryData(
         ["sessions", workspaceId],
         (old: Session[] | undefined) =>
@@ -57,6 +60,7 @@ export default function ChatHistory() {
         setActiveSessionId(remaining.length > 0 ? remaining[remaining.length - 1].id : null);
       }
     },
+    onError: () => toast.error("Failed to delete chat session"),
   });
 
   const handleNewChat = () => {

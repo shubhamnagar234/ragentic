@@ -15,6 +15,7 @@ import {
 import { motion } from "motion/react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 function ActionItemBadge({ priority }: { priority?: string }) {
   const config = {
@@ -189,8 +190,10 @@ export default function ReportsPage() {
   const deleteMutation = useMutation({
     mutationFn: (reportId: string) => reportsApi.delete(id, reportId),
     onSuccess: () => {
+      toast.success("Report deleted");
       queryClient.invalidateQueries({ queryKey: ["reports", id] });
     },
+    onError: () => toast.error("Failed to delete report"),
   });
 
   return (

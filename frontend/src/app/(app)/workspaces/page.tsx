@@ -17,6 +17,7 @@ import {
 import Navbar from "@/components/layout/Navbar";
 import { Plus, Folder, ArrowRight, Sparkles, Trash2 } from "lucide-react";
 import { motion } from "motion/react";
+import { toast } from "sonner";
 
 export default function WorkspacesPage() {
   const router = useRouter();
@@ -39,13 +40,16 @@ export default function WorkspacesPage() {
       setNewWorkspaceName("");
       router.push(`/w/${newWorkspace.id}`);
     },
+    onError: () => toast.error("Failed to create workspace"),
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => workspaceApi.delete(id),
     onSuccess: () => {
+      toast.success("Workspace deleted");
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
     },
+    onError: () => toast.error("Failed to delete workspace"),
   });
 
   const handleCreate = () => {

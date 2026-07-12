@@ -248,7 +248,7 @@ async def event_generator(
                     if any(v is not None for v in [faithfulness, ctx_precision, ans_relevance]):
                         eval_score = EvalScore(
                             message_id=assistant_msg.id,
-                            workspace_id=UUID(workspace_id),
+                            workspace_id=workspace_id if not isinstance(workspace_id, str) else UUID(workspace_id),
                             faithfulness=faithfulness,
                             context_precision=ctx_precision,
                             answer_relevance=ans_relevance,

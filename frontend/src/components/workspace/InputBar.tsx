@@ -19,6 +19,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 interface Props {
   workspaceId: string;
@@ -77,6 +78,7 @@ export default function InputBar({ workspaceId }: Props) {
       setDetectedType(null);
     } catch (e) {
       console.error("Ingestion failed:", e);
+      toast.error("Failed to ingest URL", { description: "Please check the link and try again." });
     } finally {
       setIsIngesting(false);
     }
@@ -110,6 +112,7 @@ export default function InputBar({ workspaceId }: Props) {
         setActiveSessionId(newSession.id);
       } catch (e) {
         console.error("Failed to create session automatically:", e);
+        toast.error("Failed to start chat", { description: "Could not create a new session. Please try again." });
         return; // Don't proceed if we can't create a session
       }
     }
@@ -189,6 +192,7 @@ export default function InputBar({ workspaceId }: Props) {
                 });
               } catch (err) {
                 console.error("File upload failed:", err);
+                toast.error("Failed to upload file", { description: "Please check the file and try again." });
               } finally {
                 setIsIngesting(false);
                 // Reset file input so same file can be uploaded again if needed
