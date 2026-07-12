@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, delete
 from uuid import UUID
 import os
 import shutil
@@ -9,6 +9,7 @@ from app.database import get_db
 from app.dependencies import get_current_user
 from app.models.source import Source
 from app.models.workspace import Workspace
+from app.models.eval_score import EvalScore
 from app.schemas.source import SourceCreate, SourceResponse
 from app.workers.ingest_tasks import ingest_source
 
@@ -241,5 +242,7 @@ async def delete_source(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Source not found",
         )
+    
+    await db.execute(delete(EvalScore).where(EvalScore.source_id == source_id))
     await db.delete(source)
     await db.commit()

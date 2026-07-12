@@ -1,12 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, desc
+from sqlalchemy import select, desc, delete
 from uuid import UUID
 
 from app.database import get_db
 from app.dependencies import get_current_user
 from app.models.workspace import Workspace
 from app.models.session import Session
+from app.models.message import Message
+from app.models.eval_score import EvalScore
+from app.models.feedback import Feedback
 from app.schemas.session import SessionCreate, SessionResponse
 
 router = APIRouter()
@@ -101,5 +104,16 @@ async def delete_session(
             detail="Session not found",
         )
     
+    # Delete related records to prevent foreign key constraint violations
+    msg_result = await db.execute(select(Message).where(Message.session_id == UUID(session_id)))
+    messages = msg_result.scalars().all()
+    
+    if messages:
+        msg_ids = [msg.id for msg in messages]
+        await db.execute(delete(EvalScore).where(EvalScore.message_id.in_(msg_ids)))
+        await db.execute(delete(Feedback).where(Feedback.message_id.in_(msg_ids)))
+        for msg in messages:
+            await db.delete(msg)
+            
     await db.delete(session)
     await db.commit()

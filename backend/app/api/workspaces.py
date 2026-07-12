@@ -1,11 +1,17 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, delete
 from uuid import UUID
 
 from app.database import get_db
 from app.dependencies import get_current_user
 from app.models.workspace import Workspace
+from app.models.eval_score import EvalScore
+from app.models.feedback import Feedback
+from app.models.message import Message
+from app.models.report import Report
+from app.models.session import Session
+from app.models.source import Source
 from app.schemas.workspace import WorkspaceCreate, WorkspaceUpdate, WorkspaceResponse
 
 router = APIRouter()
@@ -100,5 +106,18 @@ async def delete_workspace(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Workspace not found",
         )
+    
+    # Clean up dependent records safely to prevent foreign key constraint violations
+    await db.execute(delete(Feedback).where(
+        Feedback.message_id.in_(
+            select(Message.id).where(Message.workspace_id == workspace_id)
+        )
+    ))
+    await db.execute(delete(EvalScore).where(EvalScore.workspace_id == workspace_id))
+    await db.execute(delete(Message).where(Message.workspace_id == workspace_id))
+    await db.execute(delete(Report).where(Report.workspace_id == workspace_id))
+    await db.execute(delete(Session).where(Session.workspace_id == workspace_id))
+    await db.execute(delete(Source).where(Source.workspace_id == workspace_id))
+
     await db.delete(workspace)
     await db.commit()

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, asc
+from sqlalchemy import select, asc, delete
 import json
 from uuid import UUID
 from typing import Optional
@@ -17,6 +17,7 @@ from app.services.memory.compressor import get_conversation_memory
 from app.services.llm.client import get_llm_response, stream_llm_response
 from app.services.eval.ragas_eval import evaluate_response
 from app.models.session import Session
+from app.models.feedback import Feedback
 
 router = APIRouter()
 
@@ -84,8 +85,16 @@ async def delete_messages(
 
     result = await db.execute(query)
     messages = result.scalars().all()
-    for msg in messages:
-        await db.delete(msg)
+    
+    if messages:
+        msg_ids = [msg.id for msg in messages]
+        
+        await db.execute(delete(EvalScore).where(EvalScore.message_id.in_(msg_ids)))
+        await db.execute(delete(Feedback).where(Feedback.message_id.in_(msg_ids)))
+        
+        for msg in messages:
+            await db.delete(msg)
+            
     await db.commit()
 
 
