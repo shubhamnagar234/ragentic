@@ -3,6 +3,7 @@
 import { useChatStore } from "@/store/chatStore";
 import { cn } from "@/lib/utils";
 import { BarChart2, RefreshCw, Shield } from "lucide-react";
+import { Message } from "@/types";
 
 interface RetrieverMetadata {
   dense_count?: number;
@@ -23,15 +24,17 @@ export default function EvalPanel() {
   const criticEvents = timelineEvents.filter((e) => e.agent === "critic");
   const latestCritic = criticEvents[criticEvents.length - 1];
 
+  const activeMessage = streamingMessage || messages[messages.length - 1];
+
   const criticMeta = latestCritic?.metadata as CriticMetadata | undefined;
-  const faithfulness = criticMeta?.faithfulness;
-  const confidence = criticMeta?.confidence_level;
-  const retryCount = timelineEvents.filter(
+  const faithfulness = criticMeta?.faithfulness ?? (activeMessage as Message)?.eval_scores?.[0]?.faithfulness;
+  const confidence = criticMeta?.confidence_level ?? activeMessage?.confidence;
+  const retryCount = (activeMessage as Message)?.retry_count ?? timelineEvents.filter(
     (e) => e.agent === "rewriter",
   ).length;
 
   // Count sources used
-  const sourcesUsed = streamingMessage?.sources.length ?? 0;
+  const sourcesUsed = activeMessage?.sources?.length ?? 0;
 
   const metrics = [
     {

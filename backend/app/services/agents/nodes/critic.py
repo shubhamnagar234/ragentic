@@ -31,7 +31,7 @@ async def critic_node(state: RagenticState) -> RagenticState:
         "agent": "critic",
         "status": "retrying" if needs_retry else "completed",
         "message": (
-            f"Confidence: {confidence_level} (score: {confidence_score:.2f})"
+            f"Confidence: {str(confidence_level).split('.')[-1]} (score: {confidence_score:.2f})"
             f"{' → retry triggered' if needs_retry else ' → proceeding to respond'}"
         ),
         "timestamp": datetime.utcnow().isoformat(),

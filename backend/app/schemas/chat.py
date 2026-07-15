@@ -20,6 +20,13 @@ class SourceCitation(BaseModel):
     source_type: Optional[str] = None
 
 
+class EvalScoreResponse(BaseModel):
+    faithfulness: Optional[float] = None
+    context_precision: Optional[float] = None
+    answer_relevance: Optional[float] = None
+
+    model_config = {"from_attributes": True}
+
 class MessageResponse(BaseModel):
     id: UUID
     workspace_id: UUID
@@ -30,6 +37,7 @@ class MessageResponse(BaseModel):
     retry_count: int
     feedback: Optional[str] = None
     created_at: datetime
+    eval_scores: Optional[List[EvalScoreResponse]] = []
 
     model_config = {"from_attributes": True}
 

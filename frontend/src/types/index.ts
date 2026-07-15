@@ -84,6 +84,7 @@ export interface Message {
   retry_count: number;
   feedback?: "UP" | "DOWN" | null;
   created_at: string;
+  eval_scores?: EvalScore[];
 }
 
 export interface ChatRequest {

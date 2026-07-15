@@ -12,6 +12,10 @@ from app.models.workspace import Workspace
 from app.models.eval_score import EvalScore
 from app.schemas.source import SourceCreate, SourceResponse
 from app.workers.ingest_tasks import ingest_source
+from app.models.chunk import Chunk
+from app.services.retrieval.dense import get_qdrant_client
+from qdrant_client.models import Filter, FieldCondition, MatchValue
+from app.config import settings
 
 router = APIRouter()
 
@@ -244,5 +248,19 @@ async def delete_source(
         )
     
     await db.execute(delete(EvalScore).where(EvalScore.source_id == source_id))
+    await db.execute(delete(Chunk).where(Chunk.source_id == source_id))
     await db.delete(source)
     await db.commit()
+
+    try:
+        client = get_qdrant_client()
+        client.delete(
+            collection_name=settings.QDRANT_COLLECTION,
+            points_selector=Filter(
+                must=[
+                    FieldCondition(key="source_id", match=MatchValue(value=str(source_id)))
+                ]
+            )
+        )
+    except Exception as e:
+        print(f"[sources] Failed to delete chunks from Qdrant: {e}")

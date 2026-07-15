@@ -18,6 +18,9 @@ from app.services.llm.client import get_llm_response, stream_llm_response
 from app.services.eval.ragas_eval import evaluate_response
 from app.models.session import Session
 from app.models.feedback import Feedback
+from app.models.source import Source
+from sqlalchemy.orm import selectinload
+from datetime import datetime, timedelta
 
 router = APIRouter()
 
@@ -54,7 +57,7 @@ async def get_messages(
 ):
     await verify_workspace(workspace_id, user_id, db)
 
-    query = select(Message).where(Message.workspace_id == workspace_id)
+    query = select(Message).options(selectinload(Message.eval_scores)).where(Message.workspace_id == workspace_id)
     if session_id:
         query = query.where(Message.session_id == UUID(session_id))
     
@@ -200,6 +203,17 @@ async def event_generator(
                     sys_prompt = node_output.get("responder_system_prompt")
                     reranked_chunks = node_output.get("reranked_chunks", [])
 
+                    # Enrich sources with title and type from Postgres
+                    source_ids = {UUID(s["source_id"]) for s in sources if s.get("source_id")}
+                    if source_ids:
+                        result = await db.execute(select(Source).where(Source.id.in_(source_ids)))
+                        db_sources = {str(s.id): s for s in result.scalars().all()}
+                        for s in sources:
+                            db_s = db_sources.get(s.get("source_id"))
+                            if db_s:
+                                s["source_title"] = db_s.title
+                                s["source_type"] = db_s.source_type
+
                     # ── True Streaming ──────────────────────────────────────────────
                     answer = ""
                     async for token in stream_llm_response(prompt, sys_prompt, max_tokens=1500):
@@ -228,7 +242,6 @@ async def event_generator(
                     except Exception as e:
                         print(f"[chat] Evaluation failed: {e}")
 
-                    from datetime import datetime, timedelta
                     now = datetime.utcnow()
                     
                     user_msg = Message(
@@ -263,6 +276,19 @@ async def event_generator(
                             answer_relevance=ans_relevance,
                         )
                         db.add(eval_score)
+
+                        critic_event = {
+                            "agent": "critic",
+                            "message": "Response evaluation complete",
+                            "timestamp": datetime.utcnow().isoformat(),
+                            "metadata": {
+                                "faithfulness": faithfulness,
+                                "context_precision": ctx_precision,
+                                "answer_relevance": ans_relevance,
+                                "confidence_level": confidence,
+                            }
+                        }
+                        yield f"data: {json.dumps({'type': 'timeline', 'data': critic_event})}\n\n"
 
                     await db.commit()
 
