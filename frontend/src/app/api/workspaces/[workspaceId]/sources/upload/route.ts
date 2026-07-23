@@ -40,3 +40,4 @@ export async function POST(request: NextRequest, { params }: Props) {
   const data = await response.json();
   return NextResponse.json(data);
 }
+

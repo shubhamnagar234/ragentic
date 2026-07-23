@@ -1,5 +1,18 @@
-from app.workers.celery_app import celery_app
 import asyncio
+import uuid
+
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import select
+from qdrant_client import QdrantClient
+from qdrant_client.models import PointStruct
+
+from app.workers.celery_app import celery_app
+from app.config import settings
+from app.models.source import Source
+from app.models.chunk import Chunk as ChunkModel
+from app.services.ingestion.embedder import embed_chunks
+from app.services.retrieval.sparse import save_index_to_redis
 
 
 @celery_app.task(bind=True, name="app.workers.ingest_tasks.ingest_source")
@@ -8,6 +21,13 @@ def ingest_source(
 ):
     """
     Main ingestion task — routes to correct ingestor based on source_type.
+
+    Each Celery task calls asyncio.run(), which creates a NEW event loop then
+    CLOSES it when done. The shared module-level asyncpg engine in database.py
+    is tied to the first loop that imported it; reusing it on subsequent tasks
+    causes 'Event loop is closed' / 'NoneType.send' crashes. The fix is to
+    create a fresh engine inside _ingest_async (scoped to this loop) and
+    dispose it before asyncio.run() shuts down the loop.
     """
     try:
         self.update_state(state="STARTED", meta={"source_id": source_id})
@@ -15,7 +35,6 @@ def ingest_source(
             f"[ingest_source] Starting ingestion: source_id={source_id}, type={source_type}, url={url}"
         )
 
-        # Run async ingestion in sync Celery context
         asyncio.run(_ingest_async(source_id, workspace_id, source_type, url))
 
         return {"status": "completed", "source_id": source_id}
@@ -30,74 +49,78 @@ async def _ingest_async(
 ):
     """
     Async ingestion pipeline — runs inside Celery worker.
+
+    Creates its own SQLAlchemy async engine so that the asyncpg connection pool
+    is bound to THIS event loop (the one created by asyncio.run in ingest_source).
+    The engine is disposed in a finally block to release all connections cleanly
+    before asyncio.run() closes the loop — preventing stale pool references on
+    the next task invocation.
     """
-    from app.database import AsyncSessionLocal
-    from app.models.source import Source
-    from app.services.ingestion.embedder import embed_chunks
-    from app.services.retrieval.sparse import save_index_to_redis
-    from sqlalchemy import select
-    from qdrant_client import QdrantClient
-    from qdrant_client.models import PointStruct
-    from app.config import settings
-    import uuid
+    # Fresh engine scoped to this task's event loop — never reuses connections
+    # from a previous (now-closed) loop.
+    task_engine = create_async_engine(
+        settings.DATABASE_URL,
+        echo=False,
+        pool_pre_ping=True,
+        pool_size=2,
+        max_overflow=0,
+    )
+    TaskSession = sessionmaker(
+        task_engine,
+        class_=AsyncSession,
+        expire_on_commit=False,
+    )
 
-    async with AsyncSessionLocal() as db:
-        # Update source status to ingesting
-        result = await db.execute(select(Source).where(Source.id == source_id))
-        source = result.scalar_one_or_none()
-        if not source:
-            raise ValueError(f"Source {source_id} not found")
+    try:
+        async with TaskSession() as db:
+            result = await db.execute(select(Source).where(Source.id == source_id))
+            source = result.scalar_one_or_none()
+            if not source:
+                raise ValueError(f"Source {source_id} not found")
 
-        source.status = "ingesting"
-        await db.commit()
+            source.status = "ingesting"
+            await db.commit()
 
-        try:
-            chunks = []
-            title = None
+            try:
+                chunks = []
+                title = None
 
-            # Route to correct ingestor
-            if source_type == "YOUTUBE" or source_type == "LOOM":
-                from app.services.ingestion.video_ingestor import ingest_video
+                # Route to correct ingestor
+                if source_type in ("YOUTUBE", "LOOM"):
+                    from app.services.ingestion.video_ingestor import ingest_video
+                    chunks, title = await ingest_video(url, source_id)
 
-                chunks, title = await ingest_video(url, source_id)
+                elif source_type == "PDF":
+                    from app.services.ingestion.pdf_ingestor import ingest_pdf
+                    chunks = await ingest_pdf(url, source_id)
+                    title = url.split("/")[-1] if url else "PDF"
 
-            elif source_type == "PDF":
-                from app.services.ingestion.pdf_ingestor import ingest_pdf
+                elif source_type == "WEB":
+                    from app.services.ingestion.web_ingestor import ingest_web
+                    chunks, title = await ingest_web(url, source_id)
 
-                chunks = await ingest_pdf(url, source_id)
-                title = url.split("/")[-1] if url else "PDF"
+                elif source_type == "GITHUB":
+                    from app.services.ingestion.github_ingestor import ingest_github
+                    chunks, title = await ingest_github(url, source_id)
 
-            elif source_type == "WEB":
-                from app.services.ingestion.web_ingestor import ingest_web
+                else:
+                    raise ValueError(f"Unknown source type: {source_type}")
 
-                chunks, title = await ingest_web(url, source_id)
+                if not chunks:
+                    raise ValueError("No chunks produced from ingestion")
 
-            elif source_type == "GITHUB":
-                from app.services.ingestion.github_ingestor import ingest_github
+                # Embed child chunks
+                is_code = source_type == "GITHUB"
+                embedded = embed_chunks(chunks, is_code=is_code)
+                print(f"[ingest_source] Embedded {len(embedded)} child chunks")
 
-                chunks, title = await ingest_github(url, source_id)
+                # Store in Qdrant
+                client = QdrantClient(
+                    url=settings.QDRANT_URL,
+                    api_key=settings.QDRANT_API_KEY or None,
+                )
 
-            else:
-                raise ValueError(f"Unknown source type: {source_type}")
-
-            if not chunks:
-                raise ValueError("No chunks produced from ingestion")
-
-            # Embed child chunks
-            is_code = source_type == "GITHUB"
-            embedded = embed_chunks(chunks, is_code=is_code)
-
-            print(f"[ingest_source] Embedded {len(embedded)} child chunks")
-
-            # Store in Qdrant
-            client = QdrantClient(
-                url=settings.QDRANT_URL,
-                api_key=settings.QDRANT_API_KEY or None,
-            )
-
-            points = []
-            for item in embedded:
-                points.append(
+                points = [
                     PointStruct(
                         id=item["chunk_id"],
                         vector=item["vector"],
@@ -112,56 +135,59 @@ async def _ingest_async(
                             **item.get("metadata", {}),
                         },
                     )
+                    for item in embedded
+                ]
+
+                if points:
+                    client.upsert(
+                        collection_name=settings.QDRANT_COLLECTION,
+                        points=points,
+                    )
+                    print(f"[ingest_source] Upserted {len(points)} vectors to Qdrant")
+
+                # Store parent chunks in PostgreSQL
+                parent_chunks = [c for c in chunks if c.chunk_type == "parent"]
+                for chunk in parent_chunks:
+                    db.add(ChunkModel(
+                        id=uuid.UUID(chunk.chunk_id),
+                        source_id=uuid.UUID(source_id),
+                        text=chunk.text,
+                        page_num=chunk.page_num,
+                        start_time=chunk.start_time,
+                        end_time=chunk.end_time,
+                        chunk_type="parent",
+                    ))
+
+                # Build BM25 index
+                all_chunk_dicts = [
+                    {
+                        "chunk_id": item["chunk_id"],
+                        "text": item["text"],
+                        "source_id": source_id,
+                    }
+                    for item in embedded
+                ]
+                save_index_to_redis(workspace_id, all_chunk_dicts)
+                print(f"[ingest_source] BM25 index saved to Redis")
+
+                # Update source status to ready
+                source.status = "ready"
+                source.title = title or url
+                source.chunk_count = len(embedded)
+                await db.commit()
+
+                print(
+                    f"[ingest_source] ✓ Ingestion complete: {len(embedded)} chunks, title={title}"
                 )
 
-            if points:
-                client.upsert(
-                    collection_name=settings.QDRANT_COLLECTION,
-                    points=points,
-                )
-                print(f"[ingest_source] Upserted {len(points)} vectors to Qdrant")
+            except Exception as e:
+                await db.rollback()
+                source.status = "failed"
+                await db.commit()
+                raise e
 
-            # Store parent chunks in PostgreSQL
-            from app.models.chunk import Chunk as ChunkModel
-
-            parent_chunks = [c for c in chunks if c.chunk_type == "parent"]
-            for chunk in parent_chunks:
-                import uuid
-                db_chunk = ChunkModel(
-                    id=uuid.UUID(chunk.chunk_id),
-                    source_id=uuid.UUID(source_id),
-                    text=chunk.text,
-                    page_num=chunk.page_num,
-                    start_time=chunk.start_time,
-                    end_time=chunk.end_time,
-                    chunk_type="parent",
-                )
-                db.add(db_chunk)
-
-            # Build BM25 index
-            all_chunk_dicts = [
-                {
-                    "chunk_id": item["chunk_id"],
-                    "text": item["text"],
-                    "source_id": source_id,
-                }
-                for item in embedded
-            ]
-            save_index_to_redis(workspace_id, all_chunk_dicts)
-            print(f"[ingest_source] BM25 index saved to Redis")
-
-            # Update source status to ready
-            source.status = "ready"
-            source.title = title or url
-            source.chunk_count = len(embedded)
-            await db.commit()
-
-            print(
-                f"[ingest_source] ✓ Ingestion complete: {len(embedded)} chunks, title={title}"
-            )
-
-        except Exception as e:
-            await db.rollback()
-            source.status = "failed"
-            await db.commit()
-            raise e
+    finally:
+        # Dispose the engine so asyncpg releases all sockets before the event
+        # loop closes. Without this, the proactor shuts down while asyncpg
+        # still holds open connections, corrupting subsequent tasks' loops.
+        await task_engine.dispose()

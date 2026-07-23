@@ -46,4 +46,4 @@ export async function POST(request: NextRequest, { params }: Props) {
     session.user.id,
   )
   return NextResponse.json(data)
-}
+}
