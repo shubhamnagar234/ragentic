@@ -92,7 +92,7 @@ async def get_llm_response(
         messages.append({"role": "system", "content": system_prompt})
     messages.append({"role": "user", "content": prompt})
 
-    kwargs = {"messages": messages, "max_tokens": max_tokens}
+    kwargs = {"messages": messages, "max_tokens": max_tokens, "temperature": 0.0}
     if json_mode:
         kwargs["response_format"] = {"type": "json_object"}
 
@@ -150,6 +150,7 @@ async def stream_llm_response(
             model=model,
             messages=messages,
             max_tokens=max_tokens,
+            temperature=0.0,
             api_key=api_key,
             stream=True,
         )
@@ -190,5 +191,7 @@ async def stream_llm_response(
             print(f"[llm] Streaming rate-limited on {model}, trying next")
         except Exception as e:
             print(f"[llm] Streaming failed on {model}: {e}")
+            with open("llm_error.txt", "a") as f:
+                f.write(f"Streaming failed on {model}: {repr(e)}\n")
 
     yield "Error: All LLM providers are unavailable. Please try again later."
