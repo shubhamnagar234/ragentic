@@ -75,9 +75,9 @@ async def add_source(
             source_type=payload.source_type,
             url=payload.url,
         )
-        print(f"[sources] ✓ Queued ingestion task for source {source.id}")
+        print(f"[sources] [OK] Queued ingestion task for source {source.id}")
     except Exception as e:
-        print(f"[sources] ✗ Failed to queue task: {e}")
+        print(f"[sources] [FAILED] Failed to queue task: {e}")
 
     return source
 
@@ -130,9 +130,9 @@ async def upload_source(
             source_type=source_type,
             url=file_path,
         )
-        print(f"[sources] ✓ Queued upload task for source {source.id}")
+        print(f"[sources] [OK] Queued upload task for source {source.id}")
     except Exception as e:
-        print(f"[sources] ✗ Failed to queue upload task: {e}")
+        print(f"[sources] [FAILED] Failed to queue upload task: {e}")
 
     return source
 
@@ -174,9 +174,9 @@ async def retry_source(
             source_type=source.source_type,
             url=source.url,
         )
-        print(f"[sources] ✓ Queued retry task for source {source.id}")
+        print(f"[sources] [OK] Queued retry task for source {source.id}")
     except Exception as e:
-        print(f"[sources] ✗ Failed to queue retry task: {e}")
+        print(f"[sources] [FAILED] Failed to queue retry task: {e}")
 
     return source
 

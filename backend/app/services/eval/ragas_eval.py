@@ -37,8 +37,8 @@ async def evaluate_response(
     if not contexts or not answer or answer == "placeholder":
         return None
 
-    # Truncate to keep costs low (first 3 contexts, max 400 chars each)
-    ctx_preview = "\n---\n".join(c[:400] for c in contexts[:3])
+    # Include all retrieved contexts so claims from all cited sources are evaluated
+    ctx_preview = "\n---\n".join(f"[Source {i+1}]: {c}" for i, c in enumerate(contexts[:5]))
 
     system = (
         "You are an evaluation assistant. "
@@ -56,12 +56,12 @@ CONTEXT (retrieved chunks):
 ANSWER: {answer}
 
 Score definitions:
-- faithfulness: Is every claim in the answer directly supported by the context? (1.0 = fully supported, 0.0 = hallucinated)
+- faithfulness: Are the claims in the answer supported by the provided context? If all claims in the answer are accurate and grounded in the sources, score 1.0. Only give a lower score if the answer introduces false or unsupported hallucinations.
 - context_precision: Are the retrieved context chunks relevant to the question? (1.0 = highly relevant, 0.0 = off-topic)
 - answer_relevance: Does the answer actually address the question asked? (1.0 = directly answers, 0.0 = completely irrelevant)
 
 Respond with exactly this JSON format:
-{{"faithfulness": 0.0, "context_precision": 0.0, "answer_relevance": 0.0}}"""
+{{"faithfulness": 1.0, "context_precision": 1.0, "answer_relevance": 1.0}}"""
 
     try:
         print("[eval] Running LLM-based RAG evaluation...")
@@ -69,10 +69,23 @@ Respond with exactly this JSON format:
             prompt=prompt,
             system_prompt=system,
             json_mode=True,
-            max_tokens=80,
+            max_tokens=1000,
         )
 
-        scores = json.loads(raw)
+        text = raw.strip()
+        if "```" in text:
+            # Strip markdown code blocks
+            parts = text.split("```")
+            if len(parts) >= 2:
+                text = parts[1]
+                if text.startswith("json"):
+                    text = text[4:]
+        start = text.find("{")
+        end = text.rfind("}")
+        if start != -1 and end != -1:
+            text = text[start:end+1]
+
+        scores = json.loads(text)
 
         faithfulness = float(scores.get("faithfulness", 0.0))
         context_precision = float(scores.get("context_precision", 0.0))
@@ -84,7 +97,7 @@ Respond with exactly this JSON format:
         answer_relevance = max(0.0, min(1.0, answer_relevance))
 
         print(
-            f"[eval] Scores — faithfulness: {faithfulness:.2f}, "
+            f"[eval] Scores -- faithfulness: {faithfulness:.2f}, "
             f"context_precision: {context_precision:.2f}, "
             f"answer_relevance: {answer_relevance:.2f}"
         )

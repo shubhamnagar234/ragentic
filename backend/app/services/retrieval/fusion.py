@@ -41,6 +41,6 @@ def reciprocal_rank_fusion(
         fused.append(chunk)
 
     print(
-        f"[fusion] RRF merged {len(dense_results)} dense + {len(sparse_results)} sparse → {len(fused)} results"
+        f"[fusion] RRF merged {len(dense_results)} dense + {len(sparse_results)} sparse -> {len(fused)} results"
     )
     return fused

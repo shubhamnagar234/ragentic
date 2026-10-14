@@ -13,16 +13,16 @@ def should_retry_edge(state: RagenticState) -> str:
     retry_count = state.get("retry_count", 0)
     max_retries = 2
 
-    # Max retries reached — proceed to respond regardless of confidence
+    # Max retries reached
     if retry_count >= max_retries:
-        print(f"[edges] Max retries ({max_retries}) reached — proceeding to respond")
+        print(f"[edges] Max retries ({max_retries}) reached -- proceeding to respond")
         return "respond"
 
-    # Low confidence — trigger query rewrite + re-retrieval
+    # Low confidence
     if confidence_level == "LOW":
-        print(f"[edges] Confidence LOW (retry {retry_count + 1}/{max_retries}) — triggering rewrite")
+        print(f"[edges] Confidence LOW (retry {retry_count + 1}/{max_retries}) -- triggering rewrite")
         return "rewrite"
 
-    # Confidence acceptable — proceed to respond
-    print(f"[edges] Confidence {confidence_level} — proceeding to respond")
+    # Confidence acceptable
+    print(f"[edges] Confidence {confidence_level} -- proceeding to respond")
     return "respond"

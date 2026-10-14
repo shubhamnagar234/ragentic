@@ -87,7 +87,7 @@ async def get_conversation_memory(
     if len(older_turns) >= compress_after:
         summary = await compress_conversation(older_turns)
         print(
-            f"[compressor] Memory compressed: {turn_count} turns → summary + {len(recent_turns)} recent"
+            f"[compressor] Memory compressed: {turn_count} turns -> summary + {len(recent_turns)} recent"
         )
 
     return ConversationMemory(

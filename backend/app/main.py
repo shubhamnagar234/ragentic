@@ -39,9 +39,9 @@ async def init_qdrant():
                 distance=Distance.COSINE,
             ),
         )
-        print(f"✓ Qdrant collection '{collection_name}' created")
+        print(f"[main] [OK] Qdrant collection '{collection_name}' created")
     else:
-        print(f"✓ Qdrant collection '{collection_name}' already exists")
+        print(f"[main] [OK] Qdrant collection '{collection_name}' already exists")
 
 
 @asynccontextmanager
@@ -78,15 +78,25 @@ async def lifespan(app: FastAPI):
             """))
         except Exception as e:
             print(f"Skipping alter table: {e}")
-    print("✓ Database tables created")
+    print("[main] [OK] Database tables created")
 
     await init_qdrant()
+
+    # Pre-warm embedder and reranker so user queries never experience cold-start delays
+    try:
+        from app.services.ingestion.embedder import get_text_model
+        from app.services.retrieval.reranker import get_reranker
+        get_text_model()
+        get_reranker()
+        print("[main] [OK] Embedder & Reranker models pre-warmed in RAM")
+    except Exception as e:
+        print(f"[main] Model pre-warm skipped: {e}")
 
     yield
 
     # Shutdown
     await engine.dispose()
-    print("✓ Database connections closed")
+    print("[main] [OK] Database connections closed")
 
 
 app = FastAPI(

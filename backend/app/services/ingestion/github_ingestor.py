@@ -1,7 +1,10 @@
-import httpx
+import os
+import shutil
+import stat
+import tempfile
+import asyncio
 from typing import List
 from app.services.ingestion.chunker import Chunk, chunk_text_hierarchical
-from app.config import settings
 
 # File extensions to ingest
 ALLOWED_EXTENSIONS = {
@@ -31,31 +34,6 @@ def parse_github_url(url: str) -> tuple[str, str]:
     return parts[0], parts[1]
 
 
-async def fetch_repo_tree(owner: str, repo: str) -> List[dict]:
-    """
-    Fetches the full file tree of a GitHub repo using the GitHub API.
-    Returns list of file objects with path and download_url.
-    """
-    headers = {"Accept": "application/vnd.github.v3+json"}
-    if settings.GITHUB_TOKEN:
-        headers["Authorization"] = f"Bearer {settings.GITHUB_TOKEN}"
-
-    url = f"https://api.github.com/repos/{owner}/{repo}/git/trees/HEAD?recursive=1"
-
-    async with httpx.AsyncClient() as client:
-        response = await client.get(url, headers=headers)
-        response.raise_for_status()
-        data = response.json()
-
-    files = [
-        item for item in data.get("tree", [])
-        if item["type"] == "blob"
-    ]
-
-    print(f"[github_ingestor] Found {len(files)} files in {owner}/{repo}")
-    return files
-
-
 def should_ingest_file(path: str) -> bool:
     """
     Returns True if the file should be ingested based on
@@ -74,87 +52,93 @@ def should_ingest_file(path: str) -> bool:
     return path_obj.suffix.lower() in ALLOWED_EXTENSIONS
 
 
-async def fetch_file_content(download_url: str) -> str:
-    """
-    Fetches the raw content of a single file from GitHub.
-    """
-    try:
-        async with httpx.AsyncClient() as client:
-            response = await client.get(download_url, timeout=10.0)
-            response.raise_for_status()
-            return response.text
-    except Exception as e:
-        print(f"[github_ingestor] Failed to fetch file: {e}")
-        return ""
+def remove_readonly(func, path, _):
+    """Clear the readonly bit and reattempt the removal (for Windows)."""
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
 
 
 async def ingest_github(url: str, source_id: str) -> tuple[List[Chunk], str]:
     """
-    Full GitHub repo ingestion pipeline:
-    1. Parse URL → owner/repo
-    2. Fetch file tree via GitHub API
-    3. Filter files by extension and path
-    4. Fetch and chunk each file
-    Returns (chunks, title)
+    Full GitHub repo ingestion pipeline using git clone.
+    Bypasses GitHub API rate limits.
     """
-    print(f"[github_ingestor] Starting GitHub ingestion: {url}")
+    print(f"[github_ingestor] Starting GitHub ingestion via git clone: {url}")
 
     owner, repo = parse_github_url(url)
     title = f"{owner}/{repo}"
 
-    # Fetch file tree
-    all_files = await fetch_repo_tree(owner, repo)
-
-    # Filter to allowed files
-    files_to_ingest = [
-        f for f in all_files
-        if should_ingest_file(f["path"])
-    ]
-
-    print(f"[github_ingestor] Ingesting {len(files_to_ingest)} files from {title}")
-
     all_chunks = []
+    
+    # Create temp directory
+    temp_dir = tempfile.mkdtemp()
+    
+    try:
+        clone_url = f"https://github.com/{owner}/{repo}.git"
+        
+        # Clone repo asynchronously
+        process = await asyncio.create_subprocess_exec(
+            "git", "clone", "--depth", "1", clone_url, temp_dir,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+        stdout, stderr = await process.communicate()
+        
+        if process.returncode != 0:
+            raise RuntimeError(f"Failed to clone repository: {stderr.decode()}")
+            
+        print(f"[github_ingestor] Cloned {title} successfully.")
 
-    for file in files_to_ingest:
-        path = file["path"]
-        download_url = file.get("url", "")
-
-        # Fetch raw content via GitHub API
-        headers = {"Accept": "application/vnd.github.v3.raw"}
-        if settings.GITHUB_TOKEN:
-            headers["Authorization"] = f"Bearer {settings.GITHUB_TOKEN}"
-
-        try:
-            async with httpx.AsyncClient() as client:
-                response = await client.get(
-                    f"https://api.github.com/repos/{owner}/{repo}/contents/{path}",
-                    headers=headers,
-                    timeout=10.0,
-                )
-                if response.status_code != 200:
+        # Walk directory
+        for root, dirs, files in os.walk(temp_dir):
+            # Modify dirs in-place to skip SKIP_PATHS
+            dirs[:] = [d for d in dirs if d not in SKIP_PATHS]
+            
+            for file_name in files:
+                file_path = os.path.join(root, file_name)
+                rel_path = os.path.relpath(file_path, temp_dir)
+                
+                # Normalize slashes for consistency
+                rel_path = rel_path.replace("\\", "/")
+                
+                if not should_ingest_file(rel_path):
                     continue
-                content = response.text
+                    
+                try:
+                    with open(file_path, "r", encoding="utf-8") as f:
+                        content = f.read()
+                except UnicodeDecodeError:
+                    # Skip binary files
+                    continue
+                except Exception as e:
+                    print(f"[github_ingestor] Skipping {rel_path}: {e}")
+                    continue
+                    
+                if not content.strip():
+                    continue
+                    
+                # Prefix content with file path for context
+                full_text = f"# File: {rel_path}\n\n{content}"
+                
+                # Chunk the file
+                chunks = chunk_text_hierarchical(full_text)
+                
+                # Tag with metadata
+                for chunk in chunks:
+                    chunk.metadata["source_id"] = source_id
+                    chunk.metadata["file_path"] = rel_path
+                    chunk.metadata["repo"] = title
+                    chunk.metadata["is_code"] = True
+                    
+                all_chunks.extend(chunks)
+                
+        print(f"[github_ingestor] Created {len(all_chunks)} chunks from {title}")
+        
+    finally:
+        # Clean up temp directory, using onerror to handle Windows read-only files created by git
+        try:
+            shutil.rmtree(temp_dir, onerror=remove_readonly)
         except Exception as e:
-            print(f"[github_ingestor] Skipping {path}: {e}")
-            continue
+            print(f"[github_ingestor] Failed to clean up temp dir {temp_dir}: {e}")
 
-        if not content.strip():
-            continue
-
-        # Prefix content with file path for context
-        full_text = f"# File: {path}\n\n{content}"
-
-        # Chunk the file
-        chunks = chunk_text_hierarchical(full_text)
-
-        # Tag with metadata
-        for chunk in chunks:
-            chunk.metadata["source_id"] = source_id
-            chunk.metadata["file_path"] = path
-            chunk.metadata["repo"] = title
-            chunk.metadata["is_code"] = True
-
-        all_chunks.extend(chunks)
-
-    print(f"[github_ingestor] Created {len(all_chunks)} chunks from {title}")
     return all_chunks, title

@@ -27,3 +27,16 @@ celery_app.conf.update(
         },
     },
 )
+
+from celery.signals import worker_ready
+
+@worker_ready.connect
+def warm_up_models(sender, **kwargs):
+    print("[celery] Pre-warming embedding model into RAM...")
+    try:
+        from app.services.ingestion.embedder import get_text_model
+        get_text_model()
+        print("[celery] Embedding model pre-warmed and ready in RAM")
+    except Exception as e:
+        print(f"[celery] Warm up skipped: {e}")
+

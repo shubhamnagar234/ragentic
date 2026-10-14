@@ -48,7 +48,7 @@ def embed_chunks(
     model = get_code_model() if is_code else get_text_model()
 
     print(f"[embedder] Embedding {len(texts)} child chunks...")
-    vectors = model.encode(texts, batch_size=32, show_progress_bar=True)
+    vectors = model.encode(texts, batch_size=128, show_progress_bar=False)
 
     results = []
     for chunk, vector in zip(child_chunks, vectors):

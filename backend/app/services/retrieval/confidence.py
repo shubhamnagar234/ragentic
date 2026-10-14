@@ -47,7 +47,7 @@ def compute_confidence(
     else:
         level = ConfidenceLevel.LOW
 
-    print(f"[confidence] Score: {raw_score:.3f} → {level}")
+    print(f"[confidence] Score: {raw_score:.3f} -> {level}")
     return level, raw_score
 
 

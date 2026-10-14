@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     # LLM — required, no defaults
     GEMINI_API_KEY: str
     GROQ_API_KEY: Optional[str] = None
+    OPENROUTER_API_KEY: Optional[str] = None
     GITHUB_TOKEN: Optional[str] = None
 
     # LLM Models

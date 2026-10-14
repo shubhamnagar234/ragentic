@@ -145,18 +145,21 @@ async def _ingest_async(
                     )
                     print(f"[ingest_source] Upserted {len(points)} vectors to Qdrant")
 
-                # Store parent chunks in PostgreSQL
+                # Store parent chunks in PostgreSQL (bulk insert)
                 parent_chunks = [c for c in chunks if c.chunk_type == "parent"]
-                for chunk in parent_chunks:
-                    db.add(ChunkModel(
-                        id=uuid.UUID(chunk.chunk_id),
-                        source_id=uuid.UUID(source_id),
-                        text=chunk.text,
-                        page_num=chunk.page_num,
-                        start_time=chunk.start_time,
-                        end_time=chunk.end_time,
-                        chunk_type="parent",
-                    ))
+                if parent_chunks:
+                    db.add_all([
+                        ChunkModel(
+                            id=uuid.UUID(chunk.chunk_id),
+                            source_id=uuid.UUID(source_id),
+                            text=chunk.text,
+                            page_num=chunk.page_num,
+                            start_time=chunk.start_time,
+                            end_time=chunk.end_time,
+                            chunk_type="parent",
+                        )
+                        for chunk in parent_chunks
+                    ])
 
                 # Build BM25 index
                 all_chunk_dicts = [
@@ -176,8 +179,9 @@ async def _ingest_async(
                 source.chunk_count = len(embedded)
                 await db.commit()
 
+                safe_title = (title or "").encode("ascii", "replace").decode("ascii")
                 print(
-                    f"[ingest_source] ✓ Ingestion complete: {len(embedded)} chunks, title={title}"
+                    f"[ingest_source] Ingestion complete: {len(embedded)} chunks, title={safe_title}"
                 )
 
             except Exception as e:

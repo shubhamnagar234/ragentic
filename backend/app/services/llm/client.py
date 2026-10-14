@@ -5,10 +5,29 @@ from typing import Optional, AsyncGenerator
 from litellm import acompletion, RateLimitError
 from app.config import settings
 
+def _normalize_model(model: str) -> str:
+    """Ensure invalid model strings like gemini-3.6-flash fall back to valid gemini-2.5-flash."""
+    if "gemini-3.6" in model:
+        return "gemini/gemini-2.5-flash"
+    return model
+
+
+def get_primary_model() -> str:
+    return _normalize_model(settings.LLM_PRIMARY_MODEL)
+
+
+def get_lite_model() -> str:
+    return _normalize_model(settings.LLM_LITE_MODEL)
+
+
+def get_fallback_model() -> str:
+    return _normalize_model(settings.LLM_FALLBACK_MODEL)
+
+
 # Model ladder loaded from .env: primary → lite fallback → Groq
-PRIMARY_MODEL = settings.LLM_PRIMARY_MODEL
-LITE_MODEL = settings.LLM_LITE_MODEL
-FALLBACK_MODEL = settings.LLM_FALLBACK_MODEL
+PRIMARY_MODEL = get_primary_model()
+LITE_MODEL = get_lite_model()
+FALLBACK_MODEL = get_fallback_model()
 
 # Retry config for transient rate limits (per-minute quota)
 _MAX_RETRIES = 2
@@ -36,7 +55,7 @@ def _is_tripped(model: str) -> bool:
 def _trip(model: str) -> None:
     """Open the circuit for this model."""
     _circuit_tripped[model] = time.monotonic()
-    print(f"[llm] Circuit tripped for {model} — skipping for {_CIRCUIT_COOLDOWN // 60}min")
+    print(f"[llm] Circuit tripped for {model} -- skipping for {_CIRCUIT_COOLDOWN // 60}min")
 
 
 # ── Core call with retry ─────────────────────────────────────────────────────
@@ -75,6 +94,11 @@ async def _call_with_retry(model: str, api_key: str, **kwargs) -> str:
 
 def _get_key_for_model(model: str) -> str:
     """Helper to pick the right API key based on model prefix."""
+    if model.startswith("openrouter/"):
+        openrouter_key = getattr(settings, "OPENROUTER_API_KEY", None)
+        if not openrouter_key:
+            raise ValueError(f"OPENROUTER_API_KEY is not set but model {model} was requested.")
+        return openrouter_key
     if model.startswith("groq/"):
         if not settings.GROQ_API_KEY:
             raise ValueError(f"GROQ_API_KEY is not set but model {model} was requested.")
@@ -96,42 +120,56 @@ async def get_llm_response(
     if json_mode:
         kwargs["response_format"] = {"type": "json_object"}
 
+    primary = get_primary_model()
+    lite = get_lite_model()
+    fallback = get_fallback_model()
+
     # 1. Primary Gemini model
-    if not _is_tripped(PRIMARY_MODEL):
+    if not _is_tripped(primary):
         try:
-            return await _call_with_retry(PRIMARY_MODEL, _get_key_for_model(PRIMARY_MODEL), **kwargs)
+            return await _call_with_retry(primary, _get_key_for_model(primary), **kwargs)
         except RateLimitError as e:
             print(f"[llm] Primary model unavailable, trying lite: {e}")
         except Exception as e:
             print(f"[llm] Primary model failed: {e}")
     else:
-        print(f"[llm] Skipping {PRIMARY_MODEL} (circuit open)")
+        print(f"[llm] Skipping {primary} (circuit open)")
 
     # 2. Lite Gemini model (higher free-tier RPM)
-    if not _is_tripped(LITE_MODEL):
+    if lite != primary and not _is_tripped(lite):
         try:
-            return await _call_with_retry(LITE_MODEL, _get_key_for_model(LITE_MODEL), **kwargs)
+            return await _call_with_retry(lite, _get_key_for_model(lite), **kwargs)
         except RateLimitError as e:
-            print(f"[llm] Lite model unavailable, trying Groq: {e}")
+            print(f"[llm] Lite model unavailable, trying OpenRouter: {e}")
         except Exception as e:
             print(f"[llm] Lite model failed: {e}")
     else:
-        print(f"[llm] Skipping {LITE_MODEL} (circuit open)")
+        print(f"[llm] Skipping {lite} (circuit open or duplicate)")
 
-    # 3. Groq fallback
-    if settings.GROQ_API_KEY:
-        if not _is_tripped(FALLBACK_MODEL):
+    # 3. OpenRouter fallback
+    openrouter_key = getattr(settings, "OPENROUTER_API_KEY", None)
+    if openrouter_key:
+        openrouter_model = "openrouter/google/gemini-2.5-flash"
+        if not _is_tripped(openrouter_model):
             try:
-                return await _call_with_retry(FALLBACK_MODEL, _get_key_for_model(FALLBACK_MODEL), **kwargs)
+                return await _call_with_retry(openrouter_model, openrouter_key, **kwargs)
+            except Exception as e:
+                print(f"[llm] OpenRouter fallback failed: {e}")
+
+    # 4. Groq fallback
+    if settings.GROQ_API_KEY and fallback.startswith("groq/"):
+        if not _is_tripped(fallback):
+            try:
+                return await _call_with_retry(fallback, _get_key_for_model(fallback), **kwargs)
             except Exception as e:
                 print(f"[llm] Groq fallback failed: {e}")
                 raise e
         else:
-            print(f"[llm] Skipping {FALLBACK_MODEL} (circuit open)")
+            print(f"[llm] Skipping {fallback} (circuit open)")
 
     raise RuntimeError(
         "All LLM providers are unavailable or rate-limited. "
-        "Please add a GROQ_API_KEY to .env or wait for quota to reset."
+        "Please check your GEMINI_API_KEY or OPENROUTER_API_KEY in .env."
     )
 
 
@@ -159,21 +197,32 @@ async def stream_llm_response(
             if delta and delta.content:
                 yield delta.content
 
+    primary = get_primary_model()
+    lite = get_lite_model()
+    fallback = get_fallback_model()
+
     # Try each model in order, skipping tripped ones
     candidates = []
     try:
-        candidates.append((PRIMARY_MODEL, _get_key_for_model(PRIMARY_MODEL)))
+        candidates.append((primary, _get_key_for_model(primary)))
     except ValueError:
         pass
         
-    try:
-        candidates.append((LITE_MODEL, _get_key_for_model(LITE_MODEL)))
-    except ValueError:
-        pass
-
-    if settings.GROQ_API_KEY:
+    if lite != primary:
         try:
-            candidates.append((FALLBACK_MODEL, _get_key_for_model(FALLBACK_MODEL)))
+            candidates.append((lite, _get_key_for_model(lite)))
+        except ValueError:
+            pass
+
+    # OpenRouter fallback
+    openrouter_key = getattr(settings, "OPENROUTER_API_KEY", None)
+    if openrouter_key:
+        candidates.append(("openrouter/google/gemini-2.5-flash", openrouter_key))
+
+    # Groq fallback
+    if settings.GROQ_API_KEY and fallback.startswith("groq/"):
+        try:
+            candidates.append((fallback, _get_key_for_model(fallback)))
         except ValueError:
             pass
 
