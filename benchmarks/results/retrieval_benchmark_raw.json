@@ -1,0 +1,4850 @@
+[
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q01",
+    "query_type": "factual",
+    "query_text": "What are the exact word counts and overlaps used for parent and child chunks in hierarchical chunking?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 16.246200015302747,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 16.247599996859208,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q02",
+    "query_type": "factual",
+    "query_text": "Which chunks are embedded into Qdrant, and where are parent chunks stored for context retrieval?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "f0b99314-bd19-4253-8363-ee9adaf40445"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.704399996437132,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.705800007097423,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q03",
+    "query_type": "conceptual",
+    "query_text": "Why does dense vector search struggle with exact acronyms and part numbers, and how does BM25 solve this?",
+    "relevant_docs": [
+      "doc-ret-02"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.724900025408715,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.726000004680827,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q04",
+    "query_type": "factual",
+    "query_text": "What mathematical formula defines Reciprocal Rank Fusion (RRF), and what is the standard smoothing constant k?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.348899985430762,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.349899993045256,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q05",
+    "query_type": "comparative",
+    "query_text": "How do factual vs conceptual query routing configurations differ in vector and BM25 weights?",
+    "relevant_docs": [
+      "doc-fus-03",
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 0.25,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 21.401299978606403,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 21.402299986220896,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q06",
+    "query_type": "factual",
+    "query_text": "What is the computational complexity of Reciprocal Rank Fusion?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 11.934700014535338,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 11.935700022149831,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q07",
+    "query_type": "conceptual",
+    "query_text": "How does cross-encoder token-to-token attention differ from bi-encoder retrieval?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 10.510799998883158,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 10.511700005736202,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q08",
+    "query_type": "factual",
+    "query_text": "What mathematical function normalizes cross-encoder output logits, and what threshold filters candidates?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "58164e73-e143-41fb-8baf-015fab100fac"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 11.919100012164563,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 11.919999989913777,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q09",
+    "query_type": "factual",
+    "query_text": "What are the 5 nodes in the Ragentic LangGraph agent workflow in execution order?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 11.986400000751019,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 11.98749998002313,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q10",
+    "query_type": "procedural",
+    "query_text": "Under what condition does the LangGraph critic route to the rewriter node instead of responder?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.38780000130646,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.389399984385818,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q11",
+    "query_type": "procedural",
+    "query_text": "What techniques does the rewriter node use to generate rewritten queries?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 11.967700003879145,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 11.968800012255087,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q12",
+    "query_type": "factual",
+    "query_text": "How is the hallucination rate calculated from evaluation metrics in RAgentic?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.213500012876466,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.214699992910028,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q13",
+    "query_type": "conceptual",
+    "query_text": "What are the definitions of the three custom RAG evaluation metrics?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 11.994200001936406,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 11.99510000878945,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q14",
+    "query_type": "procedural",
+    "query_text": "Why must engine.dispose() be called after asynchronous database tasks using asyncpg?",
+    "relevant_docs": [
+      "doc-db-07"
+    ],
+    "retrieved_chunk_ids": [
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 10.208699997747317,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 10.209600004600361,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q15",
+    "query_type": "factual",
+    "query_text": "What Redis key naming pattern and TTL policy are used for BM25 indexes?",
+    "relevant_docs": [
+      "doc-red-08"
+    ],
+    "retrieved_chunk_ids": [
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 11.98479998856783,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 11.985799996182323,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q16",
+    "query_type": "factual",
+    "query_text": "What three event types are yielded over Server-Sent Events (SSE) in chat streaming?",
+    "relevant_docs": [
+      "doc-sse-09"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 12.35509998514317,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.355999991996214,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q17",
+    "query_type": "factual",
+    "query_text": "What is the trigger threshold for Celery Beat weekly drift detection to flag degraded sources?",
+    "relevant_docs": [
+      "doc-cel-10"
+    ],
+    "retrieved_chunk_ids": [
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 10.102400003233925,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 10.103199980221689,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q18",
+    "query_type": "procedural",
+    "query_text": "How does the LiteLLM circuit breaker handle confirmed daily quota exhaustion errors?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 12.540600000647828,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.541599979158491,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q19",
+    "query_type": "procedural",
+    "query_text": "What is the retry strategy for transient per-minute rate limits in the LLM client?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 12.834599998313934,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.835500005166978,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q20",
+    "query_type": "factual",
+    "query_text": "What MIME media type and response class are used for streaming chat responses in FastAPI?",
+    "relevant_docs": [
+      "doc-sse-09",
+      "doc-cod-11"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.951999990036711,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.953099998412654,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q01",
+    "query_type": "factual",
+    "query_text": "What are the exact word counts and overlaps used for parent and child chunks in hierarchical chunking?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 11.261500010732561,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 11.262399988481775,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q02",
+    "query_type": "factual",
+    "query_text": "Which chunks are embedded into Qdrant, and where are parent chunks stored for context retrieval?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "f0b99314-bd19-4253-8363-ee9adaf40445"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.424400018062443,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.425199995050207,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q03",
+    "query_type": "conceptual",
+    "query_text": "Why does dense vector search struggle with exact acronyms and part numbers, and how does BM25 solve this?",
+    "relevant_docs": [
+      "doc-ret-02"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.645699975313619,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.646599982166663,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q04",
+    "query_type": "factual",
+    "query_text": "What mathematical formula defines Reciprocal Rank Fusion (RRF), and what is the standard smoothing constant k?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.1507999796886,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.151799987303093,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q05",
+    "query_type": "comparative",
+    "query_text": "How do factual vs conceptual query routing configurations differ in vector and BM25 weights?",
+    "relevant_docs": [
+      "doc-fus-03",
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 0.25,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.701699994271621,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.702700001886114,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q06",
+    "query_type": "factual",
+    "query_text": "What is the computational complexity of Reciprocal Rank Fusion?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 9.325899998657405,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 9.327099978690967,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q07",
+    "query_type": "conceptual",
+    "query_text": "How does cross-encoder token-to-token attention differ from bi-encoder retrieval?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.366000009933487,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.36690001678653,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q08",
+    "query_type": "factual",
+    "query_text": "What mathematical function normalizes cross-encoder output logits, and what threshold filters candidates?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "58164e73-e143-41fb-8baf-015fab100fac"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.323200004175305,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.324299983447418,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q09",
+    "query_type": "factual",
+    "query_text": "What are the 5 nodes in the Ragentic LangGraph agent workflow in execution order?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.12099999631755,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.122300006216392,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q10",
+    "query_type": "procedural",
+    "query_text": "Under what condition does the LangGraph critic route to the rewriter node instead of responder?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.803799996618181,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.805000005755574,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q11",
+    "query_type": "procedural",
+    "query_text": "What techniques does the rewriter node use to generate rewritten queries?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.112899992847815,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.114000001223758,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q12",
+    "query_type": "factual",
+    "query_text": "How is the hallucination rate calculated from evaluation metrics in RAgentic?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.278800004627556,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.279799983138219,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q13",
+    "query_type": "conceptual",
+    "query_text": "What are the definitions of the three custom RAG evaluation metrics?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.916000006953254,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.916999985463917,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q14",
+    "query_type": "procedural",
+    "query_text": "Why must engine.dispose() be called after asynchronous database tasks using asyncpg?",
+    "relevant_docs": [
+      "doc-db-07"
+    ],
+    "retrieved_chunk_ids": [
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.834300014423206,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.835699995979667,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q15",
+    "query_type": "factual",
+    "query_text": "What Redis key naming pattern and TTL policy are used for BM25 indexes?",
+    "relevant_docs": [
+      "doc-red-08"
+    ],
+    "retrieved_chunk_ids": [
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 15.621400001691654,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 15.622399980202317,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q16",
+    "query_type": "factual",
+    "query_text": "What three event types are yielded over Server-Sent Events (SSE) in chat streaming?",
+    "relevant_docs": [
+      "doc-sse-09"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.151899988064542,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.152999996440485,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q17",
+    "query_type": "factual",
+    "query_text": "What is the trigger threshold for Celery Beat weekly drift detection to flag degraded sources?",
+    "relevant_docs": [
+      "doc-cel-10"
+    ],
+    "retrieved_chunk_ids": [
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.758100005565211,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.759099984075874,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q18",
+    "query_type": "procedural",
+    "query_text": "How does the LiteLLM circuit breaker handle confirmed daily quota exhaustion errors?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.813199999276549,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.814199977787212,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q19",
+    "query_type": "procedural",
+    "query_text": "What is the retry strategy for transient per-minute rate limits in the LLM client?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.015400025527924,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.016500004800037,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q20",
+    "query_type": "factual",
+    "query_text": "What MIME media type and response class are used for streaming chat responses in FastAPI?",
+    "relevant_docs": [
+      "doc-sse-09",
+      "doc-cod-11"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 15.070699999341741,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 15.072000009240583,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q01",
+    "query_type": "factual",
+    "query_text": "What are the exact word counts and overlaps used for parent and child chunks in hierarchical chunking?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.792599987937137,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.794099999358878,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q02",
+    "query_type": "factual",
+    "query_text": "Which chunks are embedded into Qdrant, and where are parent chunks stored for context retrieval?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "f0b99314-bd19-4253-8363-ee9adaf40445"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.3790000109002,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.380199990933761,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q03",
+    "query_type": "conceptual",
+    "query_text": "Why does dense vector search struggle with exact acronyms and part numbers, and how does BM25 solve this?",
+    "relevant_docs": [
+      "doc-ret-02"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.513100013369694,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.514299993403256,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q04",
+    "query_type": "factual",
+    "query_text": "What mathematical formula defines Reciprocal Rank Fusion (RRF), and what is the standard smoothing constant k?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.479200006462634,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.480200014077127,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q05",
+    "query_type": "comparative",
+    "query_text": "How do factual vs conceptual query routing configurations differ in vector and BM25 weights?",
+    "relevant_docs": [
+      "doc-fus-03",
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 0.25,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.507999992929399,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.509100001305342,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q06",
+    "query_type": "factual",
+    "query_text": "What is the computational complexity of Reciprocal Rank Fusion?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.451000006170943,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.452000013785437,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q07",
+    "query_type": "conceptual",
+    "query_text": "How does cross-encoder token-to-token attention differ from bi-encoder retrieval?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.477000000420958,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.478599983500317,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q08",
+    "query_type": "factual",
+    "query_text": "What mathematical function normalizes cross-encoder output logits, and what threshold filters candidates?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "58164e73-e143-41fb-8baf-015fab100fac"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 11.524800007464364,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 11.525899986736476,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q09",
+    "query_type": "factual",
+    "query_text": "What are the 5 nodes in the Ragentic LangGraph agent workflow in execution order?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 12.602000002516434,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.602999981027097,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q10",
+    "query_type": "procedural",
+    "query_text": "Under what condition does the LangGraph critic route to the rewriter node instead of responder?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.751200021943077,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.75230000121519,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q11",
+    "query_type": "procedural",
+    "query_text": "What techniques does the rewriter node use to generate rewritten queries?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 10.382100008428097,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 10.38300001528114,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q12",
+    "query_type": "factual",
+    "query_text": "How is the hallucination rate calculated from evaluation metrics in RAgentic?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.111899985233322,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.112999993609264,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q13",
+    "query_type": "conceptual",
+    "query_text": "What are the definitions of the three custom RAG evaluation metrics?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.309999998658895,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.311100007034838,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q14",
+    "query_type": "procedural",
+    "query_text": "Why must engine.dispose() be called after asynchronous database tasks using asyncpg?",
+    "relevant_docs": [
+      "doc-db-07"
+    ],
+    "retrieved_chunk_ids": [
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 16.76129997940734,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 16.762499988544732,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q15",
+    "query_type": "factual",
+    "query_text": "What Redis key naming pattern and TTL policy are used for BM25 indexes?",
+    "relevant_docs": [
+      "doc-red-08"
+    ],
+    "retrieved_chunk_ids": [
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 16.29309999407269,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 16.294200002448633,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q16",
+    "query_type": "factual",
+    "query_text": "What three event types are yielded over Server-Sent Events (SSE) in chat streaming?",
+    "relevant_docs": [
+      "doc-sse-09"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.784600003622472,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.785800012759864,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q17",
+    "query_type": "factual",
+    "query_text": "What is the trigger threshold for Celery Beat weekly drift detection to flag degraded sources?",
+    "relevant_docs": [
+      "doc-cel-10"
+    ],
+    "retrieved_chunk_ids": [
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.862199983326718,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.863299991702661,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q18",
+    "query_type": "procedural",
+    "query_text": "How does the LiteLLM circuit breaker handle confirmed daily quota exhaustion errors?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.652599998749793,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.653800007887185,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q19",
+    "query_type": "procedural",
+    "query_text": "What is the retry strategy for transient per-minute rate limits in the LLM client?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.681500015081838,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.683299999684095,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "A",
+    "config_name": "Qdrant Vector Only",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q20",
+    "query_type": "factual",
+    "query_text": "What MIME media type and response class are used for streaming chat responses in FastAPI?",
+    "relevant_docs": [
+      "doc-sse-09",
+      "doc-cod-11"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.487399992300197,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.48839999991469,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q01",
+    "query_type": "factual",
+    "query_text": "What are the exact word counts and overlaps used for parent and child chunks in hierarchical chunking?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 15.116099995793775,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 15.117799979634583,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q02",
+    "query_type": "factual",
+    "query_text": "Which chunks are embedded into Qdrant, and where are parent chunks stored for context retrieval?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.762199978576973,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.763699989998713,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q03",
+    "query_type": "conceptual",
+    "query_text": "Why does dense vector search struggle with exact acronyms and part numbers, and how does BM25 solve this?",
+    "relevant_docs": [
+      "doc-ret-02"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.117200014879927,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.11820002249442,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q04",
+    "query_type": "factual",
+    "query_text": "What mathematical formula defines Reciprocal Rank Fusion (RRF), and what is the standard smoothing constant k?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 16.831999993883073,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 16.833100002259016,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q05",
+    "query_type": "comparative",
+    "query_text": "How do factual vs conceptual query routing configurations differ in vector and BM25 weights?",
+    "relevant_docs": [
+      "doc-fus-03",
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 0.5,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.435699995374307,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.436899975407869,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q06",
+    "query_type": "factual",
+    "query_text": "What is the computational complexity of Reciprocal Rank Fusion?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.015200005611405,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.016399985644966,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q07",
+    "query_type": "conceptual",
+    "query_text": "How does cross-encoder token-to-token attention differ from bi-encoder retrieval?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 11.880200006999075,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 11.881200014613569,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q08",
+    "query_type": "factual",
+    "query_text": "What mathematical function normalizes cross-encoder output logits, and what threshold filters candidates?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.151800016406924,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.152599993394688,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q09",
+    "query_type": "factual",
+    "query_text": "What are the 5 nodes in the Ragentic LangGraph agent workflow in execution order?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.779399993130937,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.780199999222532,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q10",
+    "query_type": "procedural",
+    "query_text": "Under what condition does the LangGraph critic route to the rewriter node instead of responder?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.52570001129061,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.526599989039823,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q11",
+    "query_type": "procedural",
+    "query_text": "What techniques does the rewriter node use to generate rewritten queries?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.591499999165535,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.592499977676198,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q12",
+    "query_type": "factual",
+    "query_text": "How is the hallucination rate calculated from evaluation metrics in RAgentic?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.773299986496568,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.774599996395409,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q13",
+    "query_type": "conceptual",
+    "query_text": "What are the definitions of the three custom RAG evaluation metrics?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.645300001371652,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.647499989019707,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q14",
+    "query_type": "procedural",
+    "query_text": "Why must engine.dispose() be called after asynchronous database tasks using asyncpg?",
+    "relevant_docs": [
+      "doc-db-07"
+    ],
+    "retrieved_chunk_ids": [
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f",
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.469700021436438,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.470599999185652,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q15",
+    "query_type": "factual",
+    "query_text": "What Redis key naming pattern and TTL policy are used for BM25 indexes?",
+    "relevant_docs": [
+      "doc-red-08"
+    ],
+    "retrieved_chunk_ids": [
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "58164e73-e143-41fb-8baf-015fab100fac"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.522199984639883,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.522899989970028,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q16",
+    "query_type": "factual",
+    "query_text": "What three event types are yielded over Server-Sent Events (SSE) in chat streaming?",
+    "relevant_docs": [
+      "doc-sse-09"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.213400001404807,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.2144000090193,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q17",
+    "query_type": "factual",
+    "query_text": "What is the trigger threshold for Celery Beat weekly drift detection to flag degraded sources?",
+    "relevant_docs": [
+      "doc-cel-10"
+    ],
+    "retrieved_chunk_ids": [
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 11.035600007744506,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 11.0364000138361,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q18",
+    "query_type": "procedural",
+    "query_text": "How does the LiteLLM circuit breaker handle confirmed daily quota exhaustion errors?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 10.76969999121502,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 10.770399996545166,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q19",
+    "query_type": "procedural",
+    "query_text": "What is the retry strategy for transient per-minute rate limits in the LLM client?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.803199981339276,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.80399998743087,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q20",
+    "query_type": "factual",
+    "query_text": "What MIME media type and response class are used for streaming chat responses in FastAPI?",
+    "relevant_docs": [
+      "doc-sse-09",
+      "doc-cod-11"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "881c4d43-ed26-40db-b54f-130c9f356fda"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.194400002248585,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.19530000910163,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q01",
+    "query_type": "factual",
+    "query_text": "What are the exact word counts and overlaps used for parent and child chunks in hierarchical chunking?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.49889999255538,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.499699998646975,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q02",
+    "query_type": "factual",
+    "query_text": "Which chunks are embedded into Qdrant, and where are parent chunks stored for context retrieval?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.08539998717606,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.086299994029105,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q03",
+    "query_type": "conceptual",
+    "query_text": "Why does dense vector search struggle with exact acronyms and part numbers, and how does BM25 solve this?",
+    "relevant_docs": [
+      "doc-ret-02"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 15.352599992183968,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 15.353700000559911,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q04",
+    "query_type": "factual",
+    "query_text": "What mathematical formula defines Reciprocal Rank Fusion (RRF), and what is the standard smoothing constant k?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.397899998584762,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.398800005437806,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q05",
+    "query_type": "comparative",
+    "query_text": "How do factual vs conceptual query routing configurations differ in vector and BM25 weights?",
+    "relevant_docs": [
+      "doc-fus-03",
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 0.5,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.495499985059723,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.496399991912767,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q06",
+    "query_type": "factual",
+    "query_text": "What is the computational complexity of Reciprocal Rank Fusion?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.801499997498468,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.802500005112961,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q07",
+    "query_type": "conceptual",
+    "query_text": "How does cross-encoder token-to-token attention differ from bi-encoder retrieval?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.991900010500103,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.993099990533665,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q08",
+    "query_type": "factual",
+    "query_text": "What mathematical function normalizes cross-encoder output logits, and what threshold filters candidates?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.182600018102676,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.183599996613339,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q09",
+    "query_type": "factual",
+    "query_text": "What are the 5 nodes in the Ragentic LangGraph agent workflow in execution order?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.195700022857636,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.196699972264469,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q10",
+    "query_type": "procedural",
+    "query_text": "Under what condition does the LangGraph critic route to the rewriter node instead of responder?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.719300001161173,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.720200008014217,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q11",
+    "query_type": "procedural",
+    "query_text": "What techniques does the rewriter node use to generate rewritten queries?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.443499996559694,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.444500004174188,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q12",
+    "query_type": "factual",
+    "query_text": "How is the hallucination rate calculated from evaluation metrics in RAgentic?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.670299988007173,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.671199994860217,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q13",
+    "query_type": "conceptual",
+    "query_text": "What are the definitions of the three custom RAG evaluation metrics?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.88110000314191,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.881900009233505,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q14",
+    "query_type": "procedural",
+    "query_text": "Why must engine.dispose() be called after asynchronous database tasks using asyncpg?",
+    "relevant_docs": [
+      "doc-db-07"
+    ],
+    "retrieved_chunk_ids": [
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f",
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.6841000164859,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.685299996519461,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q15",
+    "query_type": "factual",
+    "query_text": "What Redis key naming pattern and TTL policy are used for BM25 indexes?",
+    "relevant_docs": [
+      "doc-red-08"
+    ],
+    "retrieved_chunk_ids": [
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "58164e73-e143-41fb-8baf-015fab100fac"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.961600023321807,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.96260000183247,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q16",
+    "query_type": "factual",
+    "query_text": "What three event types are yielded over Server-Sent Events (SSE) in chat streaming?",
+    "relevant_docs": [
+      "doc-sse-09"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.772799982689321,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.773699989542365,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q17",
+    "query_type": "factual",
+    "query_text": "What is the trigger threshold for Celery Beat weekly drift detection to flag degraded sources?",
+    "relevant_docs": [
+      "doc-cel-10"
+    ],
+    "retrieved_chunk_ids": [
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.09890002105385,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.099699998041615,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q18",
+    "query_type": "procedural",
+    "query_text": "How does the LiteLLM circuit breaker handle confirmed daily quota exhaustion errors?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.85890002711676,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.859799975762144,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q19",
+    "query_type": "procedural",
+    "query_text": "What is the retry strategy for transient per-minute rate limits in the LLM client?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.634499995736405,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.635500003350899,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q20",
+    "query_type": "factual",
+    "query_text": "What MIME media type and response class are used for streaming chat responses in FastAPI?",
+    "relevant_docs": [
+      "doc-sse-09",
+      "doc-cod-11"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "881c4d43-ed26-40db-b54f-130c9f356fda"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.988599996082485,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.989800005219877,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q01",
+    "query_type": "factual",
+    "query_text": "What are the exact word counts and overlaps used for parent and child chunks in hierarchical chunking?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.037899993127212,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.039500005310401,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q02",
+    "query_type": "factual",
+    "query_text": "Which chunks are embedded into Qdrant, and where are parent chunks stored for context retrieval?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.834399996791035,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.835400004405528,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q03",
+    "query_type": "conceptual",
+    "query_text": "Why does dense vector search struggle with exact acronyms and part numbers, and how does BM25 solve this?",
+    "relevant_docs": [
+      "doc-ret-02"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.081500004976988,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.082399982726201,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q04",
+    "query_type": "factual",
+    "query_text": "What mathematical formula defines Reciprocal Rank Fusion (RRF), and what is the standard smoothing constant k?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.370299992151558,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.371299999766052,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q05",
+    "query_type": "comparative",
+    "query_text": "How do factual vs conceptual query routing configurations differ in vector and BM25 weights?",
+    "relevant_docs": [
+      "doc-fus-03",
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 0.5,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.059800014365464,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 14.060900022741407,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q06",
+    "query_type": "factual",
+    "query_text": "What is the computational complexity of Reciprocal Rank Fusion?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.27350000408478,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.274500011699274,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q07",
+    "query_type": "conceptual",
+    "query_text": "How does cross-encoder token-to-token attention differ from bi-encoder retrieval?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 10.491399996681139,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 10.492100002011284,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q08",
+    "query_type": "factual",
+    "query_text": "What mathematical function normalizes cross-encoder output logits, and what threshold filters candidates?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.306599994190037,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.307500001043081,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q09",
+    "query_type": "factual",
+    "query_text": "What are the 5 nodes in the Ragentic LangGraph agent workflow in execution order?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.136800000211224,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.137600006302819,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q10",
+    "query_type": "procedural",
+    "query_text": "Under what condition does the LangGraph critic route to the rewriter node instead of responder?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 9.964800003217533,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 9.965500008547679,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q11",
+    "query_type": "procedural",
+    "query_text": "What techniques does the rewriter node use to generate rewritten queries?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 11.35499999509193,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 11.355700000422075,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q12",
+    "query_type": "factual",
+    "query_text": "How is the hallucination rate calculated from evaluation metrics in RAgentic?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 11.918500007595867,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 11.919400014448911,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q13",
+    "query_type": "conceptual",
+    "query_text": "What are the definitions of the three custom RAG evaluation metrics?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 11.029700021026656,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 11.03049999801442,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q14",
+    "query_type": "procedural",
+    "query_text": "Why must engine.dispose() be called after asynchronous database tasks using asyncpg?",
+    "relevant_docs": [
+      "doc-db-07"
+    ],
+    "retrieved_chunk_ids": [
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f",
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.529299991205335,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.53009999729693,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q15",
+    "query_type": "factual",
+    "query_text": "What Redis key naming pattern and TTL policy are used for BM25 indexes?",
+    "relevant_docs": [
+      "doc-red-08"
+    ],
+    "retrieved_chunk_ids": [
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "58164e73-e143-41fb-8baf-015fab100fac"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.293500000145286,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.29440000699833,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q16",
+    "query_type": "factual",
+    "query_text": "What three event types are yielded over Server-Sent Events (SSE) in chat streaming?",
+    "relevant_docs": [
+      "doc-sse-09"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 12.376600003335625,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 12.37729997956194,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q17",
+    "query_type": "factual",
+    "query_text": "What is the trigger threshold for Celery Beat weekly drift detection to flag degraded sources?",
+    "relevant_docs": [
+      "doc-cel-10"
+    ],
+    "retrieved_chunk_ids": [
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f",
+      "f0b99314-bd19-4253-8363-ee9adaf40445",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "881c4d43-ed26-40db-b54f-130c9f356fda",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 10.218799987342209,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 10.219499992672354,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q18",
+    "query_type": "procedural",
+    "query_text": "How does the LiteLLM circuit breaker handle confirmed daily quota exhaustion errors?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 11.863699997775257,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 11.864900006912649,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q19",
+    "query_type": "procedural",
+    "query_text": "What is the retry strategy for transient per-minute rate limits in the LLM client?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "57ec99ce-a76a-4f75-b745-6f2e63525220"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.178699999116361,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 13.179600005969405,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "B",
+    "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q20",
+    "query_type": "factual",
+    "query_text": "What MIME media type and response class are used for streaming chat responses in FastAPI?",
+    "relevant_docs": [
+      "doc-sse-09",
+      "doc-cod-11"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220",
+      "38eed15c-74a1-4a53-99e2-f9e99373a2d5",
+      "14c44b21-6a22-4100-865d-74d30cf8fa24",
+      "a098fa91-f17a-4689-849f-787d9f520e28",
+      "881c4d43-ed26-40db-b54f-130c9f356fda"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 10.33419999293983,
+    "reranking_latency_ms": 0.0,
+    "total_latency_ms": 10.334999999031425,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q01",
+    "query_type": "factual",
+    "query_text": "What are the exact word counts and overlaps used for parent and child chunks in hierarchical chunking?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.944899994181469,
+    "reranking_latency_ms": 1198.2384999864735,
+    "total_latency_ms": 1211.186300002737,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q02",
+    "query_type": "factual",
+    "query_text": "Which chunks are embedded into Qdrant, and where are parent chunks stored for context retrieval?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.946499995654449,
+    "reranking_latency_ms": 961.4476000133436,
+    "total_latency_ms": 975.3971000027377,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q03",
+    "query_type": "conceptual",
+    "query_text": "Why does dense vector search struggle with exact acronyms and part numbers, and how does BM25 solve this?",
+    "relevant_docs": [
+      "doc-ret-02"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "58164e73-e143-41fb-8baf-015fab100fac"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 16.079499997431412,
+    "reranking_latency_ms": 994.1555999976117,
+    "total_latency_ms": 1010.2371000102721,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q04",
+    "query_type": "factual",
+    "query_text": "What mathematical formula defines Reciprocal Rank Fusion (RRF), and what is the standard smoothing constant k?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.31820000289008,
+    "reranking_latency_ms": 942.0599000004586,
+    "total_latency_ms": 956.3800999894738,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q05",
+    "query_type": "comparative",
+    "query_text": "How do factual vs conceptual query routing configurations differ in vector and BM25 weights?",
+    "relevant_docs": [
+      "doc-fus-03",
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.677699996856973,
+    "reranking_latency_ms": 927.1280000102706,
+    "total_latency_ms": 939.80819999706,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q06",
+    "query_type": "factual",
+    "query_text": "What is the computational complexity of Reciprocal Rank Fusion?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.396100006299093,
+    "reranking_latency_ms": 969.0792000037618,
+    "total_latency_ms": 981.4773000252899,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q07",
+    "query_type": "conceptual",
+    "query_text": "How does cross-encoder token-to-token attention differ from bi-encoder retrieval?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 15.262200002325699,
+    "reranking_latency_ms": 907.7028000028804,
+    "total_latency_ms": 922.967200021958,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q08",
+    "query_type": "factual",
+    "query_text": "What mathematical function normalizes cross-encoder output logits, and what threshold filters candidates?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "f0b99314-bd19-4253-8363-ee9adaf40445"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.884400017559528,
+    "reranking_latency_ms": 981.5906999865547,
+    "total_latency_ms": 995.4772000201046,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q09",
+    "query_type": "factual",
+    "query_text": "What are the 5 nodes in the Ragentic LangGraph agent workflow in execution order?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 16.36159999179654,
+    "reranking_latency_ms": 950.8552000042982,
+    "total_latency_ms": 967.2189000120852,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q10",
+    "query_type": "procedural",
+    "query_text": "Under what condition does the LangGraph critic route to the rewriter node instead of responder?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 17.24879999528639,
+    "reranking_latency_ms": 1128.2804999791551,
+    "total_latency_ms": 1145.5314999911934,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q11",
+    "query_type": "procedural",
+    "query_text": "What techniques does the rewriter node use to generate rewritten queries?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 19.092699978500605,
+    "reranking_latency_ms": 1021.7816999938805,
+    "total_latency_ms": 1040.8781000005547,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q12",
+    "query_type": "factual",
+    "query_text": "How is the hallucination rate calculated from evaluation metrics in RAgentic?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 15.348200016887859,
+    "reranking_latency_ms": 1169.4784999999683,
+    "total_latency_ms": 1184.8294999799691,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q13",
+    "query_type": "conceptual",
+    "query_text": "What are the definitions of the three custom RAG evaluation metrics?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.148699992801994,
+    "reranking_latency_ms": 1013.5938999883365,
+    "total_latency_ms": 1027.744699997129,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q14",
+    "query_type": "procedural",
+    "query_text": "Why must engine.dispose() be called after asynchronous database tasks using asyncpg?",
+    "relevant_docs": [
+      "doc-db-07"
+    ],
+    "retrieved_chunk_ids": [
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 18.014500004937872,
+    "reranking_latency_ms": 1045.3387999732513,
+    "total_latency_ms": 1063.355699996464,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q15",
+    "query_type": "factual",
+    "query_text": "What Redis key naming pattern and TTL policy are used for BM25 indexes?",
+    "relevant_docs": [
+      "doc-red-08"
+    ],
+    "retrieved_chunk_ids": [
+      "881c4d43-ed26-40db-b54f-130c9f356fda"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.939899974502623,
+    "reranking_latency_ms": 981.9615000160411,
+    "total_latency_ms": 995.9035999781918,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q16",
+    "query_type": "factual",
+    "query_text": "What three event types are yielded over Server-Sent Events (SSE) in chat streaming?",
+    "relevant_docs": [
+      "doc-sse-09"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 17.033600015565753,
+    "reranking_latency_ms": 1099.4133000203874,
+    "total_latency_ms": 1116.4495999983046,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q17",
+    "query_type": "factual",
+    "query_text": "What is the trigger threshold for Celery Beat weekly drift detection to flag degraded sources?",
+    "relevant_docs": [
+      "doc-cel-10"
+    ],
+    "retrieved_chunk_ids": [
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 15.663900005165488,
+    "reranking_latency_ms": 1044.9047000147402,
+    "total_latency_ms": 1060.5708999792114,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q18",
+    "query_type": "procedural",
+    "query_text": "How does the LiteLLM circuit breaker handle confirmed daily quota exhaustion errors?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 16.731300012907013,
+    "reranking_latency_ms": 1036.226700001862,
+    "total_latency_ms": 1052.9602999740746,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q19",
+    "query_type": "procedural",
+    "query_text": "What is the retry strategy for transient per-minute rate limits in the LLM client?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 17.141100019216537,
+    "reranking_latency_ms": 1100.7651000109036,
+    "total_latency_ms": 1117.9092999955174,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 1,
+    "run_type": "cold",
+    "query_id": "q20",
+    "query_type": "factual",
+    "query_text": "What MIME media type and response class are used for streaming chat responses in FastAPI?",
+    "relevant_docs": [
+      "doc-sse-09",
+      "doc-cod-11"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 15.133300010347739,
+    "reranking_latency_ms": 1011.8348999822047,
+    "total_latency_ms": 1026.970299979439,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q01",
+    "query_type": "factual",
+    "query_text": "What are the exact word counts and overlaps used for parent and child chunks in hierarchical chunking?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 15.854299999773502,
+    "reranking_latency_ms": 1124.3977000121959,
+    "total_latency_ms": 1140.253899997333,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q02",
+    "query_type": "factual",
+    "query_text": "Which chunks are embedded into Qdrant, and where are parent chunks stored for context retrieval?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.220800017938018,
+    "reranking_latency_ms": 1024.7056999942288,
+    "total_latency_ms": 1038.928499998292,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q03",
+    "query_type": "conceptual",
+    "query_text": "Why does dense vector search struggle with exact acronyms and part numbers, and how does BM25 solve this?",
+    "relevant_docs": [
+      "doc-ret-02"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "58164e73-e143-41fb-8baf-015fab100fac"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 17.201799986651167,
+    "reranking_latency_ms": 1061.6622999950778,
+    "total_latency_ms": 1078.8669000030495,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q04",
+    "query_type": "factual",
+    "query_text": "What mathematical formula defines Reciprocal Rank Fusion (RRF), and what is the standard smoothing constant k?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 17.77899998705834,
+    "reranking_latency_ms": 1073.5389000037685,
+    "total_latency_ms": 1091.320099978475,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q05",
+    "query_type": "comparative",
+    "query_text": "How do factual vs conceptual query routing configurations differ in vector and BM25 weights?",
+    "relevant_docs": [
+      "doc-fus-03",
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.756300013279542,
+    "reranking_latency_ms": 1016.8448000040371,
+    "total_latency_ms": 1029.603099974338,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q06",
+    "query_type": "factual",
+    "query_text": "What is the computational complexity of Reciprocal Rank Fusion?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 15.251399978296831,
+    "reranking_latency_ms": 1051.9467999984045,
+    "total_latency_ms": 1067.2002999926917,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q07",
+    "query_type": "conceptual",
+    "query_text": "How does cross-encoder token-to-token attention differ from bi-encoder retrieval?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 15.215899999020621,
+    "reranking_latency_ms": 1017.9681000008713,
+    "total_latency_ms": 1033.186700020451,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q08",
+    "query_type": "factual",
+    "query_text": "What mathematical function normalizes cross-encoder output logits, and what threshold filters candidates?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "f0b99314-bd19-4253-8363-ee9adaf40445"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.494300005026162,
+    "reranking_latency_ms": 1016.7494999768678,
+    "total_latency_ms": 1031.245799997123,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q09",
+    "query_type": "factual",
+    "query_text": "What are the 5 nodes in the Ragentic LangGraph agent workflow in execution order?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 11.904300015885383,
+    "reranking_latency_ms": 981.0595999879297,
+    "total_latency_ms": 992.9661999922246,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q10",
+    "query_type": "procedural",
+    "query_text": "Under what condition does the LangGraph critic route to the rewriter node instead of responder?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.802300021983683,
+    "reranking_latency_ms": 1000.1101999951061,
+    "total_latency_ms": 1014.914699975634,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q11",
+    "query_type": "procedural",
+    "query_text": "What techniques does the rewriter node use to generate rewritten queries?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 15.646999992895871,
+    "reranking_latency_ms": 1233.9994999929331,
+    "total_latency_ms": 1249.6491000056267,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q12",
+    "query_type": "factual",
+    "query_text": "How is the hallucination rate calculated from evaluation metrics in RAgentic?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 15.597800025716424,
+    "reranking_latency_ms": 1014.6776000037789,
+    "total_latency_ms": 1030.277899990324,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q13",
+    "query_type": "conceptual",
+    "query_text": "What are the definitions of the three custom RAG evaluation metrics?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 17.72309999796562,
+    "reranking_latency_ms": 984.1522999922745,
+    "total_latency_ms": 1001.8777000077534,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q14",
+    "query_type": "procedural",
+    "query_text": "Why must engine.dispose() be called after asynchronous database tasks using asyncpg?",
+    "relevant_docs": [
+      "doc-db-07"
+    ],
+    "retrieved_chunk_ids": [
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 15.600700018694624,
+    "reranking_latency_ms": 1114.0462000039406,
+    "total_latency_ms": 1129.6492999827024,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q15",
+    "query_type": "factual",
+    "query_text": "What Redis key naming pattern and TTL policy are used for BM25 indexes?",
+    "relevant_docs": [
+      "doc-red-08"
+    ],
+    "retrieved_chunk_ids": [
+      "881c4d43-ed26-40db-b54f-130c9f356fda"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 15.155499975662678,
+    "reranking_latency_ms": 1030.82159999758,
+    "total_latency_ms": 1045.9791999892332,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q16",
+    "query_type": "factual",
+    "query_text": "What three event types are yielded over Server-Sent Events (SSE) in chat streaming?",
+    "relevant_docs": [
+      "doc-sse-09"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.700999988941476,
+    "reranking_latency_ms": 993.5384000127669,
+    "total_latency_ms": 1007.241499988595,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q17",
+    "query_type": "factual",
+    "query_text": "What is the trigger threshold for Celery Beat weekly drift detection to flag degraded sources?",
+    "relevant_docs": [
+      "doc-cel-10"
+    ],
+    "retrieved_chunk_ids": [
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 18.251300003612414,
+    "reranking_latency_ms": 1033.4391000214964,
+    "total_latency_ms": 1051.692400011234,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q18",
+    "query_type": "procedural",
+    "query_text": "How does the LiteLLM circuit breaker handle confirmed daily quota exhaustion errors?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 11.726199998520315,
+    "reranking_latency_ms": 1190.6042999762576,
+    "total_latency_ms": 1202.3328999930527,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q19",
+    "query_type": "procedural",
+    "query_text": "What is the retry strategy for transient per-minute rate limits in the LLM client?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.2440999916289,
+    "reranking_latency_ms": 1012.4246000195853,
+    "total_latency_ms": 1026.6706999973394,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 2,
+    "run_type": "warm",
+    "query_id": "q20",
+    "query_type": "factual",
+    "query_text": "What MIME media type and response class are used for streaming chat responses in FastAPI?",
+    "relevant_docs": [
+      "doc-sse-09",
+      "doc-cod-11"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.886199991451576,
+    "reranking_latency_ms": 985.4886000102852,
+    "total_latency_ms": 1000.3771000192501,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q01",
+    "query_type": "factual",
+    "query_text": "What are the exact word counts and overlaps used for parent and child chunks in hierarchical chunking?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "f805d3a1-8d45-4f31-8059-7357e11ff023",
+      "13cec9dc-a547-4f5e-8279-0a911268ced8"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.810699998633936,
+    "reranking_latency_ms": 991.7574000137392,
+    "total_latency_ms": 1006.5701999992598,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q02",
+    "query_type": "factual",
+    "query_text": "Which chunks are embedded into Qdrant, and where are parent chunks stored for context retrieval?",
+    "relevant_docs": [
+      "doc-vec-01"
+    ],
+    "retrieved_chunk_ids": [
+      "13cec9dc-a547-4f5e-8279-0a911268ced8",
+      "f805d3a1-8d45-4f31-8059-7357e11ff023"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.268500002799556,
+    "reranking_latency_ms": 921.4755000139121,
+    "total_latency_ms": 935.7461000035983,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q03",
+    "query_type": "conceptual",
+    "query_text": "Why does dense vector search struggle with exact acronyms and part numbers, and how does BM25 solve this?",
+    "relevant_docs": [
+      "doc-ret-02"
+    ],
+    "retrieved_chunk_ids": [
+      "c3605780-4dbb-45ad-8139-a8620d9a1429",
+      "1c8762b1-41e2-4812-b366-506664ad1825",
+      "58164e73-e143-41fb-8baf-015fab100fac"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 14.96420000330545,
+    "reranking_latency_ms": 925.6373999814969,
+    "total_latency_ms": 940.6033999985084,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q04",
+    "query_type": "factual",
+    "query_text": "What mathematical formula defines Reciprocal Rank Fusion (RRF), and what is the standard smoothing constant k?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 13.418699993053451,
+    "reranking_latency_ms": 935.6508000055328,
+    "total_latency_ms": 949.0717000153381,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q05",
+    "query_type": "comparative",
+    "query_text": "How do factual vs conceptual query routing configurations differ in vector and BM25 weights?",
+    "relevant_docs": [
+      "doc-fus-03",
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7",
+      "58164e73-e143-41fb-8baf-015fab100fac"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 15.412099979585037,
+    "reranking_latency_ms": 962.7356000128202,
+    "total_latency_ms": 978.1497000076342,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q06",
+    "query_type": "factual",
+    "query_text": "What is the computational complexity of Reciprocal Rank Fusion?",
+    "relevant_docs": [
+      "doc-fus-03"
+    ],
+    "retrieved_chunk_ids": [
+      "50b85aec-c62c-4b8c-bf0d-dd2d1270dc84",
+      "62eeb276-eb7f-481d-ba65-05b9f5bb8cc7"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 12.87820001016371,
+    "reranking_latency_ms": 992.9756000055932,
+    "total_latency_ms": 1005.8557000011206,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q07",
+    "query_type": "conceptual",
+    "query_text": "How does cross-encoder token-to-token attention differ from bi-encoder retrieval?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "1c8762b1-41e2-4812-b366-506664ad1825"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.75979998940602,
+    "reranking_latency_ms": 1062.3032999865245,
+    "total_latency_ms": 1077.0653999934439,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q08",
+    "query_type": "factual",
+    "query_text": "What mathematical function normalizes cross-encoder output logits, and what threshold filters candidates?",
+    "relevant_docs": [
+      "doc-rer-04"
+    ],
+    "retrieved_chunk_ids": [
+      "f0b99314-bd19-4253-8363-ee9adaf40445"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 16.545799997402355,
+    "reranking_latency_ms": 1029.3023999838624,
+    "total_latency_ms": 1045.850900001824,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q09",
+    "query_type": "factual",
+    "query_text": "What are the 5 nodes in the Ragentic LangGraph agent workflow in execution order?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 15.958700008923188,
+    "reranking_latency_ms": 1027.529599989066,
+    "total_latency_ms": 1043.4907999879215,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q10",
+    "query_type": "procedural",
+    "query_text": "Under what condition does the LangGraph critic route to the rewriter node instead of responder?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b",
+      "bbc1ba46-27b0-4e2f-820d-11945f9e1e13"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 15.93180000782013,
+    "reranking_latency_ms": 995.1913999975659,
+    "total_latency_ms": 1011.1255000228994,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q11",
+    "query_type": "procedural",
+    "query_text": "What techniques does the rewriter node use to generate rewritten queries?",
+    "relevant_docs": [
+      "doc-gra-05"
+    ],
+    "retrieved_chunk_ids": [
+      "51a13a44-736d-4ec9-bfe6-a4ef3701438b"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 13.91509998939,
+    "reranking_latency_ms": 1006.4816999947652,
+    "total_latency_ms": 1020.3986999986228,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q12",
+    "query_type": "factual",
+    "query_text": "How is the hallucination rate calculated from evaluation metrics in RAgentic?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 15.693600027589127,
+    "reranking_latency_ms": 1098.4066000091843,
+    "total_latency_ms": 1114.1022999945562,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q13",
+    "query_type": "conceptual",
+    "query_text": "What are the definitions of the three custom RAG evaluation metrics?",
+    "relevant_docs": [
+      "doc-eva-06"
+    ],
+    "retrieved_chunk_ids": [
+      "a098fa91-f17a-4689-849f-787d9f520e28"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 15.213600010611117,
+    "reranking_latency_ms": 1091.4215999946464,
+    "total_latency_ms": 1106.637100019725,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q14",
+    "query_type": "procedural",
+    "query_text": "Why must engine.dispose() be called after asynchronous database tasks using asyncpg?",
+    "relevant_docs": [
+      "doc-db-07"
+    ],
+    "retrieved_chunk_ids": [
+      "2b7b412d-b16f-45a8-b467-f0761bbfd22a",
+      "30593c30-e3f3-453e-a2ed-bda537e8da7f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.4,
+    "retrieval_latency_ms": 16.98970000143163,
+    "reranking_latency_ms": 974.5884999865666,
+    "total_latency_ms": 991.5809000085574,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q15",
+    "query_type": "factual",
+    "query_text": "What Redis key naming pattern and TTL policy are used for BM25 indexes?",
+    "relevant_docs": [
+      "doc-red-08"
+    ],
+    "retrieved_chunk_ids": [
+      "881c4d43-ed26-40db-b54f-130c9f356fda"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.414700010092929,
+    "reranking_latency_ms": 969.9102999875322,
+    "total_latency_ms": 984.3269000120927,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q16",
+    "query_type": "factual",
+    "query_text": "What three event types are yielded over Server-Sent Events (SSE) in chat streaming?",
+    "relevant_docs": [
+      "doc-sse-09"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 14.114100020378828,
+    "reranking_latency_ms": 3231.606700021075,
+    "total_latency_ms": 3245.723600004567,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q17",
+    "query_type": "factual",
+    "query_text": "What is the trigger threshold for Celery Beat weekly drift detection to flag degraded sources?",
+    "relevant_docs": [
+      "doc-cel-10"
+    ],
+    "retrieved_chunk_ids": [
+      "d9f43355-f5fb-44c6-a372-0ffd39c1f09f"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 27.542000025277957,
+    "reranking_latency_ms": 1423.6668999947142,
+    "total_latency_ms": 1451.2115999823436,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q18",
+    "query_type": "procedural",
+    "query_text": "How does the LiteLLM circuit breaker handle confirmed daily quota exhaustion errors?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 17.1645000227727,
+    "reranking_latency_ms": 1341.87020000536,
+    "total_latency_ms": 1359.0381999965757,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q19",
+    "query_type": "procedural",
+    "query_text": "What is the retry strategy for transient per-minute rate limits in the LLM client?",
+    "relevant_docs": [
+      "doc-lit-12"
+    ],
+    "retrieved_chunk_ids": [
+      "08cd41dc-6895-4c25-b459-4dc3a4995654"
+    ],
+    "recall@5": 1.0,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 23.57839999604039,
+    "reranking_latency_ms": 1488.6877000099048,
+    "total_latency_ms": 1512.2699000057764,
+    "success": true,
+    "error": null
+  },
+  {
+    "config_id": "C",
+    "config_name": "Hybrid + Cross-Encoder Rerank",
+    "iteration": 3,
+    "run_type": "warm",
+    "query_id": "q20",
+    "query_type": "factual",
+    "query_text": "What MIME media type and response class are used for streaming chat responses in FastAPI?",
+    "relevant_docs": [
+      "doc-sse-09",
+      "doc-cod-11"
+    ],
+    "retrieved_chunk_ids": [
+      "57ec99ce-a76a-4f75-b745-6f2e63525220"
+    ],
+    "recall@5": 0.5,
+    "hit_rate@5": 1.0,
+    "mrr": 1.0,
+    "precision@5": 0.2,
+    "retrieval_latency_ms": 18.826399988029152,
+    "reranking_latency_ms": 1563.7195000017527,
+    "total_latency_ms": 1582.548999984283,
+    "success": true,
+    "error": null
+  }
+]

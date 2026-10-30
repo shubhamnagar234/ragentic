@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RAgenticBenchmarkDatasetTemplate",
+  "description": "Schema template for reproducible RAgentic retrieval and answer quality evaluation",
+  "workspace_id": "ws-benchmark-001",
+  "version": "1.0.0",
+  "documents": [
+    {
+      "doc_id": "doc-001",
+      "title": "Example Document Title",
+      "source_type": "WEB",
+      "text": "Full text of document that will be ingested and chunked using chunk_text_hierarchical()..."
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "q-001",
+      "query": "What is the specific mechanism or concept described?",
+      "query_type": "conceptual",
+      "ground_truth_answer": "Expected gold answer for faithfulness and relevance scoring.",
+      "relevant_doc_ids": ["doc-001"],
+      "relevant_keywords": ["keyword1", "keyword2"],
+      "notes": "Verified relevance annotation."
+    }
+  ]
+}
