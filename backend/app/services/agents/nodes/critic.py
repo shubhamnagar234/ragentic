@@ -1,6 +1,6 @@
 from app.services.agents.state import RagenticState
 from app.services.retrieval.confidence import compute_confidence
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 async def critic_node(state: RagenticState) -> RagenticState:
@@ -34,7 +34,7 @@ async def critic_node(state: RagenticState) -> RagenticState:
             f"Confidence: {str(confidence_level).split('.')[-1]} (score: {confidence_score:.2f})"
             f"{' → retry triggered' if needs_retry else ' → proceeding to respond'}"
         ),
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "metadata": {
             "confidence_level": confidence_level,
             "confidence_score": confidence_score,

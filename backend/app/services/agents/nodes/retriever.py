@@ -3,7 +3,7 @@ from app.services.retrieval.dense import dense_search
 from app.services.retrieval.sparse import sparse_search
 from app.services.retrieval.fusion import reciprocal_rank_fusion
 from app.services.retrieval.reranker import rerank_chunks
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 async def retriever_node(state: RagenticState) -> RagenticState:
@@ -55,7 +55,6 @@ async def retriever_node(state: RagenticState) -> RagenticState:
         query=query,
         chunks=fused_chunks[:20],
         top_k=5,
-        threshold=0.3,
     )
 
     # Log timeline event
@@ -67,7 +66,7 @@ async def retriever_node(state: RagenticState) -> RagenticState:
             f"{len(sparse_chunks)} sparse → "
             f"{len(reranked_chunks)} selected after reranking"
         ),
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "metadata": {
             "dense_count": len(dense_chunks),
             "sparse_count": len(sparse_chunks),

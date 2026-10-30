@@ -1,0 +1,105 @@
+{
+  "retrieval_quality": {
+    "A": {
+      "config_name": "Qdrant Vector Only",
+      "recall@5": 0.95,
+      "hit_rate@5": 1.0,
+      "mrr": 0.9625,
+      "precision@5": 0.3399999999999999,
+      "evaluated_queries": 20,
+      "total_observations": 60
+    },
+    "B": {
+      "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+      "recall@5": 0.95,
+      "hit_rate@5": 1.0,
+      "mrr": 0.975,
+      "precision@5": 0.3399999999999999,
+      "evaluated_queries": 20,
+      "total_observations": 60
+    },
+    "C": {
+      "config_name": "Hybrid + Cross-Encoder Rerank",
+      "recall@5": 0.8,
+      "hit_rate@5": 1.0,
+      "mrr": 1.0,
+      "precision@5": 0.27999999999999997,
+      "evaluated_queries": 20,
+      "total_observations": 60
+    }
+  },
+  "latency": {
+    "A": {
+      "config_name": "Qdrant Vector Only",
+      "warm_samples": 40,
+      "failure_rate_pct": 0.0,
+      "retrieval": {
+        "median_ms": 13.649149987031706,
+        "p95_ms": 15.654985001310704,
+        "mean_ms": 13.53753250077716
+      },
+      "reranking": {
+        "median_ms": 0.0,
+        "p95_ms": 0.0,
+        "mean_ms": 0.0
+      },
+      "total": {
+        "median_ms": 13.650199995026924,
+        "p95_ms": 15.655989981314631,
+        "mean_ms": 13.53865249620867
+      },
+      "cold_start": {
+        "median_ms": 12.28534999245312,
+        "p95_ms": 16.505334996327296
+      }
+    },
+    "B": {
+      "config_name": "Hybrid (Qdrant + BM25 + RRF)",
+      "warm_samples": 40,
+      "failure_rate_pct": 0.0,
+      "retrieval": {
+        "median_ms": 13.514099991880357,
+        "p95_ms": 14.73293000162812,
+        "mean_ms": 13.134265001281165
+      },
+      "reranking": {
+        "median_ms": 0.0,
+        "p95_ms": 0.0,
+        "mean_ms": 0.0
+      },
+      "total": {
+        "median_ms": 13.514899997971952,
+        "p95_ms": 14.73384500714019,
+        "mean_ms": 13.135202499688603
+      },
+      "cold_start": {
+        "median_ms": 13.961100004962645,
+        "p95_ms": 15.203564980765806
+      }
+    },
+    "C": {
+      "config_name": "Hybrid + Cross-Encoder Rerank",
+      "warm_samples": 40,
+      "failure_rate_pct": 0.0,
+      "retrieval": {
+        "median_ms": 15.214750004815869,
+        "p95_ms": 19.0639999884297,
+        "mean_ms": 15.710347502317745
+      },
+      "reranking": {
+        "median_ms": 1021.3368999975501,
+        "p95_ms": 1492.439290009497,
+        "mean_ms": 1124.927362499875
+      },
+      "total": {
+        "median_ms": 1036.0576000093715,
+        "p95_ms": 1515.7838550047015,
+        "mean_ms": 1140.6400399988343
+      },
+      "cold_start": {
+        "median_ms": 1027.357499988284,
+        "p95_ms": 1186.1473399811075
+      }
+    }
+  }
+}
