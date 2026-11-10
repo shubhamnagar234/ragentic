@@ -18,11 +18,13 @@ def extract_pdf_pages(file_path: str) -> List[dict]:
         images = page.get_images(full=True)
         has_images = len(images) > 0
 
-        pages.append({
-            "page_num": page_num + 1,
-            "text": text,
-            "has_images": has_images,
-        })
+        pages.append(
+            {
+                "page_num": page_num + 1,
+                "text": text,
+                "has_images": has_images,
+            }
+        )
 
     doc.close()
     return pages
@@ -34,12 +36,11 @@ async def get_image_description(page_num: int, file_path: str) -> str:
     Returns text description of images/charts on that page.
     """
     try:
-        import google.generativeai as genai
+        from google import genai
         from app.config import settings
         import fitz
 
-        genai.configure(api_key=settings.GEMINI_API_KEY)
-        model = genai.GenerativeModel(settings.LLM_VISION_MODEL)
+        client = genai.Client(api_key=settings.GEMINI_API_KEY)
 
         # Render page as image
         doc = fitz.open(file_path)
@@ -51,15 +52,20 @@ async def get_image_description(page_num: int, file_path: str) -> str:
         # Send to Gemini Vision
         import PIL.Image
         import io
+
         image = PIL.Image.open(io.BytesIO(img_bytes))
 
-        response = model.generate_content([
-            "Describe all charts, graphs, diagrams, and images on this page. "
-            "Be specific about data, labels, and visual information shown.",
-            image,
-        ])
+        model_name = settings.LLM_VISION_MODEL or "gemini-2.5-flash"
+        response = client.models.generate_content(
+            model=model_name,
+            contents=[
+                "Describe all charts, graphs, diagrams, and images on this page. "
+                "Be specific about data, labels, and visual information shown.",
+                image,
+            ],
+        )
 
-        return response.text
+        return response.text or ""
 
     except Exception as e:
         print(f"[pdf_ingestor] Vision pass failed for page {page_num}: {e}")
@@ -85,9 +91,7 @@ async def ingest_pdf(file_path: str, source_id: str) -> List[Chunk]:
         # Vision pass for image pages
         if page["has_images"]:
             print(f"[pdf_ingestor] Running vision pass on page {page['page_num']}")
-            image_description = await get_image_description(
-                page["page_num"], file_path
-            )
+            image_description = await get_image_description(page["page_num"], file_path)
             if image_description:
                 page_text += f"\n\n[Visual content on page {page['page_num']}]: {image_description}"
 

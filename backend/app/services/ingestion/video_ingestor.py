@@ -9,8 +9,8 @@ from app.services.ingestion.chunker import Chunk, chunk_transcript_hierarchical
 def extract_youtube_video_id(url: str) -> Optional[str]:
     """Extract YouTube video ID from various URL formats."""
     patterns = [
-        r'(?:v=|\/)([0-9A-Za-z_-]{11}).*',
-        r'(?:embed\/|shorts\/)([0-9A-Za-z_-]{11})',
+        r"(?:v=|\/)([0-9A-Za-z_-]{11}).*",
+        r"(?:embed\/|shorts\/)([0-9A-Za-z_-]{11})",
     ]
     for pattern in patterns:
         match = re.search(pattern, url)
@@ -23,6 +23,7 @@ def get_video_title(url: str) -> str:
     """Fetch video title using YouTube official oEmbed API (instant, never blocked)."""
     import urllib.request
     import json
+
     try:
         oembed_url = f"https://www.youtube.com/oembed?url={url}&format=json"
         req = urllib.request.Request(oembed_url, headers={"User-Agent": "Mozilla/5.0"})
@@ -49,7 +50,9 @@ def parse_srt_timestamp(ts: str) -> float:
 
 def parse_srt(content: str) -> List[dict]:
     """Parse SRT content into list of segments [{text, start, end}]."""
-    pattern = re.compile(r'(\d+:\d+:[\d\.,]+|\d+:[\d\.,]+)\s*-->\s*(\d+:\d+:[\d\.,]+|\d+:[\d\.,]+)')
+    pattern = re.compile(
+        r"(\d+:\d+:[\d\.,]+|\d+:[\d\.,]+)\s*-->\s*(\d+:\d+:[\d\.,]+|\d+:[\d\.,]+)"
+    )
     blocks = content.replace("\r\n", "\n").strip().split("\n\n")
     segments = []
     for block in blocks:
@@ -68,7 +71,7 @@ def parse_srt(content: str) -> List[dict]:
             continue
         start = parse_srt_timestamp(ts_match.group(1))
         end = parse_srt_timestamp(ts_match.group(2))
-        text_lines = lines[ts_idx + 1:]
+        text_lines = lines[ts_idx + 1 :]
         text = " ".join(text_lines).strip()
         if text:
             segments.append({"text": text, "start": start, "end": end})
@@ -84,7 +87,9 @@ def fetch_youtube_subtitles_ytdlp(url: str) -> List[dict]:
     import glob
     import yt_dlp
 
-    print(f"[video_ingestor] Attempting subtitle extraction via yt-dlp mobile client: {url}")
+    print(
+        f"[video_ingestor] Attempting subtitle extraction via yt-dlp mobile client: {url}"
+    )
     with tempfile.TemporaryDirectory() as tmp_dir:
         sub_prefix = os.path.join(tmp_dir, "sub")
         ydl_opts = {
@@ -97,6 +102,7 @@ def fetch_youtube_subtitles_ytdlp(url: str) -> List[dict]:
             "extractor_args": {"youtube": {"player_client": ["android", "ios"]}},
             "quiet": True,
             "no_warnings": True,
+            "ignoreerrors": True,
         }
         try:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -111,7 +117,9 @@ def fetch_youtube_subtitles_ytdlp(url: str) -> List[dict]:
                 content = f.read()
 
             segments = parse_srt(content)
-            print(f"[video_ingestor] Extracted {len(segments)} subtitle segments via yt-dlp")
+            print(
+                f"[video_ingestor] Extracted {len(segments)} subtitle segments via yt-dlp"
+            )
             return segments
         except Exception as e:
             print(f"[video_ingestor] yt-dlp subtitle extraction failed: {e}")
@@ -124,6 +132,7 @@ def fetch_youtube_transcript(video_id: str) -> List[dict]:
     Used as secondary fallback for YouTube.
     """
     from youtube_transcript_api import YouTubeTranscriptApi
+
     try:
         try:
             api = YouTubeTranscriptApi()
@@ -146,11 +155,13 @@ def fetch_youtube_transcript(video_id: str) -> List[dict]:
                 continue
 
             if text:
-                segments.append({
-                    "text": text,
-                    "start": float(start),
-                    "end": float(start + duration),
-                })
+                segments.append(
+                    {
+                        "text": text,
+                        "start": float(start),
+                        "end": float(start + duration),
+                    }
+                )
         return segments
     except Exception as e:
         print(f"[video_ingestor] youtube-transcript-api failed for {video_id}: {e}")
@@ -170,11 +181,13 @@ def download_audio(url: str, output_dir: str) -> str:
         "format": "bestaudio/best",
         "outtmpl": output_path,
         "extractor_args": {"youtube": {"player_client": ["android", "ios"]}},
-        "postprocessors": [{
-            "key": "FFmpegExtractAudio",
-            "preferredcodec": "mp3",
-            "preferredquality": "192",
-        }],
+        "postprocessors": [
+            {
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "mp3",
+                "preferredquality": "192",
+            }
+        ],
         "quiet": True,
         "no_warnings": True,
     }
@@ -205,11 +218,13 @@ def transcribe_audio(audio_path: str) -> List[dict]:
 
     result = []
     for segment in segments:
-        result.append({
-            "text": segment.text.strip(),
-            "start": segment.start,
-            "end": segment.end,
-        })
+        result.append(
+            {
+                "text": segment.text.strip(),
+                "start": segment.start,
+                "end": segment.end,
+            }
+        )
 
     print(f"[video_ingestor] Transcribed {len(result)} segments")
     return result
@@ -235,12 +250,16 @@ async def ingest_video(url: str, source_id: str) -> tuple[List[Chunk], str]:
     if not segments:
         video_id = extract_youtube_video_id(url)
         if video_id:
-            print(f"[video_ingestor] Subtitles not found via yt-dlp; trying youtube-transcript-api for: {video_id}")
+            print(
+                f"[video_ingestor] Subtitles not found via yt-dlp; trying youtube-transcript-api for: {video_id}"
+            )
             segments = fetch_youtube_transcript(video_id)
 
     # 3. Last fallback: yt-dlp audio download + whisper (for Loom or videos without subtitles)
     if not segments:
-        print(f"[video_ingestor] No subtitles available; falling back to audio download + whisper")
+        print(
+            f"[video_ingestor] No subtitles available; falling back to audio download + whisper"
+        )
         with tempfile.TemporaryDirectory() as tmp_dir:
             try:
                 audio_path, extracted_title = download_audio(url, tmp_dir)

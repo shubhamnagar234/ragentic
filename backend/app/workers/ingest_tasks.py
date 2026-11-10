@@ -88,19 +88,28 @@ async def _ingest_async(
                 # Route to correct ingestor
                 if source_type in ("YOUTUBE", "LOOM"):
                     from app.services.ingestion.video_ingestor import ingest_video
+
                     chunks, title = await ingest_video(url, source_id)
 
                 elif source_type == "PDF":
+                    import os
                     from app.services.ingestion.pdf_ingestor import ingest_pdf
+
                     chunks = await ingest_pdf(url, source_id)
-                    title = url.split("/")[-1] if url else "PDF"
+                    raw_name = os.path.basename(url) if url else "PDF"
+                    clean_name = (
+                        raw_name.split("_", 1)[1] if "_" in raw_name else raw_name
+                    )
+                    title = source.title or clean_name
 
                 elif source_type == "WEB":
                     from app.services.ingestion.web_ingestor import ingest_web
+
                     chunks, title = await ingest_web(url, source_id)
 
                 elif source_type == "GITHUB":
                     from app.services.ingestion.github_ingestor import ingest_github
+
                     chunks, title = await ingest_github(url, source_id)
 
                 else:
@@ -148,18 +157,20 @@ async def _ingest_async(
                 # Store parent chunks in PostgreSQL (bulk insert)
                 parent_chunks = [c for c in chunks if c.chunk_type == "parent"]
                 if parent_chunks:
-                    db.add_all([
-                        ChunkModel(
-                            id=uuid.UUID(chunk.chunk_id),
-                            source_id=uuid.UUID(source_id),
-                            text=chunk.text,
-                            page_num=chunk.page_num,
-                            start_time=chunk.start_time,
-                            end_time=chunk.end_time,
-                            chunk_type="parent",
-                        )
-                        for chunk in parent_chunks
-                    ])
+                    db.add_all(
+                        [
+                            ChunkModel(
+                                id=uuid.UUID(chunk.chunk_id),
+                                source_id=uuid.UUID(source_id),
+                                text=chunk.text,
+                                page_num=chunk.page_num,
+                                start_time=chunk.start_time,
+                                end_time=chunk.end_time,
+                                chunk_type="parent",
+                            )
+                            for chunk in parent_chunks
+                        ]
+                    )
 
                 # Build BM25 index
                 all_chunk_dicts = [
@@ -175,7 +186,7 @@ async def _ingest_async(
 
                 # Update source status to ready
                 source.status = "ready"
-                source.title = title or url
+                source.title = title or source.title or url
                 source.chunk_count = len(embedded)
                 await db.commit()
 
