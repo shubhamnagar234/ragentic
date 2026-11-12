@@ -1,5 +1,15 @@
 from pydantic_settings import BaseSettings
 from typing import Optional
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Ensure .env is loaded as the authoritative source of truth, overriding any stale shell env vars
+env_path = Path(__file__).resolve().parent.parent / ".env"
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path, override=True)
+else:
+    load_dotenv(override=True)
+
 
 
 class Settings(BaseSettings):

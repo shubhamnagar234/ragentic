@@ -38,7 +38,9 @@ async def evaluate_response(
         return None
 
     # Include all retrieved contexts so claims from all cited sources are evaluated
-    ctx_preview = "\n---\n".join(f"[Source {i+1}]: {c}" for i, c in enumerate(contexts[:5]))
+    ctx_preview = "\n---\n".join(
+        f"[Source {i+1}]: {c}" for i, c in enumerate(contexts[:5])
+    )
 
     system = (
         "You are an evaluation assistant. "
@@ -69,7 +71,7 @@ Respond with exactly this JSON format:
             prompt=prompt,
             system_prompt=system,
             json_mode=True,
-            max_tokens=1000,
+            max_tokens=2048,
         )
 
         text = raw.strip()
@@ -80,12 +82,30 @@ Respond with exactly this JSON format:
                 text = parts[1]
                 if text.startswith("json"):
                     text = text[4:]
-        start = text.find("{")
-        end = text.rfind("}")
-        if start != -1 and end != -1:
-            text = text[start:end+1]
 
-        scores = json.loads(text)
+        start = text.find("{")
+        if start != -1:
+            end = text.rfind("}")
+            if end != -1 and end > start:
+                text = text[start : end + 1]
+            else:
+                text = text[start:] + "}"
+
+        try:
+            scores = json.loads(text)
+        except Exception:
+            import re
+
+            scores = {}
+            f_m = re.search(r'"?faithfulness"?\s*:\s*([0-9.]+)', text)
+            p_m = re.search(r'"?context_precision"?\s*:\s*([0-9.]+)', text)
+            r_m = re.search(r'"?answer_relevance"?\s*:\s*([0-9.]+)', text)
+            if f_m:
+                scores["faithfulness"] = float(f_m.group(1))
+            if p_m:
+                scores["context_precision"] = float(p_m.group(1))
+            if r_m:
+                scores["answer_relevance"] = float(r_m.group(1))
 
         faithfulness = float(scores.get("faithfulness", 0.0))
         context_precision = float(scores.get("context_precision", 0.0))

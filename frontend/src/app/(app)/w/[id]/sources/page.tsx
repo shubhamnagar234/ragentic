@@ -150,9 +150,9 @@ export default function SourcesPage() {
   const params = useParams();
   const id = params.id as string;
   const queryClient = useQueryClient();
-  const { setSources } = useWorkspaceStore();
+  const setSources = useWorkspaceStore((state) => state.setSources);
 
-  const { data: sources = [], isLoading } = useQuery<Source[]>({
+  const { data: sources, isLoading } = useQuery<Source[]>({
     queryKey: ["sources", id],
     queryFn: () => sourcesApi.getAll(id),
     refetchInterval: 5000, // Poll every 5s to catch status updates
@@ -160,8 +160,12 @@ export default function SourcesPage() {
 
   // Sync sources to store for sidebar filter
   useEffect(() => {
-    setSources(sources);
+    if (sources) {
+      setSources(sources);
+    }
   }, [sources, setSources]);
+
+  const sourcesList = sources ?? [];
 
   const deleteMutation = useMutation({
     mutationFn: (sourceId: string) => sourcesApi.delete(id, sourceId),
@@ -194,7 +198,7 @@ export default function SourcesPage() {
       )}
 
       {/* Empty state */}
-      {!isLoading && sources.length === 0 && (
+      {!isLoading && sourcesList.length === 0 && (
         <div className="flex flex-col items-center justify-center py-24 gap-3">
           <Database className="w-10 h-10 text-muted-foreground" />
           <div className="text-center">
@@ -207,9 +211,9 @@ export default function SourcesPage() {
       )}
 
       {/* Sources list */}
-      {!isLoading && sources.length > 0 && (
+      {!isLoading && sourcesList.length > 0 && (
         <div className="space-y-3">
-          {sources.map((source) => (
+          {sourcesList.map((source) => (
             <SourceCard
               key={source.id}
               source={source}

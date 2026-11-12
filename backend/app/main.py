@@ -117,7 +117,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Register routers
+# Register routers (reloaded)
 app.include_router(
     workspaces.router,
     prefix="/api/workspaces",

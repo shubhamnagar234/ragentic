@@ -39,7 +39,23 @@ export const useWorkspaceStore = create<WorkspaceStore>((set) => ({
 
   // Sources
   sources: [],
-  setSources: (sources) => set({ sources }),
+  setSources: (sources) =>
+    set((state) => {
+      if (
+        state.sources === sources ||
+        (state.sources.length === sources.length &&
+          state.sources.every(
+            (s, i) =>
+              s.id === sources[i]?.id &&
+              s.status === sources[i]?.status &&
+              s.chunk_count === sources[i]?.chunk_count &&
+              s.title === sources[i]?.title,
+          ))
+      ) {
+        return state;
+      }
+      return { sources };
+    }),
   addSource: (source) =>
     set((state) => ({ sources: [...state.sources, source] })),
   updateSource: (id, updates) =>
@@ -55,10 +71,23 @@ export const useWorkspaceStore = create<WorkspaceStore>((set) => ({
 
   // Sessions
   sessions: [],
-  setSessions: (sessions) => set({ sessions }),
+  setSessions: (sessions) =>
+    set((state) => {
+      if (
+        state.sessions === sessions ||
+        (state.sessions.length === sessions.length &&
+          state.sessions.every(
+            (s, i) =>
+              s.id === sessions[i]?.id && s.title === sessions[i]?.title,
+          ))
+      ) {
+        return state;
+      }
+      return { sessions };
+    }),
   activeSessionId: null,
   setActiveSessionId: (id) => set({ activeSessionId: id }),
-  addSession: (session) => 
+  addSession: (session) =>
     set((state) => ({ sessions: [...state.sessions, session] })),
 
   // Source filter
@@ -74,7 +103,8 @@ export const useWorkspaceStore = create<WorkspaceStore>((set) => ({
 
   // UI state
   showEvalPanel: false, // Default hidden based on user request
-  toggleEvalPanel: () => set((state) => ({ showEvalPanel: !state.showEvalPanel })),
+  toggleEvalPanel: () =>
+    set((state) => ({ showEvalPanel: !state.showEvalPanel })),
   activeCitation: null,
   setActiveCitation: (citation) => set({ activeCitation: citation }),
 }));

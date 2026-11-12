@@ -38,7 +38,8 @@ async def get_analytics(
             EvalScore.faithfulness.isnot(None),
         )
     )
-    avg_faithfulness = avg_faithfulness_result.scalar() or 0.0
+    avg_faithfulness_val = avg_faithfulness_result.scalar()
+    avg_faithfulness = avg_faithfulness_val if avg_faithfulness_val is not None else 0.0
 
     # Average context precision (scoped to this workspace)
     avg_precision_result = await db.execute(
@@ -47,7 +48,8 @@ async def get_analytics(
             EvalScore.context_precision.isnot(None),
         )
     )
-    avg_precision = avg_precision_result.scalar() or 0.0
+    avg_precision_val = avg_precision_result.scalar()
+    avg_precision = avg_precision_val if avg_precision_val is not None else 0.0
 
     # Retry rate
     retry_count_result = await db.execute(
@@ -60,8 +62,12 @@ async def get_analytics(
     retry_count = retry_count_result.scalar() or 0
     retry_rate = (retry_count / query_count) if query_count > 0 else 0.0
 
-    # Hallucination rate (1 - avg_faithfulness)
-    hallucination_rate = 1.0 - float(avg_faithfulness)
+    # Hallucination rate (1 - avg_faithfulness when evaluations exist, otherwise 0.0)
+    hallucination_rate = (
+        max(0.0, 1.0 - float(avg_faithfulness))
+        if avg_faithfulness_val is not None
+        else 0.0
+    )
 
     # Source count
     source_count_result = await db.execute(

@@ -229,7 +229,9 @@ async def event_generator(
                     ans_relevance = None
                     
                     try:
-                        contexts = [c["text"] for c in reranked_chunks]
+                        contexts = [c.get("text", c.get("full_text", "")) for c in reranked_chunks if isinstance(c, dict)]
+                        if not contexts and sources:
+                            contexts = [s.get("full_text", s.get("text_preview", "")) for s in sources if isinstance(s, dict)]
                         eval_result = await evaluate_response(
                             query=query,
                             answer=answer,
